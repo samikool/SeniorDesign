@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirstFragment">
+
+    <Button
+        android:id="@+id/Server_Call"
+        android:layout_width="175dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginBottom="168dp"
+        android:text="@string/ServerCall"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Drinks"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/BBQ_Orders"
+        android:layout_width="175dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginBottom="168dp"
+        android:text="@string/BBQOrders"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Utensils"
+        app:layout_constraintStart_toEndOf="@+id/Server_Call" />
+
+    <Button
+        android:id="@+id/Side_Dishes"
+        android:layout_width="175dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginBottom="168dp"
+        android:text="@string/SideDishes"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/Check"
+        app:layout_constraintStart_toEndOf="@+id/BBQ_Orders" />
+
+    <Button
+        android:id="@+id/Drinks"
+        android:layout_width="175dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginBottom="84dp"
+        android:text="@string/Drinks"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/Utensils"
+        android:layout_width="175dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginBottom="84dp"
+        android:text="@string/Utensils"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Drinks" />
+
+    <Button
+        android:id="@+id/Check"
+        android:layout_width="175dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginBottom="84dp"
+        android:text="@string/Check"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Utensils" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="603dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="722dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="37dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
