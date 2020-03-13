@@ -1,4 +1,4 @@
-package com.example.customer_application;
+package com.example.myapplication;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +20,7 @@ public class SecondFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_second, container, false);
     }
 
-  /*  public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
@@ -30,5 +30,5 @@ public class SecondFragment extends Fragment {
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
-    }*/
+    }
 }

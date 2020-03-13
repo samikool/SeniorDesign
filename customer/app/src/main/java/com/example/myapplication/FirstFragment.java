@@ -1,4 +1,4 @@
-package com.example.customer_application;
+package com.example.myapplication;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +24,23 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.Server_Call).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.BBQ_Orders).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
+        });
+
+        view.findViewById(R.id.Side_Dishes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
+        });
+
+        view.findViewById(R.id.Drinks).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(FirstFragment.this)
@@ -35,9 +51,11 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.Server_Call).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast myToast = Toast.makeText(getActivity(), "Server Called", Toast.LENGTH_SHORT);
+                Toast myToast = Toast.makeText(getActivity(), "Server Called!", Toast.LENGTH_SHORT);
                 myToast.show();
             }
         });
     }
+
+
 }
