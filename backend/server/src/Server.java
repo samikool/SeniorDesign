@@ -5,8 +5,10 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 //TODO: When connection handler gets request then, add to Queue
 //TODO: Thread Constantly reading requests pulling from Queue
@@ -16,18 +18,22 @@ import java.util.concurrent.Executors;
 public class Server extends JFrame implements Runnable {
     private int port;
     private ServerSocket serverSocket;
-    private ConnectionHandler[] connectionHandlers;
+    private ConnectionHandler[] connectionHandlerss;
+    private HashMap<Integer, ConnectionHandler> connectionHandlers;
     private static ExecutorService executor;
     private int clientsConnected;
     private JTextArea console;
     private JTextField inputField;
+    private static LinkedBlockingQueue<String> requestQ;
 
     public Server(int port){
         super("Server");
-        this.connectionHandlers = new ConnectionHandler[512];
+        this.connectionHandlerss = new ConnectionHandler[512];
+        this.connectionHandlers = new HashMap<>();
         this.executor = Executors.newCachedThreadPool();
         this.clientsConnected = 0;
         this.port = port;
+        requestQ = new LinkedBlockingQueue<>();
 
         console = new JTextArea();
         inputField = new JTextField();
@@ -56,15 +62,15 @@ public class Server extends JFrame implements Runnable {
 
     public void start() throws IOException{
         serverSocket = new ServerSocket(port,512);
-        
+        executor.execute(this);
 
         while(true){
             try{
                 System.out.println("waiting for client: " + clientsConnected + " to connect...");
-                connectionHandlers[clientsConnected] = new ConnectionHandler(clientsConnected);
-                connectionHandlers[clientsConnected].waitForConnection();
+                connectionHandlers.put(clientsConnected, new ConnectionHandler(clientsConnected));
+                connectionHandlers.get(clientsConnected).waitForConnection();
 
-                executor.execute(connectionHandlers[clientsConnected]);
+                executor.execute(connectionHandlers.get(clientsConnected));
 
                 System.out.println("Connection: " + clientsConnected + " successfully made");
                 clientsConnected++;
@@ -77,7 +83,20 @@ public class Server extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        
+        while (true){
+            if(!requestQ.isEmpty()){
+                //Get message and Client ID
+                String initialRequest = requestQ.poll();
+                //split message and store
+                String[] request = initialRequest.split(",");
+                int id = Integer.parseInt(request[0]);
+                String message = request[1];
+                System.out.println("Client ID: " + id + " || Request: " + message);
+
+                //Handle Message
+                connectionHandlers.get(id).sendMessage("Hey there");
+            }
+        }
     }
 
 
@@ -113,20 +132,32 @@ public class Server extends JFrame implements Runnable {
             }
         }
 
-        public void processConnection(){
+        public void receiveRequests(){
             while (activeConnection){
                 try{
                     String type = input.readLine();
                     if(type != null){
-                        System.out.println(type);
-                        output.write(type+'\n');
-                        output.flush();
+                        System.out.print(type);
+                        System.out.println(" from " + clientSocket.getInetAddress());
+                        String request = String.valueOf(clientID) + "," + type;
+                        System.out.println("Adding: " + request + " to Q");
+                        requestQ.offer(request);
+
                     }
                 }catch (Exception e){
                     System.err.println(e);
                 }
             }
             closeConnection();
+        }
+
+        public void sendMessage(String message){
+            try{
+                output.write(message+"\n");
+                output.flush();
+            }catch (IOException e){
+                System.err.println(e);
+            }
         }
 
         public void closeConnection(){
@@ -146,7 +177,7 @@ public class Server extends JFrame implements Runnable {
         @Override
         public void run() {
             initializeBuffers();
-            processConnection();
+            receiveRequests();
         }
     }
 

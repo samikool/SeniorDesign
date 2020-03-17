@@ -7,11 +7,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.DataFormatException;
 
 public class Connection implements Runnable {
     private String ip;
@@ -21,13 +20,15 @@ public class Connection implements Runnable {
     private BufferedReader input;
     private boolean done = false;
     private volatile boolean connected = false;
-    ExecutorService executor = Executors.newCachedThreadPool();
-    ServerSender sender;
-    ServerRequester requester;
+    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ServerSender sender;
+    private ServerRequester requester;
+    private Linker linker;
 
-    public Connection(String ip, int port) throws IOException{
+    public Connection(String ip, int port, Linker linker) throws IOException {
         this.ip = ip;
         this.port = port;
+        this.linker = linker;
     }
 
     public void start(){
@@ -66,7 +67,15 @@ public class Connection implements Runnable {
     public void processConnection(){
         connected = true;
         while(!done){
-
+            try{
+                String message = input.readLine();
+                if(message != null){
+                    System.out.println(message);
+                    linker.addMessage(message);
+                }
+            }catch (IOException e){
+                System.err.println(e);
+            }
 
         }
     }
@@ -113,15 +122,60 @@ public class Connection implements Runnable {
         }
     }
 
-    public static void main(String[] args){
-        try{
-            Connection connection = new Connection("172.17.52.78", 4044);
-            connection.connect();
-            connection.initializeStreams();
-            connection.closeConnection();
-        }catch (Exception e){
-            System.err.println(e);
+    private class ServerRequester implements Runnable {
+        private Connection connection;
+        private BufferedReader input;
+        private String data;
+
+        public ServerRequester(Connection connection, BufferedReader input){
+            this.connection = connection;
+            this.input = input;
+            this.data = null;
+
         }
 
+        public String getData(){
+            String returnData = data;
+            this.data = null;
+            return returnData;
+        }
+
+        @Override
+        public void run() {
+            try{
+                this.data = input.readLine();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class ServerSender implements Runnable {
+        private Connection connection;
+        private BufferedWriter output;
+        private ArrayBlockingQueue<String> dataArray = new ArrayBlockingQueue<>(128);
+
+        public ServerSender(Connection connection, BufferedWriter output){
+            this.connection = connection;
+            this.output = output;
+        }
+
+        public void addData(String data){
+            dataArray.add(data);
+        }
+
+        @Override
+        public void run() {
+            while(!dataArray.isEmpty()){
+                try{
+                    String data = dataArray.poll();
+                    output.write(data+"\n");
+                    output.flush();
+                    System.out.println(data + " was sent...");
+                }catch (Exception e){
+                    System.out.println(e);
+                }
+            }
+        }
     }
 }

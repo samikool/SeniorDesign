@@ -1,22 +1,29 @@
 package com.example.testapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
-    ExecutorService executor = Executors.newCachedThreadPool();
-    Client client = new Client();
-    Button sendButton;
-    TextView messageBox;
-    TextView responseBox;
+    //Variables for this activity
+    private Button sendButton;
+    private Button nextButton;
+    private TextView messageBox;
+    private TextView responseBox;
+    private Connection connection;
+
+    int i = 0;
+
+    //Variables for other activities
+    private Linker linker;
+    private static ArrayList<String> todoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,38 +33,44 @@ public class MainActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence message = messageBox.getText();
-                String response = client.send(messageBox.getText().toString());
-                responseBox.setText(response);
+                sendButton();
+
             }
         });
+        nextButton = findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchRecycle();
+            }
+        });
+
+
         messageBox = findViewById(R.id.messageBox);
         responseBox = findViewById(R.id.responseBox);
 
+        todoList = new ArrayList<>(16);
+        linker = new Linker(todoList);
+
         try{
-            Connection connection = new Connection("10.0.2.2", 4044);
+            //emulator
+            connection = new Connection("10.0.2.2", 4044, linker);
+            //phone at home
+            //connection = new Connection("192.168.0.20", 4044);
             connection.start();
-
-            connection.sendData("hello");
-            String response = connection.receiveData();
-            System.out.println(response);
-
-
-//            ServerRequester requester = new ServerRequester(connection);
-//            ServerSender sender = new ServerSender(connection);
-//
-//            sender.addData("hello");
-//            executor.execute(sender);
-//            executor.execute(requester);
-//            String response = requester.getData();
-//            System.out.println(response);
         }catch (Exception e){
             System.err.println(e);
         }
     }
 
     public void sendButton(){
+        connection.sendData("hello " + i);
+        i++;
+    }
 
+    public void launchRecycle(){
+        Intent intent = new Intent(this, RecycleActivity.class);
+        startActivity(intent);
     }
 
 
