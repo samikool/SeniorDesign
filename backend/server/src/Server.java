@@ -1,66 +1,163 @@
-// Fig. 28.7: Server.java
-// Server side of connectionless client/server computing with datagrams.
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class Server {
+//TODO: When connection handler gets request then, add to Queue
+//TODO: Thread Constantly reading requests pulling from Queue
+//TODO: After reading it needs to send appropiate message and update appropiate data structures
+//TODO: HashMap to store table-server pair by IP
 
-    private DatagramSocket socket; // socket to connect to client
+public class Server extends JFrame implements Runnable {
+    private int port;
+    private ServerSocket serverSocket;
+    private ConnectionHandler[] connectionHandlers;
+    private static ExecutorService executor;
+    private int clientsConnected;
+    private JTextArea console;
+    private JTextField inputField;
 
-    // set up GUI and DatagramSocket
-    public Server() {
-        try // create DatagramSocket for sending and receiving packets
-        {
-            socket = new DatagramSocket(4044);
-        } catch (SocketException socketException) {
-            socketException.printStackTrace();
-            System.exit(1);
-        }
+    public Server(int port){
+        super("Server");
+        this.connectionHandlers = new ConnectionHandler[512];
+        this.executor = Executors.newCachedThreadPool();
+        this.clientsConnected = 0;
+        this.port = port;
+
+        console = new JTextArea();
+        inputField = new JTextField();
+        inputField.setSize(1, 200);
+        inputField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String data = inputField.getText();
+            }
+        });
+
+        this.setLayout(new BorderLayout());
+        this.add(console, BorderLayout.CENTER);
+        this.add(inputField, BorderLayout.NORTH);
+
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(800,400);
     }
 
-    // wait for packets to arrive, display data and echo packet to client
-    public void waitForPackets() {
-        while (true) {
-            try // receive packet, display contents, return copy to client
-            {
-                byte[] data = new byte[100]; // set up packet
-                DatagramPacket receivePacket =
-                        new DatagramPacket(data, data.length);
+    public static ExecutorService getExecutor(){return executor;}
 
-                socket.receive(receivePacket); // wait to receive packet
+    public Server(String port) {
+        this(Integer.valueOf(port));
+    }
 
-                // display information from received packet
-                System.out.println("\nPacket received:" +
-                        "\nFrom host: " + receivePacket.getAddress() +
-                        "\nHost port: " + receivePacket.getPort() +
-                        "\nLength: " + receivePacket.getLength() +
-                        "\nContaining:\n\t" + new String(receivePacket.getData(),
-                        0, receivePacket.getLength()));
+    public void start() throws IOException{
+        serverSocket = new ServerSocket(port,512);
+        
 
-                sendPacketToClient(receivePacket); // send packet to client
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+        while(true){
+            try{
+                System.out.println("waiting for client: " + clientsConnected + " to connect...");
+                connectionHandlers[clientsConnected] = new ConnectionHandler(clientsConnected);
+                connectionHandlers[clientsConnected].waitForConnection();
+
+                executor.execute(connectionHandlers[clientsConnected]);
+
+                System.out.println("Connection: " + clientsConnected + " successfully made");
+                clientsConnected++;
+            }catch (Exception e){
+                System.err.println("Error connecting to cleint " + clientsConnected);
+                System.err.println(e);
             }
         }
     }
 
-    // echo packet to client
-    private void sendPacketToClient(DatagramPacket receivePacket) throws IOException {
-        // create packet to send
-        DatagramPacket sendPacket = new DatagramPacket(
-                receivePacket.getData(), receivePacket.getLength(),
-                receivePacket.getAddress(), receivePacket.getPort());
-
-        socket.send(sendPacket); // send packet to client
-
+    @Override
+    public void run() {
+        
     }
+
+
+    private class ConnectionHandler implements Runnable{
+        private Socket clientSocket;
+        private int clientID;
+        //private ObjectInputStream input;
+        //private ObjectOutputStream output;
+        private BufferedWriter output;
+        private BufferedReader input;
+        private boolean activeConnection;
+
+        public ConnectionHandler(int id){
+            clientID = id;
+            this.activeConnection = false;
+        }
+
+        public void waitForConnection() throws IOException{
+            clientSocket = serverSocket.accept();
+
+            activeConnection = true;
+        }
+
+        public void initializeBuffers(){
+            try{
+                output = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+                output.flush();
+
+                input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                System.out.println("Buffers successfully setup");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        public void processConnection(){
+            while (activeConnection){
+                try{
+                    String type = input.readLine();
+                    if(type != null){
+                        System.out.println(type);
+                        output.write(type+'\n');
+                        output.flush();
+                    }
+                }catch (Exception e){
+                    System.err.println(e);
+                }
+            }
+            closeConnection();
+        }
+
+        public void closeConnection(){
+            System.out.println("Attempting to close connection with client: " + clientID);
+            try{
+                clientSocket.close();
+                input.close();
+                output.close();
+                System.out.println("Client connection " + clientID + " closed." );
+            }catch (IOException e){
+                System.err.println("Error closing client connection");
+                System.err.println(e);
+            }
+
+        }
+
+        @Override
+        public void run() {
+            initializeBuffers();
+            processConnection();
+        }
+    }
+
     public static void main(String[] args){
-        Server server = new Server();
-        server.waitForPackets();
+        try{
+            Server testServer = new Server("4044");
+            testServer.start();
+        }catch (Exception e){
+            System.err.println(e);
+        }
     }
 }
+
+

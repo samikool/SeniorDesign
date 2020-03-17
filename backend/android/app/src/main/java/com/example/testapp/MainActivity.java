@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     ExecutorService executor = Executors.newCachedThreadPool();
@@ -32,6 +33,27 @@ public class MainActivity extends AppCompatActivity {
         });
         messageBox = findViewById(R.id.messageBox);
         responseBox = findViewById(R.id.responseBox);
+
+        try{
+            Connection connection = new Connection("10.0.2.2", 4044);
+            connection.start();
+
+            connection.sendData("hello");
+            String response = connection.receiveData();
+            System.out.println(response);
+
+
+//            ServerRequester requester = new ServerRequester(connection);
+//            ServerSender sender = new ServerSender(connection);
+//
+//            sender.addData("hello");
+//            executor.execute(sender);
+//            executor.execute(requester);
+//            String response = requester.getData();
+//            System.out.println(response);
+        }catch (Exception e){
+            System.err.println(e);
+        }
     }
 
     public void sendButton(){
