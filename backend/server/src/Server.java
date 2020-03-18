@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,25 +17,39 @@ import java.util.concurrent.LinkedBlockingQueue;
 //TODO: HashMap to store table-server pair by IP
 
 public class Server extends JFrame implements Runnable {
+    //connection variables
     private int port;
     private ServerSocket serverSocket;
-    private ConnectionHandler[] connectionHandlerss;
     private HashMap<Integer, ConnectionHandler> connectionHandlers;
-    private static ExecutorService executor;
     private int clientsConnected;
+    private  LinkedBlockingQueue<String> requestQ;
+
+    //executor for threading
+    private  ExecutorService executor;
+
+    //data structures for comms
+    private  HashMap<Integer, ArrayList<Integer>> servingMap;
+
+
+    //gui elements
     private JTextArea console;
     private JTextField inputField;
-    private static LinkedBlockingQueue<String> requestQ;
 
     public Server(int port){
         super("Server");
-        this.connectionHandlerss = new ConnectionHandler[512];
+        //initialize connection variables
         this.connectionHandlers = new HashMap<>();
-        this.executor = Executors.newCachedThreadPool();
         this.clientsConnected = 0;
         this.port = port;
         requestQ = new LinkedBlockingQueue<>();
 
+        //initialize executor
+        this.executor = Executors.newCachedThreadPool();
+
+        //initialize data structures for comms
+        servingMap = new HashMap<>();
+
+        //initialize gui
         console = new JTextArea();
         inputField = new JTextField();
         inputField.setSize(1, 200);
@@ -52,12 +67,6 @@ public class Server extends JFrame implements Runnable {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800,400);
-    }
-
-    public static ExecutorService getExecutor(){return executor;}
-
-    public Server(String port) {
-        this(Integer.valueOf(port));
     }
 
     public void start() throws IOException{
@@ -87,32 +96,67 @@ public class Server extends JFrame implements Runnable {
             if(!requestQ.isEmpty()){
                 //Get message and Client ID
                 String initialRequest = requestQ.poll();
-                //split message and store
-                String[] request = initialRequest.split(",");
-                int id = Integer.parseInt(request[0]);
-                String message = request[1];
-                System.out.println("Client ID: " + id + " || Request: " + message);
-
-                //Handle Message
-                connectionHandlers.get(id).sendMessage("Hey there");
+                handleRequest(initialRequest);
             }
         }
     }
+
+    public void handleRequest(String initialRequest){
+        //split request into parts
+        String[] request = initialRequest.split(",");
+        int id = Integer.parseInt(request[0]);
+        String command = request[1];
+        String data = "";
+        if (request.length > 2) {data = request[2];}
+
+        System.out.println("Client ID: " + id + " || Request: " + command + " || Data: " + data);
+
+        //first time client has connected
+        //probably send some initialization data here
+        if(command == "register"){
+            if(data == "waiter")
+                connectionHandlers.get(id).setWaiter(true);
+            else
+                connectionHandlers.get(id).setWaiter(false);
+            connectionHandlers.get(id).sendMessage("Waiter: " + connectionHandlers.get(id).isWaiter);
+        }
+        //connection is a waiter
+        else if(connectionHandlers.get(id).isWaiter){
+            if(command == "claim"){
+                servingMap.get(id).add(Integer.parseInt(data));
+            }
+            else if(command == "order"){
+                //process order data
+                //update table check
+
+                
+            }
+
+
+        }
+        //connection is a table
+        else{
+
+        }
+    }
+
 
 
     private class ConnectionHandler implements Runnable{
         private Socket clientSocket;
         private int clientID;
-        //private ObjectInputStream input;
-        //private ObjectOutputStream output;
         private BufferedWriter output;
         private BufferedReader input;
         private boolean activeConnection;
+        private boolean isWaiter;
+
 
         public ConnectionHandler(int id){
             clientID = id;
             this.activeConnection = false;
         }
+
+        public void setWaiter(boolean isTable){this.isWaiter = isTable;}
 
         public void waitForConnection() throws IOException{
             clientSocket = serverSocket.accept();
@@ -135,14 +179,12 @@ public class Server extends JFrame implements Runnable {
         public void receiveRequests(){
             while (activeConnection){
                 try{
-                    String type = input.readLine();
-                    if(type != null){
-                        System.out.print(type);
-                        System.out.println(" from " + clientSocket.getInetAddress());
-                        String request = String.valueOf(clientID) + "," + type;
-                        System.out.println("Adding: " + request + " to Q");
+                    String command = input.readLine();
+                    if(command != null){
+                        //System.out.println(command + " from " + clientSocket.getInetAddress());
+                        String request = String.valueOf(clientID) + "," + command;
+                        //System.out.println("Adding: " + request + " to Q");
                         requestQ.offer(request);
-
                     }
                 }catch (Exception e){
                     System.err.println(e);
@@ -183,7 +225,7 @@ public class Server extends JFrame implements Runnable {
 
     public static void main(String[] args){
         try{
-            Server testServer = new Server("4044");
+            Server testServer = new Server(4044);
             testServer.start();
         }catch (Exception e){
             System.err.println(e);
