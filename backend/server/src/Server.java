@@ -3,10 +3,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -28,8 +30,13 @@ public class Server extends JFrame implements Runnable {
     private  ExecutorService executor;
 
     //data structures for comms
-    private  HashMap<Integer, ArrayList<Integer>> servingMap;
+    HashMap<Integer, Integer> tableMap;
+    HashMap<Integer, Integer> waiterMap;
+    HashMap<Integer, Integer> servingMap;
 
+    //data structures for database data
+    HashMap<Integer, Item> itemMap;
+    HashMap<Integer, Receipt> receiptMap;
 
     //gui elements
     private JTextArea console;
@@ -47,7 +54,13 @@ public class Server extends JFrame implements Runnable {
         this.executor = Executors.newCachedThreadPool();
 
         //initialize data structures for comms
-        servingMap = new HashMap<>();
+        tableMap = new HashMap<>(); // <CID, TID>
+        waiterMap = new HashMap<>(); // <CID, WID>
+        servingMap = new HashMap<>(); // <TID, WID> since every TID can only have 1 WID
+
+        //initialize data structures for data
+        itemMap = new HashMap<>(); //TODO: initialize an item list with all possible items, probably from database
+        receiptMap = new HashMap<>(); // <TID, Receipt>
 
         //initialize gui
         console = new JTextArea();
@@ -101,43 +114,68 @@ public class Server extends JFrame implements Runnable {
         }
     }
 
+    /**
+     * Main function to handle requests and send responses
+     * @param initialRequest string of the intial request which will be broken into parts
+     */
     public void handleRequest(String initialRequest){
         //split request into parts
         String[] request = initialRequest.split(",");
-        int id = Integer.parseInt(request[0]);
+        int cid = Integer.parseInt(request[0]);
         String command = request[1];
-        String data = "";
-        if (request.length > 2) {data = request[2];}
+        ArrayList<String> data = new ArrayList<>();
+        if (request.length > 2) {
+            for (int i = 2; i < request.length; i++) {
+                data.add(request[i]);
+            }
+        }
 
-        System.out.println("Client ID: " + id + " || Request: " + command + " || Data: " + data);
+        System.out.println("Client ID: " + cid + " || Request: " + command + " || Data: " + data);
 
         //first time client has connected
         //probably send some initialization data here
-        if(command == "register"){
-            if(data == "waiter")
-                connectionHandlers.get(id).setWaiter(true);
-            else
-                connectionHandlers.get(id).setWaiter(false);
-            connectionHandlers.get(id).sendMessage("Waiter: " + connectionHandlers.get(id).isWaiter);
+        if(command.equals("register")){
+            //REGISTER, WAITER, WID
+            //REGISTER, TABLE, TID
+            int waitOrTableID = Integer.parseInt(data.get(1));
+            if(data.get(0).equals("waiter")){
+                connectionHandlers.get(cid).setWaiter(true);
+                waiterMap.put(cid, waitOrTableID);
+            }
+            else {
+                connectionHandlers.get(cid).setWaiter(false);
+                tableMap.put(cid, waitOrTableID);
+            }
         }
         //connection is a waiter
-        else if(connectionHandlers.get(id).isWaiter){
-            if(command == "claim"){
-                servingMap.get(id).add(Integer.parseInt(data));
+        else if(connectionHandlers.get(cid).isWaiter){
+            int wid = waiterMap.get(cid);
+            if(command.equals("claim")){
+                //CID, CLAIM, TID
+                int tid = Integer.parseInt(data.get(0));
+                servingMap.put(tid, wid);
+                receiptMap.put(tid, new Receipt(tid, wid));
+                String response = tid+",claim,"+wid;
+                waiterMap.forEach((k,v) -> {
+                    connectionHandlers.get(k).sendMessage(response);
+                });
             }
-            else if(command == "order"){
-                //process order data
-                //update table check
-
-                
+            else if(command.equals("order")){
+                //CID, ORDER, TID, ITEM, QUANT
+                int tid = Integer.parseInt(data.get(0));
+                int iid = Integer.parseInt(data.get(1));
+                int quant = Integer.parseInt(data.get(2));
+                receiptMap.get(tid).addItem(itemMap.get(iid), quant);
+                //Item item = database.pull(ITEM)
             }
-
-
+            else if(command.equals("unorder")){
+                //CID, UNORDER, TID, ITEM, QUANT
+            }
         }
         //connection is a table
-        else{
-
-        }
+        else if(!connectionHandlers.get(cid).isWaiter){
+            int tid = tableMap.get(cid);
+        }                                             
     }
 
 
