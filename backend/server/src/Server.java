@@ -303,21 +303,27 @@ public class Server extends JFrame implements Runnable {
                 connectionHandlers.get(sendCid).sendMessage(response);
             }
             else if(command.equals("chop")){
-                //TID,CHOP,UTENSILE,QUANT
+                //TID,CHOP,UTENSIL,QUANT
                 int wid = servingMap.get(tid);
                 int sendCid = waiterToConMap.get(wid);
 
-                String utensile = data.get(0);
+                String utensil = data.get(0);
                 int quant =  Integer.parseInt(data.get(1));
 
-                String response = tid+",chop,"+utensile+","+quant;
+                String response = tid+",chop,"+utensil+","+quant;
                 connectionHandlers.get(sendCid).sendMessage(response);
             }
         }
-        System.out.println("");
+        printReceipt();
     }
 
-
+    private void printReceipt(){
+        for (Receipt receipt : receiptMap.values()) {
+            if(receipt.getNumItems() > 0){
+                System.out.println(receipt);
+            }
+        }
+    }
 
     private class ConnectionHandler implements Runnable{
         private Socket clientSocket;

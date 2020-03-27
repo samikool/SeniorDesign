@@ -1,6 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+
 
 public class Receipt {
 
@@ -15,6 +14,10 @@ public class Receipt {
         total = 0;
         items = new ArrayList<>();
         quantities = new ArrayList<>();
+    }
+
+    public Receipt(int tid){
+        this(tid, -1);
     }
 
     public void addItem(Item item, int quant) {
@@ -47,6 +50,14 @@ public class Receipt {
         }
     }
 
+    public int getNumItems(){
+        int count = 0;
+        for (int quant: quantities){
+            count+=quant;
+        }
+        return count;
+    }
+
     public ArrayList<Item> getItems(){return items;}
 
     public double getTotal(){return Math.round(100 * total) / 100.;}
@@ -65,6 +76,7 @@ public class Receipt {
         for (int i=0; i<items.size(); i++) {
             str += quantities.get(i) + "   " + items.get(i).getName() + "   " + items.get(i).getPrice() * quantities.get(i) + "\n";
         }
+        str += "        Total: " + getTotal() + "\n";
         return str;
     }
 }

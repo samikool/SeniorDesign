@@ -27,12 +27,12 @@
         app:layout_constraintTop_toBottomOf="@+id/drinkButton" />
 
     <Button
-        android:id="@+id/utensileButton"
+        android:id="@+id/utensilButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
         android:layout_marginEnd="64dp"
-        android:text="Utensile"
+        android:text="Utensil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkButton" />
 
