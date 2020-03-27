@@ -3,20 +3,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-//TODO: When connection handler gets request then, add to Queue
-//TODO: Thread Constantly reading requests pulling from Queue
-//TODO: After reading it needs to send appropiate message and update appropiate data structures
-//TODO: HashMap to store table-server pair by IP
+//TODO: Ensure correct responses are being sent
+//TODO: Add void Item waiter -> table
+//TODO: Add Close Receipt waiter -> table -> Database
+//TODO: Think of other messages waiter might send table
+
 
 public class Server extends JFrame implements Runnable {
     //connection variables
@@ -25,17 +24,19 @@ public class Server extends JFrame implements Runnable {
     private HashMap<Integer, ConnectionHandler> connectionHandlers;
     private int clientsConnected;
     private  LinkedBlockingQueue<String> requestQ;
+    private DBConnector db;
 
     //executor for threading
     private  ExecutorService executor;
 
     //data structures for comms
-    HashMap<Integer, Integer> tableMap;
-    HashMap<Integer, Integer> waiterMap;
+    HashMap<Integer, Integer> conToTableMap;
+    HashMap<Integer, Integer> tableToConMap;
+    HashMap<Integer, Integer> waiterToConMap;
+    HashMap<Integer, Integer> conToWaiterMap;
     HashMap<Integer, Integer> servingMap;
 
     //data structures for database data
-    HashMap<Integer, Item> itemMap;
     HashMap<Integer, Receipt> receiptMap;
 
     //gui elements
@@ -49,17 +50,21 @@ public class Server extends JFrame implements Runnable {
         this.clientsConnected = 0;
         this.port = port;
         requestQ = new LinkedBlockingQueue<>();
+        db = new DBConnector();
+        int[] ids = {3,5,1};
+        System.out.println(db.getBBQs(ids));
 
         //initialize executor
         this.executor = Executors.newCachedThreadPool();
 
         //initialize data structures for comms
-        tableMap = new HashMap<>(); // <CID, TID>
-        waiterMap = new HashMap<>(); // <CID, WID>
+        conToTableMap = new HashMap<>(); // <CID, TID>
+        tableToConMap = new HashMap<>();
+        conToWaiterMap = new HashMap<>(); // <CID, WID>
+        waiterToConMap = new HashMap<>();
         servingMap = new HashMap<>(); // <TID, WID> since every TID can only have 1 WID
 
         //initialize data structures for data
-        itemMap = new HashMap<>(); //TODO: initialize an item list with all possible items, probably from database
         receiptMap = new HashMap<>(); // <TID, Receipt>
 
         //initialize gui
@@ -116,7 +121,7 @@ public class Server extends JFrame implements Runnable {
 
     /**
      * Main function to handle requests and send responses
-     * @param initialRequest string of the intial request which will be broken into parts
+     * @param initialRequest string of the initial request which will be broken into parts
      */
     public void handleRequest(String initialRequest){
         //split request into parts
@@ -130,7 +135,7 @@ public class Server extends JFrame implements Runnable {
             }
         }
 
-        System.out.println("Client ID: " + cid + " || Request: " + command + " || Data: " + data);
+        System.out.println("Client ID: " + cid + " || Request: " + command + " || Data: " + data + " || isWaiter: " + connectionHandlers.get(cid).isWaiter);
 
         //first time client has connected
         //probably send some initialization data here
@@ -140,42 +145,176 @@ public class Server extends JFrame implements Runnable {
             int waitOrTableID = Integer.parseInt(data.get(1));
             if(data.get(0).equals("waiter")){
                 connectionHandlers.get(cid).setWaiter(true);
-                waiterMap.put(cid, waitOrTableID);
+                conToWaiterMap.put(cid, waitOrTableID);
+                waiterToConMap.put(waitOrTableID, cid);
             }
             else {
                 connectionHandlers.get(cid).setWaiter(false);
-                tableMap.put(cid, waitOrTableID);
+                conToTableMap.put(cid, waitOrTableID);
+                tableToConMap.put(waitOrTableID, cid);
             }
+        }
+        else if(command.equals("items")){
+            //ITEMS
+            ArrayList<Item> drinks = db.getAllDrinks();
+            ArrayList<Item> bbqs = db.getAllBBQs();
+            ArrayList<Item> sides = db.getAllSides();
+
+            String drinkString = "0,items,drink";
+            for (Item item : drinks){
+                drinkString += "," + item.getId()+ "," + item.getName() + "," + item.getPrice();
+            }
+
+            String bbqString = "0,items,bbq";
+            for (Item item : bbqs){
+                bbqString += "," + item.getId()+ "," + item.getName() + "," + item.getPrice();
+            }
+
+            String sideString = "0,items,side";
+            for (Item item : sides){
+                sideString += "," + item.getId()+ "," + item.getName() + "," + item.getPrice();
+            }
+
+            connectionHandlers.get(cid).sendMessage(drinkString);
+            connectionHandlers.get(cid).sendMessage(bbqString);
+            connectionHandlers.get(cid).sendMessage(sideString);
+
         }
         //connection is a waiter
         else if(connectionHandlers.get(cid).isWaiter){
-            int wid = waiterMap.get(cid);
+            int wid = conToWaiterMap.get(cid);
             if(command.equals("claim")){
                 //CID, CLAIM, TID
                 int tid = Integer.parseInt(data.get(0));
                 servingMap.put(tid, wid);
                 receiptMap.put(tid, new Receipt(tid, wid));
                 String response = tid+",claim,"+wid;
-                waiterMap.forEach((k,v) -> {
+                conToWaiterMap.forEach((k, v) -> {
                     connectionHandlers.get(k).sendMessage(response);
                 });
+                connectionHandlers.get(cid).sendMessage(response);
             }
             else if(command.equals("order")){
-                //CID, ORDER, TID, ITEM, QUANT
+                //CID, ORDER, TID, CATEGORY, IID, QUANT, ...
                 int tid = Integer.parseInt(data.get(0));
-                int iid = Integer.parseInt(data.get(1));
-                int quant = Integer.parseInt(data.get(2));
-                receiptMap.get(tid).addItem(itemMap.get(iid), quant);
-                //Item item = database.pull(ITEM)
+
+                String category = "";
+                Item item;
+                int iid;
+                int quant;
+                for(int i=1; i<data.size(); i+=3){
+                    category = data.get(i);
+                    iid = Integer.parseInt(data.get(i+1));
+                    quant = Integer.parseInt(data.get(i+2));
+                    if(category.equals("drink")){
+                        item = db.getBBQ(iid);
+                        receiptMap.get(tid).addItem(item, quant);
+                    }
+                    else if(category.equals("bbq")){
+                        item = db.getDrink(iid);
+                        receiptMap.get(tid).addItem(item, quant);
+                    }
+                }
+
+                int sendCid = tableToConMap.get(tid);
+
+                String response = String.valueOf(wid);
+                for (int i=1; i<request.length; i++) {
+                    response+= ","+request[i];
+                }
+                //TODO:send response
             }
-            else if(command.equals("unorder")){
-                //CID, UNORDER, TID, ITEM, QUANT
+            else if(command.equals("void")){
+                //CID, VOID, TID, CATEGORY, IID, QUANT, ...
+                int tid = Integer.parseInt(data.get(0));
+
+                String category = "";
+                Item item;
+                int iid;
+                int quant;
+                for(int i=1; i<data.size(); i+=3){
+                    category = data.get(i);
+                    iid = Integer.parseInt(data.get(i+1));
+                    quant = Integer.parseInt(data.get(i+2));
+                    if(category.equals("drink")){
+                        item = db.getBBQ(iid);
+                        receiptMap.get(tid).removeItem(item, quant);
+                    }
+                    else if(category.equals("bbq")){
+                        item = db.getDrink(iid);
+                        receiptMap.get(tid).removeItem(item, quant);
+                    }
+                }
+                //TODO: Update Table Receipt
+            }
+            else if(command.equals("close")){
+                //CID, CLOSE, TID
+                int tid = Integer.parseInt(data.get(0));
+                Receipt receipt = receiptMap.remove(tid);
+                db.writeReceipt(receipt);
+
+                //TODO: update other servers table has closed
             }
         }
         //connection is a table
         else if(!connectionHandlers.get(cid).isWaiter){
-            int tid = tableMap.get(cid);
-        }                                             
+            int tid = conToTableMap.get(cid);
+            if(command.equals("call")){
+                //TID,CALL
+                int wid = servingMap.get(tid);
+                int sendCid = waiterToConMap.get(wid);
+
+                String response = tid + ",call";
+                connectionHandlers.get(sendCid).sendMessage(response);
+            }
+            else if(command.equals("order")){
+                int wid = servingMap.get(tid);
+                int sendCid = waiterToConMap.get(wid);
+
+                int iid;
+                int quant;
+                for (int i=0; i < data.size(); i+=3) {
+                    String category = data.get(i);
+                    iid = Integer.parseInt(data.get(i+1));
+                    quant = Integer.parseInt(data.get(i+2));
+
+                    if(category.equals("drink")){
+                        Item item = db.getDrink(iid);
+                        receiptMap.get(tid).addItem(item, quant);
+                    }
+                    else if(category.equals("bbq")){
+                        Item item = db.getBBQ(iid);
+                        receiptMap.get(tid).addItem(item, quant);
+                    }
+                    else if(category.equals("side")){
+                        Item item = db.getSide(iid);
+                        receiptMap.get(tid).addItem(item, quant);
+                    }
+                    String response = tid+","+category+","+iid+","+quant;
+                    connectionHandlers.get(sendCid).sendMessage(response);
+                }
+            }
+            else if(command.equals("check")){
+                //TID,CHECK
+                int wid = servingMap.get(tid);
+                int sendCid = waiterToConMap.get(wid);
+
+                String response = tid + ",check";
+                connectionHandlers.get(sendCid).sendMessage(response);
+            }
+            else if(command.equals("chop")){
+                //TID,CHOP,UTENSILE,QUANT
+                int wid = servingMap.get(tid);
+                int sendCid = waiterToConMap.get(wid);
+
+                String utensile = data.get(0);
+                int quant =  Integer.parseInt(data.get(1));
+
+                String response = tid+",chop,"+utensile+","+quant;
+                connectionHandlers.get(sendCid).sendMessage(response);
+            }
+        }
+        System.out.println("");
     }
 
 
@@ -185,21 +324,17 @@ public class Server extends JFrame implements Runnable {
         private int clientID;
         private BufferedWriter output;
         private BufferedReader input;
-        private boolean activeConnection;
         private boolean isWaiter;
 
 
         public ConnectionHandler(int id){
             clientID = id;
-            this.activeConnection = false;
         }
 
         public void setWaiter(boolean isTable){this.isWaiter = isTable;}
 
         public void waitForConnection() throws IOException{
             clientSocket = serverSocket.accept();
-
-            activeConnection = true;
         }
 
         public void initializeBuffers(){
@@ -215,15 +350,17 @@ public class Server extends JFrame implements Runnable {
         }
 
         public void receiveRequests(){
-            while (activeConnection){
+            while (true){
                 try{
                     String command = input.readLine();
+                    System.out.println(command);
                     if(command != null){
                         //System.out.println(command + " from " + clientSocket.getInetAddress());
                         String request = String.valueOf(clientID) + "," + command;
                         //System.out.println("Adding: " + request + " to Q");
                         requestQ.offer(request);
                     }
+                    else{break;}
                 }catch (Exception e){
                     System.err.println(e);
                 }
@@ -262,6 +399,31 @@ public class Server extends JFrame implements Runnable {
     }
 
     public static void main(String[] args){
+        DBConnector db = new DBConnector();
+        for (Item item : db.getAllBBQs()) {
+                System.out.println(item);
+        }
+
+        for (Item item : db.getAllDrinks()){
+            System.out.println(item);
+        }
+
+
+        Item samgyp = db.getBBQ(1);
+        Item galbi = db.getBBQ(4);
+        Item pepsi = db.getDrink(2);
+        Item sprite = db.getDrink(7);
+
+        Receipt receipt = new Receipt(3, 004);
+        receipt.addItem(samgyp, 2);
+        receipt.addItem(galbi,1);
+        receipt.addItem(pepsi, 1);
+        receipt.addItem(sprite, 1);
+
+        db.writeReceipt(receipt);
+
+        System.out.println(receipt);
+
         try{
             Server testServer = new Server(4044);
             testServer.start();
@@ -270,5 +432,3 @@ public class Server extends JFrame implements Runnable {
         }
     }
 }
-
-

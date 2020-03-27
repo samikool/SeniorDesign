@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class Connection implements Runnable {
@@ -18,17 +19,15 @@ public class Connection implements Runnable {
     private Socket socket;
     private BufferedWriter output;
     private BufferedReader input;
-    private boolean done = false;
-    private volatile boolean connected = false;
     private ExecutorService executor = Executors.newCachedThreadPool();
     private ServerSender sender;
     private ServerRequester requester;
-    private Linker linker;
+    private LinkedBlockingQueue<String> q;
 
-    public Connection(String ip, int port, Linker linker) throws IOException {
+    public Connection(String ip, int port, LinkedBlockingQueue<String> q){
         this.ip = ip;
         this.port = port;
-        this.linker = linker;
+        this.q = q;
     }
 
     public void start(){
@@ -65,19 +64,18 @@ public class Connection implements Runnable {
     }
 
     public void processConnection(){
-        connected = true;
-        while(!done){
+        while(true){
             try{
                 String message = input.readLine();
                 if(message != null){
                     System.out.println(message);
-                    linker.addMessage(message);
-                }
+                   q.offer(message);
+                }else{break;}
             }catch (IOException e){
                 System.err.println(e);
             }
-
         }
+        closeConnection();
     }
 
     public void closeConnection(){

@@ -7,28 +7,28 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ButtonBarLayout;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
     //Variables for this activity
     private Button sendButton;
     private Button nextButton;
+    private Button waiterButton;
+    private Button tableButton;
     private TextView messageBox;
     private TextView responseBox;
-    private Connection connection;
-
-    int i = 0;
 
     //Variables for other activities
-    private Linker linker;
+    private static Linker linker;
     private static ArrayList<String> todoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         sendButton = findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,32 +44,47 @@ public class MainActivity extends AppCompatActivity {
                 launchRecycle();
             }
         });
-
+        waiterButton = findViewById(R.id.waiterButton);
+        waiterButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void
+            onClick(View v) {
+                waiterMenu();
+            }
+        });
+        tableButton = findViewById(R.id.tableButton);
+        tableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableMenu();
+            }
+        });
 
         messageBox = findViewById(R.id.messageBox);
-        responseBox = findViewById(R.id.responseBox);
 
         todoList = new ArrayList<>(16);
-        linker = new Linker(todoList);
 
-        try{
-            //emulator
-            connection = new Connection("10.0.2.2", 4044, linker);
-            //phone at home
-            //connection = new Connection("192.168.0.20", 4044);
-            connection.start();
-        }catch (Exception e){
-            System.err.println(e);
-        }
+
+
     }
 
     public void sendButton(){
-        connection.sendData("hello " + i);
-        i++;
+        linker.sendMessage(messageBox.getText().toString());
     }
 
     public void launchRecycle(){
         Intent intent = new Intent(this, RecycleActivity.class);
+        startActivity(intent);
+    }
+
+    public void waiterMenu(){
+        linker = new Linker(004, true, todoList);
+        Intent intent = new Intent(this, WaiterMenu.class);
+        startActivity(intent);
+    }
+
+    public void tableMenu(){
+        linker = new Linker(2, false, todoList);
+        Intent intent = new Intent(this, TableMenu.class);
         startActivity(intent);
     }
 

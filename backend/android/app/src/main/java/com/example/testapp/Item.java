@@ -1,3 +1,5 @@
+package com.example.testapp;
+
 public class Item {
     private int id;
     private double price;

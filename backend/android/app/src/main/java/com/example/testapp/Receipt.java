@@ -1,3 +1,5 @@
+package com.example.testapp;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,6 +17,10 @@ public class Receipt {
         total = 0;
         items = new ArrayList<>();
         quantities = new ArrayList<>();
+    }
+
+    public Receipt(int tid){
+        this(tid, -1);
     }
 
     public void addItem(Item item, int quant) {
