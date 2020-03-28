@@ -1,5 +1,13 @@
+
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,8 +37,14 @@ public class DBConnector {
             int iid = rs.getInt("id");
             String name = rs.getString("name");
             double price = rs.getDouble("price");
-            rs.close();
+            if(table.equals("bbqs")){
+                String encodedImage = new String(rs.getBytes("picture"));
+                byte[] imageBytes = Base64.getDecoder().decode(encodedImage);
+                rs.close();
+                return new Item(iid, name, price, encodedImage);
+            }
 
+            rs.close();
             return new Item(iid, name, price);
 
         }catch (SQLException e){
@@ -57,15 +71,13 @@ public class DBConnector {
                 int iid = rs.getInt("id");
                 String name = rs.getString("name");
                 double price = rs.getDouble("price");
-                items.add(new Item(iid, name, price));
+                String encodedImage = new String(rs.getBytes("picture"));
+                items.add(new Item(iid, name, price, encodedImage));
             }
-
             return items;
-
         }catch (SQLException e){
             System.err.println(e);
         }
-
         return null;
     }
 
@@ -116,6 +128,60 @@ public class DBConnector {
 
     public ArrayList<Item> getAllSides(){
         return getAllItems("sides");
+    }
+
+    public void insertImages(){
+        //BBQ CAT = 0
+        insertImage("samgyupsal", 0);
+        insertImage("wanggalbi", 0);
+        insertImage("bulgogi", 0);
+        insertImage("galbi", 0);
+        insertImage("buldak", 0);
+        insertImage("chadolbaki", 0);
+        //DRINK CAT = 1
+        insertImage("water", 1);
+        insertImage("pepsi", 1);
+        insertImage("diet_pepsi", 1);
+        insertImage("root_beer", 1);
+        insertImage("mt._dew", 1);
+        insertImage("lemonade", 1);
+        insertImage("seirra_mist", 1);
+        insertImage("rammune", 1);
+        insertImage("white_milk", 1);
+        insertImage("chocolate_milk", 1);
+        insertImage("strawberry_milk", 1);
+        //SIDES CAT = 2
+        insertImage("kimchi", 2);
+        insertImage("potato_salad", 2);
+        insertImage("black_beans", 2);
+        insertImage("bean_sprouts", 2);
+        insertImage("pink_radish", 2);
+        insertImage("white_radish", 2);
+        insertImage("yellow_radish", 2);
+        insertImage("spinach", 2);
+    }
+    private void insertImage(String itemName, int category){
+        String table = "";
+        if(category == 0)
+            table = "bbqs";
+        else if(category == 1)
+            table = "drinks";
+        else if(category == 2)
+            table = "sides";
+        try{
+            String dir = "E:\\git\\seniordesign\\backend\\";
+            BufferedImage image = ImageIO.read(new File(dir,"samgyupsal" + ".jpg"));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", baos);
+            String base64String = Base64.getEncoder().encodeToString(baos.toByteArray());
+            baos.close();
+
+            String queryStr = "UPDATE " + table + " SET picture = bytea('" + base64String + "') WHERE name = '" + itemName + "'";
+            stmt.execute(queryStr);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }

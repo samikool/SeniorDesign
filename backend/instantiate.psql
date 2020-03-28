@@ -4,6 +4,7 @@ DROP TABLE sides;
 DROP TABLE receipts;
 DROP TYPE item;
 
+
 CREATE TYPE item AS(
     NAME TEXT,
     PRICE REAL,
@@ -13,19 +14,22 @@ CREATE TYPE item AS(
 CREATE TABLE bbqs (
     ID SERIAL PRIMARY KEY NOT NULL,
     NAME TEXT NOT NULL,
-    PRICE REAL NOT NULL
+    PRICE REAL NOT NULL,
+    PICTURE BYTEA
 );
 
 CREATE TABLE drinks (
     ID SERIAL PRIMARY KEY NOT NULL,
     NAME TEXT NOT NULL,
-    PRICE REAL NOT NULL
+    PRICE REAL NOT NULL,
+    PICTURE BYTEA
 );
 
 CREATE TABLE sides (
     ID SERIAL PRIMARY KEY NOT NULL,
     NAME TEXT NOT NULL,
-    PRICE REAL NOT NULL
+    PRICE REAL NOT NULL,
+    PICTURE BYTEA
 );
 
 CREATE TABLE receipts (
@@ -73,8 +77,6 @@ INSERT INTO receipts (TABLEID, TOTAL, ITEMS) VALUES
 (1, 36.9, ARRAY[ROW('samgypsal',15.95,2)::item, ROW('pepsi',2.5,2)::item]),
 (1, 36.9, ARRAY[ROW('samgypsal',15.95,2)::item, ROW('pepsi',2.5,2)::item]),
 (1, 36.9, ARRAY[ROW('samgypsal',15.95,2)::item, ROW('pepsi',2.5,2)::item]);
-
-
 
 SELECT * FROM drinks;
 SELECT * FROM bbqs;

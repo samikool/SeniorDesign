@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Receipt {
 
@@ -72,7 +73,7 @@ public class Receipt {
 
     @Override
     public String toString(){
-        String str = new String();
+        String str = "Table: " + tid + "    Waiter: " + wid + "\n";
         for (int i=0; i<items.size(); i++) {
             str += quantities.get(i) + "   " + items.get(i).getName() + "   " + items.get(i).getPrice() * quantities.get(i) + "\n";
         }

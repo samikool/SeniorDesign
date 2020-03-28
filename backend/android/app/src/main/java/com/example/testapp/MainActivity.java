@@ -7,11 +7,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ButtonBarLayout;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     //Variables for this activity
     private Button sendButton;
     private Button nextButton;
@@ -19,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private Button tableButton;
     private TextView messageBox;
     private TextView responseBox;
+    private TextView tableNumberBox;
+    private TextView waiterNumberBox;
 
     //Variables for other activities
     private static Linker linker;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         sendButton = findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -59,16 +61,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        tableNumberBox = findViewById(R.id.tableNumberBox);
+        waiterNumberBox = findViewById(R.id.waiterNumberBox);
+
         messageBox = findViewById(R.id.messageBox);
 
         todoList = new ArrayList<>(16);
-
-
-
     }
 
     public void sendButton(){
-        linker.sendMessage(messageBox.getText().toString());
+        Linker.sendMessage(messageBox.getText().toString());
     }
 
     public void launchRecycle(){
@@ -77,16 +79,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void waiterMenu(){
-        linker = new Linker(004, true, todoList);
         Intent intent = new Intent(this, WaiterMenu.class);
         startActivity(intent);
+        int id = Integer.parseInt(waiterNumberBox.getText().toString());
+        new Linker(id, true, todoList);
     }
+
+
 
     public void tableMenu(){
-        linker = new Linker(2, false, todoList);
         Intent intent = new Intent(this, TableMenu.class);
         startActivity(intent);
+        int id = Integer.parseInt(tableNumberBox.getText().toString());
+        new Linker(id, false, todoList);
     }
-
-
 }

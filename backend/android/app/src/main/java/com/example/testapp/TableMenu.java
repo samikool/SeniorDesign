@@ -15,12 +15,11 @@ public class TableMenu extends AppCompatActivity {
     private Button utensilButton;
     private Receipt receipt;
 
-
     @Override
     protected void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_table_menu);
-
+        Linker.currentView = findViewById(R.id.tableLayout);
         callButton = findViewById(R.id.callButton);
         drinkButton = findViewById(R.id.drinkButton);
         bbqButton = findViewById(R.id.bbqButton);
@@ -61,6 +60,7 @@ public class TableMenu extends AppCompatActivity {
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Linker.requestCheck();
                 Linker.printReceipt();
             }
         });
