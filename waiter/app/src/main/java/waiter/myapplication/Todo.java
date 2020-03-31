@@ -19,13 +19,11 @@ public class Todo extends AppCompatActivity {
 
         Intent MENUpage = getIntent();
         int pagenumber = MENUpage.getIntExtra(MainActivity.MAIN_NUMBER, 0);
-        TextView textView1 = (TextView) findViewById(R.id.number);
-        textView1.setText(""+ pagenumber);
+        final int p2 = pagenumber;
 
         Intent MAINpage = getIntent();
         int pagenumber1 = MAINpage.getIntExtra(Activity2.MENU_NUMBER, 0);
-        TextView textView2 = (TextView) findViewById(R.id.number2);
-        textView2.setText(""+ pagenumber1);
+
 
 
         backbutton = (Button)findViewById(R.id.TodotoMenu);
@@ -33,11 +31,18 @@ public class Todo extends AppCompatActivity {
         backbutton.setOnClickListener(new View.OnClickListener(){
 
 
+
                 @Override
                 public void onClick (View v){
-                moveToActivity2();
 
-            }
+                    if(p2 == 0) {
+                        moveToActivity2();
+                    }
+                    else{
+                        moveToActivity1();
+                    }
+                }
+
 
         });
     }
@@ -53,4 +58,6 @@ public class Todo extends AppCompatActivity {
         Intent intent2 = new Intent(Todo.this, MainActivity.class);
         startActivity(intent2);
     }
+
+
 }
