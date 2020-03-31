@@ -6,35 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-    private Button button;
-    private Button table1;
+public class Todo extends AppCompatActivity {
+
+    private Button backbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_todo);
 
-        button = (Button)findViewById(R.id.MaintoMenu);
+        backbutton = (Button)findViewById(R.id.TodotoMenu);
 
-
-
-        button.setOnClickListener(new View.OnClickListener(){
+        backbutton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v){
                 moveToActivity2();
             }
         });
-
     }
 
     private void moveToActivity2(){
 
-        Intent intent = new Intent(MainActivity.this, Activity2.class);
+        Intent intent = new Intent(Todo.this, Activity2.class);
         startActivity(intent);
     }
-
-
-
 }

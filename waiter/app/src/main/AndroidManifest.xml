@@ -17,7 +17,10 @@
         </activity>
         <activity android:name=".Activity2" />
         <activity android:name=".MyTables" />
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".Settings" />
+        <activity android:name=".SyncTable" />
+        <activity android:name=".Todo" />
+        <activity android:name=".Tables"></activity>
     </application>
 
 </manifest>

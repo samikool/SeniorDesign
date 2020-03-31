@@ -11,6 +11,8 @@ public class Activity2 extends AppCompatActivity {
     private Button backbutton;
     private Button MyTablesButton;
     private Button SettingsButton;
+    private Button SyncTableButton;
+    private Button TodoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,9 @@ public class Activity2 extends AppCompatActivity {
         backbutton = (Button)findViewById(R.id.button2);
         MyTablesButton = (Button)findViewById(R.id.MyTablesMENU);
         SettingsButton = (Button)findViewById(R.id.MenutoSettings);
+        SyncTableButton = (Button)findViewById(R.id.MenutoSyncTable);
+        TodoButton = (Button)findViewById(R.id.MenutoTodo);
+
         backbutton.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -43,6 +48,22 @@ public class Activity2 extends AppCompatActivity {
                 moveToSettings();
             }
         });
+
+        SyncTableButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                moveToSyncTable();
+            }
+        });
+
+        TodoButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                moveToTodo();
+            }
+        });
     }
 
     private void moveToActivity1(){
@@ -61,5 +82,17 @@ public class Activity2 extends AppCompatActivity {
 
         Intent intent2 = new Intent(Activity2.this, MyTables.class);
         startActivity(intent2);
+    }
+
+    private void moveToSyncTable(){
+
+        Intent intent3 = new Intent(Activity2.this, SyncTable.class);
+        startActivity(intent3);
+    }
+
+    private void moveToTodo(){
+
+        Intent intent4 = new Intent(Activity2.this, Todo.class);
+        startActivity(intent4);
     }
 }

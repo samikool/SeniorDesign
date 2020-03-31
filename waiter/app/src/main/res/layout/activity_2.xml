@@ -39,14 +39,14 @@
         android:text="TODO"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button5"
+        android:id="@+id/MenutoTodo"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
+        android:id="@+id/MenutoSyncTable"
         android:text="SYNC TABLE"
         android:layout_below="@+id/MyTablesMENU"
         android:layout_alignParentStart="true"
