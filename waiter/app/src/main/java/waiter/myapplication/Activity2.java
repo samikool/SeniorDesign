@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class Activity2 extends AppCompatActivity {
+    public static final String MENU_NUMBER = "waiter.myapplication.MENU_NUMBER";
 
     private Button backbutton;
     private Button MyTablesButton;
@@ -61,7 +62,8 @@ public class Activity2 extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-                moveToTodo();
+                int num = 2;
+                moveToTodo(num);
             }
         });
     }
@@ -90,9 +92,10 @@ public class Activity2 extends AppCompatActivity {
         startActivity(intent3);
     }
 
-    private void moveToTodo(){
+    private void moveToTodo(int z){
 
         Intent intent4 = new Intent(Activity2.this, Todo.class);
+        intent4.putExtra(MENU_NUMBER, z);
         startActivity(intent4);
     }
 }

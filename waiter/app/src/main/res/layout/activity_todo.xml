@@ -17,4 +17,22 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/TodotoMenu" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TodotoMenu"
+        android:layout_toEndOf="@+id/TodotoMenu"
+        android:layout_marginTop="60dp"
+        android:id="@+id/number" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/number"
+        android:layout_marginBottom="138dp"
+        android:id="@+id/number2" />
 </RelativeLayout>

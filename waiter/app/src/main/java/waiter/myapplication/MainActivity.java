@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-                moveToTodo();
+                int num = 1;
+                moveToTodo(num);
             }
         });
 
@@ -159,9 +160,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent1);
     }
 
-    private void moveToTodo(){
+    private void moveToTodo(int z){
 
         Intent intent2= new Intent(MainActivity.this, Todo.class);
+        intent2.putExtra(MAIN_NUMBER, z);
         startActivity(intent2);
     }
 
