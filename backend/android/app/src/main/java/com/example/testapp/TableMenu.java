@@ -3,8 +3,11 @@ package com.example.testapp;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class TableMenu extends AppCompatActivity {
     private Button callButton;
@@ -14,6 +17,7 @@ public class TableMenu extends AppCompatActivity {
     private Button sideButton;
     private Button utensilButton;
     private Receipt receipt;
+    private TextView idView;
 
     @Override
     protected void onCreate(Bundle savedInstance){
@@ -26,6 +30,7 @@ public class TableMenu extends AppCompatActivity {
         checkButton = findViewById(R.id.checkButton);
         sideButton = findViewById(R.id.sideButton);
         utensilButton = findViewById(R.id.utensilButton);
+        idView = findViewById(R.id.idView);
 
         receipt = new Receipt(2);
 
@@ -71,5 +76,7 @@ public class TableMenu extends AppCompatActivity {
                 Linker.requestUtensil("fork", 2);
             }
         });
+        String claimView = "Table: " + Linker.getId();
+        idView.setText(claimView);
     }
 }

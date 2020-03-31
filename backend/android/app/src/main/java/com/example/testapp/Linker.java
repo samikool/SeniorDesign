@@ -55,6 +55,10 @@ public class Linker implements Runnable, Serializable {
         }
     }
 
+    public static int getId(){
+        return id;
+    }
+
 
     public static ArrayList<String> getTodoList(){
         return todoList;
