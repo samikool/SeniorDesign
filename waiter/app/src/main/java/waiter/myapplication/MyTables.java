@@ -6,30 +6,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-    private Button button;
+public class MyTables extends AppCompatActivity {
 
+    private Button backbutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my_tables);
 
-        button = (Button)findViewById(R.id.button1);
+        backbutton = (Button)findViewById(R.id.button7);
 
-        button.setOnClickListener(new View.OnClickListener(){
+        backbutton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v){
                 moveToActivity2();
             }
         });
-
     }
 
     private void moveToActivity2(){
 
-        Intent intent = new Intent(MainActivity.this, Activity2.class);
+        Intent intent = new Intent(MyTables.this, Activity2.class);
         startActivity(intent);
     }
-
 }
