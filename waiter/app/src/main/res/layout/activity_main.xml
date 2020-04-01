@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -10,8 +11,96 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="waiter.myapplication.MainActivity">
 
-    <TextView
+    <Button
+        android:text="MENU"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/MaintoMenu" />
+
+    <Button
+        android:text="Table1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:id="@+id/MaintoTable1"
+        android:layout_below="@+id/MaintoMenu"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Table2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/MaintoTable1"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/MaintoTable2" />
+
+    <Button
+        android:text="Table3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MaintoTable2"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/MaintoTable3" />
+
+    <Button
+        android:text="Todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MaintoTodo"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Table4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/MaintoTable1"
+        android:layout_alignEnd="@+id/MaintoTable1"
+        android:layout_marginTop="49dp"
+        android:id="@+id/MaintoTable4" />
+
+    <Button
+        android:text="Table5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MaintoTable4"
+        android:layout_alignStart="@+id/MaintoTable2"
+        android:id="@+id/MaintoTable5" />
+
+    <Button
+        android:text="Table6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MaintoTable5"
+        android:layout_alignStart="@+id/MaintoTable3"
+        android:id="@+id/MaintoTable6" />
+
+    <Button
+        android:text="Table7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/MaintoTable4"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/MaintoTable7" />
+
+    <Button
+        android:text="Table8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MaintoTable7"
+        android:layout_alignStart="@+id/MaintoTable5"
+        android:id="@+id/MaintoTable8" />
+
+    <Button
+        android:text="Table9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MaintoTable8"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/MaintoTable9" />
+
+
 </RelativeLayout>
