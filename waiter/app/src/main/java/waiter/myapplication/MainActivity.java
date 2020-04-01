@@ -1,10 +1,12 @@
 package waiter.myapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 
 public class MainActivity extends AppCompatActivity {
     public static final String MAIN_NUMBER = "waiter.myapplication.MAIN_NUMBER";
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private Button table8;
     private Button table9;
     private Button TodoButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         table8 = (Button)findViewById(R.id.MaintoTable8);
         table9 = (Button)findViewById(R.id.MaintoTable9);
         TodoButton = (Button)findViewById(R.id.MaintoTodo);
+
+        Intent tablesintent = getIntent();
+        final int Tablenumber = tablesintent.getIntExtra(Tables.TABLE_NUMBER, 0);
+        final int Tableneed = tablesintent.getIntExtra(Tables.TABLE_NEED, 0);
+
 
 
         button.setOnClickListener(new View.OnClickListener(){

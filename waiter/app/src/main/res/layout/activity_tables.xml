@@ -18,13 +18,49 @@
         android:layout_alignParentStart="true"
         android:id="@+id/TablestoMain" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
+    <Button
+        android:text="Take Order"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TablestoMain"
-        android:layout_toEndOf="@+id/TablestoMain"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="98dp"
-        android:id="@+id/Tablenumbers" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:id="@+id/TakeOrderforTable" />
+
+    <Button
+        android:text="Send Check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:id="@+id/SendChecktoTable"
+        android:layout_below="@+id/TakeOrderforTable"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Opt Out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/OptOutTable"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="49dp" />
+
+    <Button
+        android:text="Helped Table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/HelpedTable"
+        android:layout_below="@+id/MarkTable"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp" />
+
+    <Button
+        android:text="Mark Table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:id="@+id/MarkTable"
+        android:layout_below="@+id/SendChecktoTable"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
