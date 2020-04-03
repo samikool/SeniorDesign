@@ -9,13 +9,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Tables extends AppCompatActivity {
-    public static final String TABLE_NEED = "waiter.myapplication.TABLE_NEED";
-    public static final String TABLE_NUMBER = "waiter.myapplication.TABLE_NUMBER";
+    public static final String Table_Need = "waiter.myapplication.Table_Need";
 
     private Button backbutton;
     private Button SendCheckbutton;
     private Button MarkTablebutton;
+    private Button HelpTableButton;
+    private Button OptOutButton;
+    private TextView Tablenumtext;
+
+    int Send = 0;
+    int Help = 0;
+    int Mark =0;
+    int OptOut = 0;
     int tableneed = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +36,17 @@ public class Tables extends AppCompatActivity {
         backbutton = (Button)findViewById(R.id.TablestoMain);
         SendCheckbutton = (Button)findViewById(R.id.SendChecktoTable);
         MarkTablebutton = (Button)findViewById(R.id.MarkTable);
+        HelpTableButton = (Button)findViewById(R.id.HelpedTable);
+        OptOutButton = (Button)findViewById(R.id.OptOutTable);
+        Tablenumtext = (TextView)findViewById(R.id.Tablenumbertext);
+
+        Tablenumtext.setText(""+Tablenumber);
 
         backbutton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v){
-                moveToActivity1(Tablenumber, tableneed);
+                moveToActivity1(tableneed);
             }
         });
 
@@ -40,7 +54,32 @@ public class Tables extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-                SendCheckbutton.setBackgroundColor(Color.GREEN);
+
+                if(Send%2 == 0) {
+                    SendCheckbutton.setBackgroundColor(Color.GREEN);
+                }
+                else{
+                    SendCheckbutton.setBackgroundColor(Color.LTGRAY);
+
+                }
+                Send = Send+1;
+            }
+        });
+
+        HelpTableButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+
+                if(Help%2 ==0) {
+                    HelpTableButton.setBackgroundColor(Color.GREEN);
+
+                }
+                else{
+
+                    HelpTableButton.setBackgroundColor(Color.LTGRAY);
+                }
+                Help =Help+1;
             }
         });
 
@@ -48,8 +87,34 @@ public class Tables extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-                tableneed = 1;
-                MarkTablebutton.setBackgroundColor(Color.RED);
+
+                if(Mark%2 == 0){
+                    MarkTablebutton.setBackgroundColor(Color.RED);
+                    tableneed = 1;
+                }
+                else{
+                    MarkTablebutton.setBackgroundColor(Color.LTGRAY);
+                    tableneed = 0;
+
+                }
+                Mark = Mark+1;
+            }
+        });
+
+        OptOutButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+
+                if(OptOut%2 ==0) {
+                    OptOutButton.setBackgroundColor(Color.RED);
+
+                }
+                else{
+
+                    OptOutButton.setBackgroundColor(Color.LTGRAY);
+                }
+                OptOut =OptOut+1;
             }
         });
 
@@ -58,11 +123,10 @@ public class Tables extends AppCompatActivity {
 
     }
 
-    private void moveToActivity1(int y, int z){
+    private void moveToActivity1(int y){
 
         Intent intent = new Intent(Tables.this, MainActivity.class);
-        intent.putExtra(TABLE_NEED, z);
-        intent.putExtra(TABLE_NUMBER, y);
+        intent.putExtra(Table_Need, y);
         startActivity(intent);
     }
 }

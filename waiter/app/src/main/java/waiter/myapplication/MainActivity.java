@@ -42,11 +42,6 @@ public class MainActivity extends AppCompatActivity {
         table9 = (Button)findViewById(R.id.MaintoTable9);
         TodoButton = (Button)findViewById(R.id.MaintoTodo);
 
-        Intent tablesintent = getIntent();
-        final int Tablenumber = tablesintent.getIntExtra(Tables.TABLE_NUMBER, 0);
-        final int Tableneed = tablesintent.getIntExtra(Tables.TABLE_NEED, 0);
-
-
 
         button.setOnClickListener(new View.OnClickListener(){
 
