@@ -3,11 +3,12 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-public class NextActivity extends AppCompatActivity {
+public class NextActivity extends MainActivity {
 
     private TextView tv;
+    private static String outputTextFinal;
+    private int counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +17,33 @@ public class NextActivity extends AppCompatActivity {
 
         tv = (TextView) findViewById(R.id.tv);
 
-        for (int i = 0; i < 5; i++) {
-            String text = tv.getText().toString();
-            String text2 = BBQ_Activity.modelArrayList.get(i).getFood();
-            int text3 = BBQ_Activity.modelArrayList.get(i).getNumber();
-            String outputText = text + text2 + "->" + text3 + "\n";
-            tv.setText(outputText);
+        if (Menu.BBQFoods != null){
+            for (int i = 0; i < Menu.BBQFoods.size(); i++) {
+                if (Menu.BBQFoods.get(i).getNumber() > 0) {
+                    String text = tv.getText().toString();
+                    String text2 = Menu.BBQFoods.get(i).getFood();
+                    int text3 = Menu.BBQFoods.get(i).getNumber();
+                    String outputTextAppend = text + text2 + "->" + text3 + "\n";
+                    outputTextFinal = outputTextFinal + outputTextAppend;
+                }
+            }
         }
+
+        if(Menu.SideDishFoods != null){
+            for (int i=0; i < Menu.SideDishFoods.size(); i++) {
+                if (Menu.SideDishFoods.get(i).getNumber() > 0) {
+                    String text = tv.getText().toString();
+                    String text2 = Menu.SideDishFoods.get(i).getFood();
+                    int text3 = Menu.SideDishFoods.get(i).getNumber();
+                    String outputTextAppend = text + text2 + "->" + text3 + "\n";
+                    outputTextFinal = outputTextFinal + outputTextAppend;
+                }
+            }
+        }
+
+
+        tv.setText(outputTextFinal);
+
+
     }
 }

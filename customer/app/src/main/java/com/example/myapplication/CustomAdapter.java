@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
+
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
@@ -39,15 +42,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final CustomAdapter.MyViewHolder holder, int position) {
 
-        holder.tvFood.setText(BBQ_Activity.modelArrayList.get(position).getFood());
-        holder.tvnumber.setText(String.valueOf(BBQ_Activity.modelArrayList.get(position).getNumber()));
-        holder.tvDescription.setText(BBQ_Activity.modelDescriptions.get(position).getDescription());
+        holder.tvFood.setText(Menu.BBQFoods.get(position).getFood());
+        holder.tvnumber.setText(String.valueOf(Menu.BBQFoods.get(position).getNumber()));
+        holder.tvDescription.setText(Menu.BBQDescriptions.get(position).getDescription());
     }
 
     @Override
     public int getItemCount() {
-
-        return BBQ_Activity.modelArrayList.size();
+        return Menu.BBQFoods.size();
     }
 
 
@@ -84,7 +86,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) + 1;
                 tv.setText(String.valueOf(number));
-                BBQ_Activity.modelArrayList.get(getAdapterPosition()).setNumber(number);
+                Menu.BBQFoods.get(getAdapterPosition()).setNumber(number);
 
             } else if(v.getId() == btn_minus.getId()) {
 
@@ -92,7 +94,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
                 tv.setText(String.valueOf(number));
-                BBQ_Activity.modelArrayList.get(getAdapterPosition()).setNumber(number);
+                Menu.BBQFoods.get(getAdapterPosition()).setNumber(number);
             }
         }
 

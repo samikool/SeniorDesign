@@ -39,15 +39,15 @@ public class SideDishes_CustomAdapter extends RecyclerView.Adapter<SideDishes_Cu
     @Override
     public void onBindViewHolder(final SideDishes_CustomAdapter.MyViewHolder holder, int position) {
 
-        holder.tvFood.setText(SideDishes_Activity.modelArrayList.get(position).getFood());
-        holder.tvnumber.setText(String.valueOf(SideDishes_Activity.modelArrayList.get(position).getNumber()));
-        holder.tvDescription.setText(SideDishes_Activity.modelDescriptions.get(position).getDescription());
+        holder.tvFood.setText(Menu.SideDishFoods.get(position).getFood());
+        holder.tvnumber.setText(String.valueOf(Menu.SideDishFoods.get(position).getNumber()));
+        holder.tvDescription.setText(Menu.SideDishDescriptions.get(position).getDescription());
     }
 
     @Override
     public int getItemCount() {
 
-        return SideDishes_Activity.modelArrayList.size();
+        return Menu.SideDishFoods.size();
     }
 
 
@@ -84,7 +84,7 @@ public class SideDishes_CustomAdapter extends RecyclerView.Adapter<SideDishes_Cu
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) + 1;
                 tv.setText(String.valueOf(number));
-                SideDishes_Activity.modelArrayList.get(getAdapterPosition()).setNumber(number);
+                Menu.SideDishFoods.get(getAdapterPosition()).setNumber(number);
 
             } else if(v.getId() == btn_minus.getId()) {
 
@@ -92,7 +92,7 @@ public class SideDishes_CustomAdapter extends RecyclerView.Adapter<SideDishes_Cu
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
                 tv.setText(String.valueOf(number));
-                SideDishes_Activity.modelArrayList.get(getAdapterPosition()).setNumber(number);
+                Menu.SideDishFoods.get(getAdapterPosition()).setNumber(number);
             }
         }
 

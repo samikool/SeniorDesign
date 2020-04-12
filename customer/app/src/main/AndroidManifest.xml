@@ -38,12 +38,8 @@
         </activity>
 
         <activity android:name=".NextActivity"
-            android:label="@string/Next_Activity"
-            android:parentActivityName=".BBQ_Activity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.myapplication.BBQ_Activity" />
-            </activity>
+            android:label="@string/Next_Activity">
+        </activity>
 
     </application>
 

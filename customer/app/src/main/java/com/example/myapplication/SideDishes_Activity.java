@@ -12,12 +12,8 @@ import java.util.ArrayList;
 public class SideDishes_Activity extends MainActivity {
 
     private RecyclerView recyclerView;
-    public static ArrayList<Model> modelArrayList;
-    public static ArrayList<Model> modelDescriptions;
     private SideDishes_CustomAdapter customAdapter;
     private Button btnnext;
-    private String[] foodlist = new String[]{"mk", "j", "hj", "jk", "gy"};
-    private String[] foodDescription = new String[]{"Asdf","asdf","asdf","asdf","adsf"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +23,7 @@ public class SideDishes_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.sideDishRecycler);
         btnnext = (Button) findViewById(R.id.nextbutton);
 
-        modelArrayList = getModel();
-        modelDescriptions = getModelDescriptions();
+        Menu.SideDish_Submenu();
         customAdapter = new SideDishes_CustomAdapter(this);
 
         recyclerView.setAdapter(customAdapter);
@@ -42,30 +37,4 @@ public class SideDishes_Activity extends MainActivity {
             }
         });
     }
-
-    private ArrayList<Model> getModel(){
-        ArrayList<Model> list = new ArrayList<>();
-        for(int i = 0; i < 5; i++){
-
-            Model model = new Model();
-            model.setNumber(0);
-            model.setFood(foodlist[i]);
-            list.add(model);
-        }
-        return list;
-    }
-
-    private ArrayList<Model> getModelDescriptions(){
-        ArrayList<Model> list = new ArrayList<>();
-        for(int i = 0; i < 5; i++){
-
-            Model model = new Model();
-            model.setNumber(0);
-            model.setDescription(foodDescription[i]);
-            list.add(model);
-        }
-        return list;
-    }
-
-
 }
