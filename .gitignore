@@ -3,3 +3,4 @@
 out/
 .gradle/
 app/build/*
+!artifacts/server_jar.jar
