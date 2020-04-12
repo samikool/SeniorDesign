@@ -7,7 +7,6 @@ import android.widget.Button;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
 
 public class SideDishes_Activity extends MainActivity {
 
@@ -23,7 +22,10 @@ public class SideDishes_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.sideDishRecycler);
         btnnext = (Button) findViewById(R.id.nextbutton);
 
-        Menu.SideDish_Submenu();
+        if(Menu.SideDishFoods == null) {
+            Menu.SideDish_Submenu();
+        }
+
         customAdapter = new SideDishes_CustomAdapter(this);
 
         recyclerView.setAdapter(customAdapter);

@@ -23,4 +23,6 @@
     <string name="Minus_Value">Minus</string>
     <string name="FoodDescription">TextView</string>
     <string name="activity_sidedishes">Side Dishes</string>
+    <string name="activity_drinks">Drinks Activity</string>
+    <string name="activity_utensils">Utensil Activity</string>
 </resources>

@@ -9,7 +9,10 @@ public class Menu {
     public static ArrayList<Model> BBQDescriptions;
     public static ArrayList<Model> SideDishFoods;
     public static ArrayList<Model> SideDishDescriptions;
-
+    public static ArrayList<Model> Drinks;
+    public static ArrayList<Model> DrinkDescriptions;
+    public static ArrayList<Model> Utensils;
+    public static ArrayList<Model> UtensilDescriptions;
 
     private static String BBQItem1 = "Sam-Gyup-Ssal";
     private static String BBQItem2 = "Wang-Gal-Bi";
@@ -28,6 +31,13 @@ public class Menu {
     private static String[] SideFoodList = new String[]{"mk", "j", "hj", "jk", "gy"};
     private static String[] SideFoodDescription = new String[]{"Asdf","asdf","asdf","asdf","adsf"};
 
+    private static String[] DrinkList = new String[]{"mk", "j", "hj", "jk", "gy"};
+    private static String[] DrinkListDescription = new String[]{"Asdf","asdf","asdf","asdf","adsf"};
+
+    private static String[] UtensilList = new String[]{"mk", "j", "hj", "jk", "gy"};
+    private static String[] UDescriptions = new String[]{"Asdf","asdf","asdf","asdf","adsf"};
+
+
     public static void BBQ_Submenu(){
         BBQFoods = getModel(BBQFoodList);
         BBQDescriptions = getModelDescriptions(BBQFoodDescription);
@@ -38,6 +48,15 @@ public class Menu {
         SideDishDescriptions = getModelDescriptions(SideFoodDescription);
     }
 
+    public static void Drinks_Submenu(){
+        Drinks = getModel(DrinkList);
+        DrinkDescriptions = getModelDescriptions(DrinkListDescription);
+    }
+
+    public static void Utensils_Submenu(){
+        Utensils = getModel(UtensilList);
+        UtensilDescriptions = getModelDescriptions(UDescriptions);
+    }
 
     private static ArrayList<Model> getModel(String[] foodList){
         ArrayList<Model> list = new ArrayList<>();

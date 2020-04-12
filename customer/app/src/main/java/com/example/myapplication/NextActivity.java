@@ -8,7 +8,6 @@ public class NextActivity extends MainActivity {
 
     private TextView tv;
     private static String outputTextFinal;
-    private int counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +15,7 @@ public class NextActivity extends MainActivity {
         setContentView(R.layout.activity_next);
 
         tv = (TextView) findViewById(R.id.tv);
+        outputTextFinal = null;
 
         if (Menu.BBQFoods != null){
             for (int i = 0; i < Menu.BBQFoods.size(); i++) {
@@ -41,6 +41,29 @@ public class NextActivity extends MainActivity {
             }
         }
 
+        if(Menu.Drinks != null){
+            for (int i=0; i < Menu.Drinks.size(); i++) {
+                if (Menu.Drinks.get(i).getNumber() > 0) {
+                    String text = tv.getText().toString();
+                    String text2 = Menu.Drinks.get(i).getFood();
+                    int text3 = Menu.Drinks.get(i).getNumber();
+                    String outputTextAppend = text + text2 + "->" + text3 + "\n";
+                    outputTextFinal = outputTextFinal + outputTextAppend;
+                }
+            }
+        }
+
+        if(Menu.Utensils != null){
+            for (int i=0; i < Menu.Utensils.size(); i++) {
+                if (Menu.Utensils.get(i).getNumber() > 0) {
+                    String text = tv.getText().toString();
+                    String text2 = Menu.Utensils.get(i).getFood();
+                    int text3 = Menu.Utensils.get(i).getNumber();
+                    String outputTextAppend = text + text2 + "->" + text3 + "\n";
+                    outputTextFinal = outputTextFinal + outputTextAppend;
+                }
+            }
+        }
 
         tv.setText(outputTextFinal);
 

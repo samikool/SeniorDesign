@@ -37,8 +37,28 @@
                 android:value="com.example.myapplication.MainActivity" />
         </activity>
 
+        <activity android:name=".Drinks_Activity"
+            android:label="@string/activity_drinks"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.myapplication.MainActivity" />
+        </activity>
+
+        <activity android:name=".Utensils_Activity"
+            android:label="@string/activity_utensils"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.myapplication.MainActivity" />
+        </activity>
+
         <activity android:name=".NextActivity"
-            android:label="@string/Next_Activity">
+            android:label="@string/Next_Activity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.myapplication.MainActivity" />
         </activity>
 
     </application>
