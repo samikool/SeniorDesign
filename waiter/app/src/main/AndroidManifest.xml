@@ -15,6 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity2" />
+        <activity android:name=".MyTables" />
+        <activity android:name=".Settings" />
+        <activity android:name=".SyncTable" />
+        <activity android:name=".Todo" />
+        <activity android:name=".Tables" />
+        <activity android:name=".Initialize"></activity>
     </application>
 
 </manifest>

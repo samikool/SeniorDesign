@@ -1,36 +1,64 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Button CallServer, BBQOrders, SideDishes, Drinks, Utensils, Check;
+    private LayoutInflater inflater;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.content_main);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        CallServer = (Button) findViewById(R.id.Server_Call);
+        BBQOrders = (Button) findViewById(R.id.BBQ_Orders);
+        SideDishes = (Button) findViewById(R.id.Side_Dishes);
+        Drinks = (Button) findViewById(R.id.Drinks);
+        Utensils = (Button) findViewById(R.id.Utensils);
+        Check = (Button) findViewById(R.id.Check);
+
+
+
+        CallServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast myToast = Toast.makeText(getApplicationContext(), "Server Called!", Toast.LENGTH_SHORT);
+                myToast.show();
             }
         });
+
+        BBQOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BBQ_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        SideDishes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SideDishes_Activity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
+
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -51,5 +79,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

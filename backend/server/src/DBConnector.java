@@ -169,7 +169,8 @@ public class DBConnector {
         else if(category == 2)
             table = "sides";
         try{
-            String dir = "E:\\git\\seniordesign\\backend\\";
+            //String dir = "E:\\git\\seniordesign\\backend\\";
+            String dir = "C:\\Users\\Sam\\git\\seniordesign\\backend\\";
             BufferedImage image = ImageIO.read(new File(dir,"samgyupsal" + ".jpg"));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(image, "jpg", baos);
