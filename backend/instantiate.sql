@@ -52,12 +52,12 @@ INSERT INTO bbqs (NAME, PRICE) VALUES
 INSERT INTO drinks (NAME, PRICE) VALUES
 ('water', 0),
 ('pepsi', 2.5),
-('diet_pepsi', 2.5),
+`('diet_pepsi', 2.5),
 ('root_beer', 2.5),
 ('mt._dew', 2.5),
 ('lemonade', 2.5),
 ('seirra_mist', 2.5),
-('rammune', 2.5),
+('rammune', 2.5),`
 ('white_milk', 2.5),
 ('chocolate_milk', 1.5),
 ('strawberry_milk', 1.5);

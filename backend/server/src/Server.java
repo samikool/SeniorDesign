@@ -36,6 +36,7 @@ public class Server extends JFrame implements Runnable {
 
     //gui elements
     private JTextArea console;
+    private JScrollPane pane;
     private JTextField inputField;
 
     public Server(int port){
@@ -62,7 +63,10 @@ public class Server extends JFrame implements Runnable {
         receiptMap = new HashMap<>(); // <TID, Receipt>
 
         //initialize gui
+
         console = new JTextArea();
+        pane = new JScrollPane(console, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         inputField = new JTextField();
         inputField.setSize(1, 200);
         inputField.addActionListener(new ActionListener() {
@@ -73,7 +77,7 @@ public class Server extends JFrame implements Runnable {
         });
 
         this.setLayout(new BorderLayout());
-        this.add(console, BorderLayout.CENTER);
+        this.add(pane, BorderLayout.CENTER);
         this.add(inputField, BorderLayout.NORTH);
 
         this.setVisible(true);
@@ -189,7 +193,7 @@ public class Server extends JFrame implements Runnable {
             }
             else if(command.equals("order")){
                 //CID, ORDER, TID, CATEGORY, IID, QUANT, ...
-                int tid = Integer.parseInt(data.get(0));
+               int tid = Integer.parseInt(data.get(0));
 
                 String category = "";
                 Item item;
@@ -336,6 +340,7 @@ public class Server extends JFrame implements Runnable {
         for (Receipt receipt : receiptMap.values()) {
             if(receipt.getNumItems() > 0){
                 System.out.println(receipt);
+                console.append(receipt.toString());
             }
         }
     }

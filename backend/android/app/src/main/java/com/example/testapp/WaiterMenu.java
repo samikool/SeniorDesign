@@ -18,6 +18,7 @@ public class WaiterMenu extends AppCompatActivity {
     private Button closeButton;
     private Button removeButton;
     private TextView claimNumberView;
+    private TextView idView;
 
     @Override
     protected void onCreate(Bundle savedInstance){
@@ -32,6 +33,7 @@ public class WaiterMenu extends AppCompatActivity {
         closeButton = findViewById(R.id.closeButton);
         claimNumberView = findViewById(R.id.claimNumberView);
         removeButton = findViewById(R.id.removeButton);
+        idView = findViewById(R.id.idView);
 
         claimButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +60,9 @@ public class WaiterMenu extends AppCompatActivity {
 //                else if(randomNum == 3){
 //                    Linker.orderSide(0, 1, 2);
 //                }
-                Linker.orderBBQ(1, 2);
+                Linker.orderBBQ(1, 2, Integer.parseInt(claimNumberView.getText().toString()));
+                Linker.orderBBQ(4, 1, Integer.parseInt(claimNumberView.getText().toString()));
+                Linker.orderDrink(2,2, Integer.parseInt(claimNumberView.getText().toString()));
             }
         });
 
@@ -82,5 +86,8 @@ public class WaiterMenu extends AppCompatActivity {
                 Linker.voidBBq(1,2, Integer.parseInt(claimNumberView.getText().toString()));
             }
         });
+
+        String claimView = "Waiter: " + Linker.getId();
+        idView.setText(claimView);
     }
 }
