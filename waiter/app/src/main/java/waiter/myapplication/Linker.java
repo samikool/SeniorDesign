@@ -35,7 +35,7 @@ public class Linker implements Runnable, Serializable {
         sideItems = new ArrayList<>();
         q = new LinkedBlockingQueue<>();
 
-        connection = new Connection("10.0.2.2", 4044, q);
+        connection = new Connection("173.22.101.110", 4044, q);
         connection.start();
 
         ExecutorService executor = Executors.newCachedThreadPool();
