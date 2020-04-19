@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -14,6 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class Connection implements Runnable {
+    private String url;
     private String ip;
     private int port;
     private Socket socket;
@@ -24,13 +26,16 @@ public class Connection implements Runnable {
     private ServerRequester requester;
     private LinkedBlockingQueue<String> q;
 
-    public Connection(String ip, int port, LinkedBlockingQueue<String> q){
-        this.ip = ip;
+    public Connection(String url, int port, LinkedBlockingQueue<String> q){
+        //System.out.println(ip);
+        this.url = url;
+        this.ip = "";
         this.port = port;
         this.q = q;
     }
 
     public void start(){
+
         executor.execute(this);
         try{
             executor.awaitTermination(1, TimeUnit.SECONDS);
@@ -112,6 +117,7 @@ public class Connection implements Runnable {
     @Override
     public void run() {
         try{
+            this.ip = Inet4Address.getByName(url).getHostAddress();
             connect();
             initializeStreams();
             processConnection();

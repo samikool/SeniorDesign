@@ -3,10 +3,10 @@ package com.example.testapp;
 
 
 import android.view.View;
-
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +35,7 @@ public class Linker implements Runnable, Serializable {
         sideItems = new ArrayList<>();
         q = new LinkedBlockingQueue<>();
 
-        connection = new Connection("10.0.2.2", 4044, q);
+        connection = new Connection("seniordesign.now.im", 4044, q);
         connection.start();
 
         ExecutorService executor = Executors.newCachedThreadPool();

@@ -47,7 +47,7 @@ public class Server extends JFrame implements Runnable {
         this.port = port;
         requestQ = new LinkedBlockingQueue<>();
         db = new DBConnector();
-        db.insertImages();
+        //db.insertImages();
 
         //initialize executor
         this.executor = Executors.newCachedThreadPool();
@@ -109,11 +109,15 @@ public class Server extends JFrame implements Runnable {
     @Override
     public void run() {
         while (true){
-            if(!requestQ.isEmpty()){
-                //Get message and Client ID
-                String initialRequest = requestQ.poll();
+            //Get message and Client ID
+            try{
+                String initialRequest = requestQ.take();
                 handleRequest(initialRequest);
+            }catch (Exception e){
+                System.out.println(e);
             }
+
+
         }
     }
 
@@ -384,9 +388,10 @@ public class Server extends JFrame implements Runnable {
                         //System.out.println(command + " from " + clientSocket.getInetAddress());
                         String request = clientID + "," + command;
                         //System.out.println("Adding: " + request + " to Q");
-                        requestQ.offer(request);
+                        requestQ.put(request);
                     }
                     else{break;}
+                    Thread.sleep(1);
                 }catch (Exception e){
                     System.err.println(e);
                 }
@@ -412,6 +417,7 @@ public class Server extends JFrame implements Runnable {
                 input.close();
                 output.close();
                 System.out.println("Client connection " + clientID + " closed." );
+                console.append("Client connection " + clientID + " closed.\n");
             }catch (IOException e){
                 System.err.println("Error closing client connection");
                 System.err.println(e);
@@ -427,8 +433,8 @@ public class Server extends JFrame implements Runnable {
     }
 
     public static void main(String[] args){
-        DBConnector db = new DBConnector();
-        db.insertImages();
+        //DBConnector db = new DBConnector();
+        //db.insertImages();
 //        for (Item item : db.getAllBBQs()) {
 //                System.out.println(item);
 //        }
