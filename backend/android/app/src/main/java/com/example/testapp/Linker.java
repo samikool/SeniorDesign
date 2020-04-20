@@ -196,135 +196,139 @@ public class Linker implements Runnable, Serializable {
     @Override
     public void run() {
         while(true){
-            if(!q.isEmpty()){
-                //get message
-                String request = q.poll();
-                String[] parts = request.split(",");
-
-                int tid = Integer.parseInt(parts[0]);
-                String command = parts[1];
-
-                ArrayList<String> data = new ArrayList<>();
-
-                if(parts.length > 2){
-                    for (int i = 2; i < parts.length; i++) {
-                        data.add(parts[i]);
-                    }
-                }
-
-                System.out.println("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
-                if(!command.equals("items")){
-                    Snackbar.make(currentView, "Table ID: " + tid + " || Request: " + command + " || Data: " + data, Snackbar.LENGTH_LONG).show();
-                }
-
-                //general commands
-                if(command.equals("items")){
-                    processItems(data);
-                }
-                //...
-                //command is for waiter
-                else if(isWaiter){
-                    if(command.equals("call")){
-                        todoList.add("Table ID: " + tid + " || Request: " + command);
-                    }
-                    else if(command.equals("check")){
-                        todoList.add("Table ID: " + tid + " || Request: " + command);
-                    }
-                    else if(command.equals("order")){
-                        String category = "";
-                        Item item;
-                        int iid;
-                        int quant;
-                        for(int i=0; i<data.size(); i+=3){
-                            category = data.get(i);
-                            iid = Integer.parseInt(data.get(i+1));
-                            quant = Integer.parseInt(data.get(i+2));
-                            if(category.equals("drink")){
-                                item = drinkItems.get(iid);
-                                receiptMap.get(tid).addItem(item, quant);
-                            }
-                            else if(category.equals("bbq")){
-                                item = bbqItems.get(iid);
-                                receiptMap.get(tid).addItem(item, quant);
-                            }
-                            else if(category.equals("sides")){
-                                item = sideItems.get(iid);
-                                receiptMap.get(tid).addItem(item, quant);
-                            }
-                        }
-                    }
-                    else if(command.equals("chop")){
-                        todoList.add("Table ID: " + tid + " || Request: " + command);
-                    }
-                    else if(command.equals("claim")){
-                        int wid = Integer.parseInt(data.get(0));
-                        tableMap.put(tid, wid);
-                    }
-                    else if(command.equals("close")){
-                        tableMap.remove(tid);
-                    }
-                }
-                //command is for table
-                else{
-                    if(command.equals("claim")){
-                        int wid = Integer.parseInt(data.get(0));
-                        receipt = new Receipt(id,wid);
-                    }
-                    else if(command.equals("order")){
-                        String category = "";
-                        Item item;
-                        int iid;
-                        int quant;
-                        for(int i=0; i<data.size(); i+=3){
-                            category = data.get(i);
-                            iid = Integer.parseInt(data.get(i+1));
-                            quant = Integer.parseInt(data.get(i+2));
-                            if(category.equals("drink")){
-                                item = drinkItems.get(iid);
-                                receipt.addItem(item, quant);
-                            }
-                            else if(category.equals("bbq")){
-                                item = bbqItems.get(iid);
-                                receipt.addItem(item, quant);
-                            }
-                            else if(category.equals("sides")){
-                                item = sideItems.get(iid);
-                                receipt.addItem(item, quant);
-                            }
-                        }
-                    }
-                    else if(command.equals("void")){
-                        String category = "";
-                        Item item;
-                        int iid;
-                        int quant;
-                        for(int i=0; i<data.size(); i+=3){
-                            category = data.get(i);
-                            iid = Integer.parseInt(data.get(i+1));
-                            quant = Integer.parseInt(data.get(i+2));
-                            if(category.equals("drink")){
-                                item = drinkItems.get(iid);
-                                receipt.removeItem(item, quant);
-                            }
-                            else if(category.equals("bbq")){
-                                item = bbqItems.get(iid);
-                                receipt.removeItem(item, quant);
-                            }
-                            else if(category.equals("sides")){
-                                item = sideItems.get(iid);
-                                receipt.removeItem(item, quant);
-                            }
-                        }
-                    }
-                    else if(command.equals("close")){
-                        receipt = null;
-                    }
-                }
-
-
-                todoList.add("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
-
+            //get message
+            String request = "";
+            try{
+                request =  q.take();
+            }catch (Exception e){
+                System.out.println(e);
             }
+            String[] parts = request.split(",");
+
+            int tid = Integer.parseInt(parts[0]);
+            String command = parts[1];
+
+            ArrayList<String> data = new ArrayList<>();
+
+            if(parts.length > 2){
+                for (int i = 2; i < parts.length; i++) {
+                    data.add(parts[i]);
+                }
+            }
+
+            System.out.println("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
+            if(!command.equals("items")){
+                Snackbar.make(currentView, "Table ID: " + tid + " || Request: " + command + " || Data: " + data, Snackbar.LENGTH_LONG).show();
+            }
+
+            //general commands
+            if(command.equals("items")){
+                processItems(data);
+            }
+            //...
+            //command is for waiter
+            else if(isWaiter){
+                if(command.equals("call")){
+                    todoList.add("Table ID: " + tid + " || Request: " + command);
+                }
+                else if(command.equals("check")){
+                    todoList.add("Table ID: " + tid + " || Request: " + command);
+                }
+                else if(command.equals("order")){
+                    String category = "";
+                    Item item;
+                    int iid;
+                    int quant;
+                    for(int i=0; i<data.size(); i+=3){
+                        category = data.get(i);
+                        iid = Integer.parseInt(data.get(i+1));
+                        quant = Integer.parseInt(data.get(i+2));
+                        if(category.equals("drink")){
+                            item = drinkItems.get(iid);
+                            receiptMap.get(tid).addItem(item, quant);
+                        }
+                        else if(category.equals("bbq")){
+                            item = bbqItems.get(iid);
+                            receiptMap.get(tid).addItem(item, quant);
+                        }
+                        else if(category.equals("sides")){
+                            item = sideItems.get(iid);
+                            receiptMap.get(tid).addItem(item, quant);
+                        }
+                    }
+                }
+                else if(command.equals("chop")){
+                    todoList.add("Table ID: " + tid + " || Request: " + command);
+                }
+                else if(command.equals("claim")){
+                    int wid = Integer.parseInt(data.get(0));
+                    tableMap.put(tid, wid);
+                }
+                else if(command.equals("close")){
+                    tableMap.remove(tid);
+                }
+            }
+            //command is for table
+            else{
+                if(command.equals("claim")){
+                    int wid = Integer.parseInt(data.get(0));
+                    receipt = new Receipt(id,wid);
+                }
+                else if(command.equals("order")){
+                    String category = "";
+                    Item item;
+                    int iid;
+                    int quant;
+                    for(int i=0; i<data.size(); i+=3){
+                        category = data.get(i);
+                        iid = Integer.parseInt(data.get(i+1));
+                        quant = Integer.parseInt(data.get(i+2));
+                        if(category.equals("drink")){
+                            item = drinkItems.get(iid);
+                            receipt.addItem(item, quant);
+                        }
+                        else if(category.equals("bbq")){
+                            item = bbqItems.get(iid);
+                            receipt.addItem(item, quant);
+                        }
+                        else if(category.equals("sides")){
+                            item = sideItems.get(iid);
+                            receipt.addItem(item, quant);
+                        }
+                    }
+                }
+                else if(command.equals("void")){
+                    String category = "";
+                    Item item;
+                    int iid;
+                    int quant;
+                    for(int i=0; i<data.size(); i+=3){
+                        category = data.get(i);
+                        iid = Integer.parseInt(data.get(i+1));
+                        quant = Integer.parseInt(data.get(i+2));
+                        if(category.equals("drink")){
+                            item = drinkItems.get(iid);
+                            receipt.removeItem(item, quant);
+                        }
+                        else if(category.equals("bbq")){
+                            item = bbqItems.get(iid);
+                            receipt.removeItem(item, quant);
+                        }
+                        else if(category.equals("sides")){
+                            item = sideItems.get(iid);
+                            receipt.removeItem(item, quant);
+                        }
+                    }
+                }
+                else if(command.equals("close")){
+                    receipt = null;
+                }
+            }
+
+
+            todoList.add("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
+
+
         }
     }
 }
