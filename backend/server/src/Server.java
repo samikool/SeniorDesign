@@ -266,6 +266,10 @@ public class Server implements Runnable {
                         item = db.getDrink(iid);
                         receiptMap.get(tid).removeItem(item, quant);
                     }
+                    else if(category.equals("side")){
+                        item = db.getSide(iid);
+                        receiptMap.get(tid).removeItem(item, quant);
+                    }
                 }
                 int sendCID = tableToConMap.get(tid);
                 String response = tid+",void";

@@ -1,93 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_tables"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="waiter.myapplication.Tables">
 
-    <Button
-        android:text="Back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/TablestoMain" />
-
-    <Button
-        android:text="Take Order"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TablestoMain"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:id="@+id/TakeOrderforTable" />
-
-    <Button
-        android:text="Send Check"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:id="@+id/SendChecktoTable"
-        android:layout_below="@+id/TakeOrderforTable"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Opt Out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/OptOutTable"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="49dp" />
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginBottom="1dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp">
 
-    <Button
-        android:text="Mark Table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:id="@+id/MarkTable"
-        android:layout_below="@+id/SendChecktoTable"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/Table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="16dp"
+            android:text="Table"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/TablestoMain"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:text="Helped Table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/HelpedTable"
-        android:layout_marginTop="27dp"
-        android:layout_below="@+id/MarkTable"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/Tablenumbertext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/Table"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="57dp"
+            android:text="1"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/ClaimTable"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/Table"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/Table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_toEndOf="@+id/TablestoMain"
-        android:text="Table" />
+        <Button
+            android:id="@+id/TablestoMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="Back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/Tablenumbertext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/Table"
-        android:layout_alignBottom="@+id/Table"
-        android:layout_marginStart="11dp"
-        android:layout_marginBottom="0dp"
-        android:layout_toEndOf="@+id/Table"
-        android:text="1" />
+        <Button
+            android:id="@+id/ClaimTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:text="Claim"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/ClaimTable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_toEndOf="@+id/Tablenumbertext"
-        android:text="Claim" />
+        <Button
+            android:id="@+id/HelpedTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Helped Table"
+            app:layout_constraintTop_toBottomOf="@+id/MarkTable"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <Button
+            android:id="@+id/MarkTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Mark Table"
+            app:layout_constraintTop_toBottomOf="@+id/SendChecktoTable"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <Button
+            android:id="@+id/SendChecktoTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="See Check"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TakeOrderforTable" />
+
+        <Button
+            android:id="@+id/TakeOrderforTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="Take Order"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Table" />
+
+        <Button
+            android:id="@+id/OptOutTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Opt Out"
+            app:layout_constraintTop_toBottomOf="@+id/HelpedTable"
+            tools:layout_editor_absoluteX="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

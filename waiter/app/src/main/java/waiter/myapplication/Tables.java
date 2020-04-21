@@ -7,6 +7,7 @@ import android.graphics.Color;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -82,14 +83,8 @@ public class Tables extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                if(Send%2 == 0) {
-                    SendCheckbutton.setBackgroundColor(Color.GREEN);
-                }
-                else{
-                    SendCheckbutton.setBackgroundColor(Color.LTGRAY);
-
-                }
-                Send = Send+1;
+                Intent intent = new Intent(Tables.this, DisplayReceipt.class);
+                startActivity(intent);
             }
         });
 

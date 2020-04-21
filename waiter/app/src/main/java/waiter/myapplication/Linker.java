@@ -22,7 +22,7 @@ public class Linker implements Runnable, Serializable {
     private static int id;
     private static boolean isWaiter;
     private static Receipt receipt;
-    private static HashMap<Integer, Receipt> receiptMap;
+    private static HashMap<Integer, Receipt> receiptMap; //<tid,TableReceipt>
     private static HashMap<Integer, Integer> tableMap;
     private static View currentView;
 
@@ -62,6 +62,10 @@ public class Linker implements Runnable, Serializable {
     }
     public static ArrayList<Item> getSideItems() {
         return sideItems;
+    }
+
+    public static Receipt getTableReceipt(int tid){
+        return receiptMap.get(tid);
     }
 
     public static void setCurrentView(View v){
@@ -139,6 +143,19 @@ public class Linker implements Runnable, Serializable {
         sendMessage("chop,"+utensil+","+quant);
     }
 
+    public static void voidItem(Item item, int quant, int tid){
+        int iid = item.getId();
+        if(item.getItemType() == ItemType.bbq){
+            voidBBq(iid, quant, tid);
+        }
+        else if(item.getItemType() == ItemType.drink){
+            voidDrink(iid, quant, tid);
+        }
+        else if(item.getItemType() == ItemType.side){
+            voidSide(iid, quant, tid);
+        }
+    }
+
     public static void voidBBq(int iid, int quant, int tid){
         sendMessage("void,"+tid+",bbq,"+iid+","+quant);
         receiptMap.get(tid).addItem(bbqItems.get(iid), quant);
@@ -149,7 +166,7 @@ public class Linker implements Runnable, Serializable {
         receiptMap.get(tid).addItem(drinkItems.get(iid), quant);
     }
 
-    public static void voidUtensil(int iid, int quant, int tid){
+    public static void voidSide(int iid, int quant, int tid){
         sendMessage("void,"+tid+",side,"+iid+","+quant);
         receiptMap.get(tid).addItem(sideItems.get(iid), quant);
     }
