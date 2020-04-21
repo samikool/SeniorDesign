@@ -1,7 +1,6 @@
 package waiter.myapplication.ui.main;
 
 import android.content.Context;
-import android.view.Menu;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -9,8 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import waiter.myapplication.Linker;
-import waiter.myapplication.MenuList;
+import waiter.myapplication.BackendClasses.Linker;
+import waiter.myapplication.DisplayMenu.MenuList;
 import waiter.myapplication.R;
 
 /**

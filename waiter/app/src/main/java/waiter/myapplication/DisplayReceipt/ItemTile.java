@@ -1,4 +1,4 @@
-package waiter.myapplication;
+package waiter.myapplication.DisplayReceipt;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -9,12 +9,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+
+import waiter.myapplication.BackendClasses.Item;
+import waiter.myapplication.BackendClasses.Linker;
+import waiter.myapplication.R;
+import waiter.myapplication.Tables;
 
 
 /**
@@ -70,61 +74,64 @@ public class ItemTile extends Fragment {
         priceView = getView().findViewById(R.id.priceView);
         layout = getView().findViewById(R.id.itemBackground);
 
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                System.out.println("Hello");
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        if(DisplayReceipt.isVoiding()){
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    System.out.println("Hello");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                builder.setTitle("Void " + item.getName() + "?");
+                    builder.setTitle("Void " + item.getName() + "?");
 
-                builder.setMessage("Select the correct amount of the item then click done.");
+                    builder.setMessage("Select the correct amount of the item then click done.");
 
-                final VoidItemTile frag = VoidItemTile.newInstance(item, quantity);
-                getChildFragmentManager().beginTransaction().add(frag, "frag1").commitNow();
+                    final VoidItemTile frag = VoidItemTile.newInstance(item, quantity);
+                    getChildFragmentManager().beginTransaction().add(frag, "frag1").commitNow();
 
-                try{
-                    Thread.sleep(250);
-                }catch (Exception e){
-                    e.printStackTrace();
+                    try{
+                        Thread.sleep(250);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    builder.setView(frag.getView());
+
+                    builder.setPositiveButton(R.string.void_yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int quantity = frag.getQuantity();
+                            int currentQuantity = frag.getStartQuant();
+                            total = item.getPrice() * quantity;
+
+                            quantityView.setText(Integer.toString(quantity));
+                            priceView.setText(priceFormat.format(total));
+
+                            Linker.voidItem(item, currentQuantity-quantity, Tables.getTablenumber());
+                        }
+                    });
+
+                    builder.setNegativeButton(R.string.void_no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            quantity = frag.getQuantity();
+                            int correctQuantity = frag.getStartQuant();
+                            DisplayReceipt.getReceipt().addItem(item, correctQuantity-quantity);
+
+                            quantity = correctQuantity;
+                            System.out.println(DisplayReceipt.getReceipt());
+
+                            //user clicked no
+                        }
+                    });
+
+
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
+            });
+        }
 
-                builder.setView(frag.getView());
-
-                builder.setPositiveButton(R.string.void_yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int quantity = frag.getQuantity();
-                        int currentQuantity = frag.getStartQuant();
-                        total = item.getPrice() * quantity;
-
-                        quantityView.setText(Integer.toString(quantity));
-                        priceView.setText(priceFormat.format(total));
-
-                        Linker.voidItem(item, currentQuantity-quantity, Tables.getTablenumber());
-                    }
-                });
-
-                builder.setNegativeButton(R.string.void_no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        quantity = frag.getQuantity();
-                        int correctQuantity = frag.getStartQuant();
-                        DisplayReceipt.getReceipt().addItem(item, correctQuantity-quantity);
-
-                        quantity = correctQuantity;
-                        System.out.println(DisplayReceipt.getReceipt());
-
-                        //user clicked no
-                    }
-                });
-
-
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
 
         nameView.setText(item.getName());
         quantityView.setText(Integer.toString(quantity));

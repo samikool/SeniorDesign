@@ -83,8 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Mark Table"
-            app:layout_constraintTop_toBottomOf="@+id/SendChecktoTable"
-            tools:layout_editor_absoluteX="8dp" />
+            app:layout_constraintTop_toBottomOf="@+id/voidItemsButton"
+            tools:layout_editor_absoluteX="16dp" />
 
         <Button
             android:id="@+id/SendChecktoTable"
@@ -96,6 +96,16 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TakeOrderforTable" />
+
+        <Button
+            android:id="@+id/voidItemsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Void Items"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SendChecktoTable" />
 
         <Button
             android:id="@+id/TakeOrderforTable"

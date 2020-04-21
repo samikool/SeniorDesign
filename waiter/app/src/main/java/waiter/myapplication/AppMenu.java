@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import waiter.myapplication.BackendClasses.Linker;
+
 public class AppMenu extends AppCompatActivity {
     public static final String MENU_NUMBER = "waiter.myapplication.MENU_NUMBER";
 

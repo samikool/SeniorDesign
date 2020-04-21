@@ -1,4 +1,4 @@
-package waiter.myapplication;
+package waiter.myapplication.BackendClasses;
 
 import java.util.ArrayList;
 

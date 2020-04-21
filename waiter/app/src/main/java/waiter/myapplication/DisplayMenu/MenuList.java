@@ -1,4 +1,4 @@
-package waiter.myapplication;
+package waiter.myapplication.DisplayMenu;
 
 import android.os.Bundle;
 
@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+
+import waiter.myapplication.BackendClasses.Item;
+import waiter.myapplication.BackendClasses.Linker;
+import waiter.myapplication.R;
+import waiter.myapplication.BackendClasses.Receipt;
 
 
 /**

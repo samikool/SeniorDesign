@@ -11,13 +11,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DisplayReceipt"></activity>
+        <activity android:name=".DisplayReceipt.DisplayReceipt"></activity>
         <activity
-            android:name=".Order"
+            android:name=".DisplayMenu.Order"
             android:label="@string/title_activity_order"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Order"
+            android:name=".DisplayMenu.Order"
             android:label="@string/title_activity_order"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">

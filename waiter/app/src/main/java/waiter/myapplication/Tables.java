@@ -7,13 +7,15 @@ import android.graphics.Color;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
+
+import waiter.myapplication.BackendClasses.Linker;
+import waiter.myapplication.DisplayMenu.Order;
+import waiter.myapplication.DisplayReceipt.DisplayReceipt;
 
 public class Tables extends AppCompatActivity {
     public static final String Table_Need = "waiter.myapplication.Table_Need";
@@ -21,7 +23,8 @@ public class Tables extends AppCompatActivity {
     private Button backbutton;
     private Button claimButton;
     private Button orderButton;
-    private Button SendCheckbutton;
+    private Button seeCheckButton;
+    private Button voidItemsButton;
     private Button MarkTablebutton;
     private Button HelpTableButton;
     private Button OptOutButton;
@@ -46,7 +49,8 @@ public class Tables extends AppCompatActivity {
         backbutton = (Button)findViewById(R.id.TablestoMain);
         claimButton = (Button)findViewById(R.id.ClaimTable);
         orderButton = findViewById(R.id.TakeOrderforTable);
-        SendCheckbutton = (Button)findViewById(R.id.SendChecktoTable);
+        seeCheckButton = (Button)findViewById(R.id.SendChecktoTable);
+        voidItemsButton = findViewById(R.id.voidItemsButton);
         MarkTablebutton = (Button)findViewById(R.id.MarkTable);
         HelpTableButton = (Button)findViewById(R.id.HelpedTable);
         OptOutButton = (Button)findViewById(R.id.OptOutTable);
@@ -78,12 +82,22 @@ public class Tables extends AppCompatActivity {
             }
         });
 
-        SendCheckbutton.setOnClickListener(new View.OnClickListener(){
+        seeCheckButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v){
 
                 Intent intent = new Intent(Tables.this, DisplayReceipt.class);
+                intent.putExtra("void", false);
+                startActivity(intent);
+            }
+        });
+
+        voidItemsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Tables.this, DisplayReceipt.class);
+                intent.putExtra("void", true);
                 startActivity(intent);
             }
         });

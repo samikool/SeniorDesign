@@ -1,24 +1,32 @@
-package waiter.myapplication;
+package waiter.myapplication.DisplayReceipt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+import waiter.myapplication.BackendClasses.Item;
+import waiter.myapplication.BackendClasses.Linker;
+import waiter.myapplication.R;
+import waiter.myapplication.BackendClasses.Receipt;
+import waiter.myapplication.Tables;
 
 public class DisplayReceipt extends AppCompatActivity {
 
     private LinearLayout itemContainer;
     private static Receipt receipt;
     private int Tablenumber;
+    private static boolean voiding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_receipt);
         itemContainer = findViewById(R.id.itemContainer);
+        voiding = getIntent().getBooleanExtra("void", false);
     }
+
+    public static boolean isVoiding(){return voiding;}
 
     @Override
     protected void onResume() {

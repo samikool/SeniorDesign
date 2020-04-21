@@ -1,4 +1,4 @@
-package waiter.myapplication;
+package waiter.myapplication.BackendClasses;
 
 
 import android.view.View;
@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import waiter.myapplication.ItemType;
 
 public class Linker implements Runnable, Serializable {
     private static LinkedBlockingQueue<String> q;
