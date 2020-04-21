@@ -28,7 +28,7 @@ public class Settings extends AppCompatActivity {
 
     private void moveToActivity2(){
 
-        Intent intent = new Intent(Settings.this, Activity2.class);
+        Intent intent = new Intent(Settings.this, AppMenu.class);
         startActivity(intent);
     }
 }

@@ -45,7 +45,7 @@ public class SyncTable extends AppCompatActivity {
     }
     private void moveToActivity2(){
 
-        Intent intent = new Intent(SyncTable.this, Activity2.class);
+        Intent intent = new Intent(SyncTable.this, AppMenu.class);
         startActivity(intent);
     }
 

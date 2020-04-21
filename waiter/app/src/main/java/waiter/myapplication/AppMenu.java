@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Activity2 extends AppCompatActivity {
+public class AppMenu extends AppCompatActivity {
     public static final String MENU_NUMBER = "waiter.myapplication.MENU_NUMBER";
 
     private Button backbutton;
@@ -18,7 +18,7 @@ public class Activity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_2);
+        setContentView(R.layout.activity_app_menu);
 
         backbutton = (Button)findViewById(R.id.button2);
         MyTablesButton = (Button)findViewById(R.id.MyTablesMENU);
@@ -76,31 +76,31 @@ public class Activity2 extends AppCompatActivity {
 
     private void moveToActivity1(){
 
-        Intent intent = new Intent(Activity2.this, MainActivity.class);
+        Intent intent = new Intent(AppMenu.this, MainActivity.class);
         startActivity(intent);
     }
 
     private void moveToMyTables(){
 
-        Intent intent1 = new Intent(Activity2.this, MyTables.class);
+        Intent intent1 = new Intent(AppMenu.this, MyTables.class);
         startActivity(intent1);
     }
 
     private void moveToSettings(){
 
-        Intent intent2 = new Intent(Activity2.this, MyTables.class);
+        Intent intent2 = new Intent(AppMenu.this, MyTables.class);
         startActivity(intent2);
     }
 
     private void moveToSyncTable(){
 
-        Intent intent3 = new Intent(Activity2.this, SyncTable.class);
+        Intent intent3 = new Intent(AppMenu.this, SyncTable.class);
         startActivity(intent3);
     }
 
     private void moveToTodo(int z){
 
-        Intent intent4 = new Intent(Activity2.this, Todo.class);
+        Intent intent4 = new Intent(AppMenu.this, Todo.class);
         intent4.putExtra(MENU_NUMBER, z);
         startActivity(intent4);
     }

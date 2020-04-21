@@ -1,5 +1,6 @@
 package waiter.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -38,10 +39,12 @@ public class Order extends AppCompatActivity {
                 Receipt receipt = MenuList.getReceipt();
                 Linker.orderItems(receipt);
                 receipt.removeAllItems();
-                Snackbar.make(view, "Items ordered for Table: " + tableNumber, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
                 Intent intent = new Intent(Order.this, Tables.class);
+                intent.putExtra("ordered", true);
                 intent.putExtra("Tablenumber", tableNumber);
+
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });

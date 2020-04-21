@@ -27,7 +27,7 @@ public class MyTables extends AppCompatActivity {
 
     private void moveToActivity2(){
 
-        Intent intent = new Intent(MyTables.this, Activity2.class);
+        Intent intent = new Intent(MyTables.this, AppMenu.class);
         startActivity(intent);
     }
 }

@@ -1,12 +1,18 @@
 package waiter.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 public class Tables extends AppCompatActivity {
     public static final String Table_Need = "waiter.myapplication.Table_Need";
@@ -26,6 +32,8 @@ public class Tables extends AppCompatActivity {
     int OptOut = 0;
     int tableneed = 0;
     private static int Tablenumber;
+
+    private static final int ORDERED = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +57,7 @@ public class Tables extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-                moveToActivity1(tableneed);
+                finish();
             }
         });
 
@@ -65,7 +73,7 @@ public class Tables extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Tables.this, Order.class);
                 intent.putExtra("Tablenumber", Tablenumber);
-                startActivity(intent);
+                startActivityForResult(intent, ORDERED);
             }
         });
 
@@ -147,15 +155,29 @@ public class Tables extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ORDERED && resultCode == Activity.RESULT_OK){
+            Linker.setCurrentView(this.findViewById(R.id.activity_tables));
+            boolean ordered = data.getBooleanExtra("ordered", false);
+            int tableNumber = data.getIntExtra("Tablenumber", 0);
+
+            if(tableNumber != 0){
+                Tablenumber = tableNumber;
+            }
+
+            if(ordered){
+                Snackbar.make(this.findViewById(R.id.activity_tables), "Items ordered for Table: " + Tablenumber, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+            Tablenumtext.setText(""+Tablenumber);
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Linker.setCurrentView(this.findViewById(R.id.activity_tables));
     }
 
-    private void moveToActivity1(int y){
-
-        Intent intent = new Intent(Tables.this, MainActivity.class);
-        intent.putExtra(Table_Need, y);
-        startActivity(intent);
-    }
 }

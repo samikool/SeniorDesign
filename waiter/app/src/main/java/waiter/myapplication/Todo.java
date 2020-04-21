@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class Todo extends AppCompatActivity {
 
@@ -22,7 +21,7 @@ public class Todo extends AppCompatActivity {
         final int p2 = pagenumber;
 
         Intent MAINpage = getIntent();
-        int pagenumber1 = MAINpage.getIntExtra(Activity2.MENU_NUMBER, 0);
+        int pagenumber1 = MAINpage.getIntExtra(AppMenu.MENU_NUMBER, 0);
 
 
 
@@ -49,7 +48,7 @@ public class Todo extends AppCompatActivity {
 
     private void moveToActivity2(){
 
-        Intent intent = new Intent(Todo.this, Activity2.class);
+        Intent intent = new Intent(Todo.this, AppMenu.class);
         startActivity(intent);
     }
 

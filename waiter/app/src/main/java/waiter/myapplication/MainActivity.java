@@ -1,7 +1,7 @@
 package waiter.myapplication;
 
 import android.content.Intent;
-import android.graphics.Color;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void moveToActivity2(){
-        Intent intent = new Intent(MainActivity.this, Activity2.class);
+        Intent intent = new Intent(MainActivity.this, AppMenu.class);
         startActivity(intent);
     }
 
