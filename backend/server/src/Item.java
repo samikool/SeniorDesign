@@ -9,11 +9,28 @@ public class Item {
     private int id;
     private double price;
     private String name;
+    private String displayName;
+    private ItemType itemType;
     private String encodedImage;
     private BufferedImage image;
 
     public Item(int id, String name, double price){
         this.name = name;
+        displayName = "";
+        for(int i=0; i<name.length(); i++){
+            if(i==0){
+                displayName += name.substring(0,1).toUpperCase();
+            }
+            else if(name.charAt(i) == '_'){
+                displayName += " ";
+            }
+            else if(i !=0 && name.charAt(i-1) == 95){
+                displayName += name.substring(i, i+1).toUpperCase();
+            }
+            else{
+                displayName+= name.charAt(i);
+            }
+        }
         this.id = id;
         this.price = price;
     }
@@ -34,6 +51,10 @@ public class Item {
 
     }
 
+    public ItemType getItemType(){return itemType;}
+
+    public ItemType setItemType(ItemType type){return this.itemType = type;}
+
     public double getPrice() {
         return price;
     }
@@ -43,7 +64,7 @@ public class Item {
     }
 
     public String getName() {
-        return name;
+        return displayName;
     }
 
     public void setName(String name) {

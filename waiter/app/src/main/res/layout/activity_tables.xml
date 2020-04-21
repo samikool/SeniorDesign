@@ -64,23 +64,30 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="Table"
+        android:id="@+id/Table"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:id="@+id/Table"
-        android:layout_above="@+id/TakeOrderforTable"
+        android:layout_marginStart="76dp"
         android:layout_toEndOf="@+id/TablestoMain"
-        android:layout_marginBottom="8dp" />
+        android:text="Table" />
 
     <TextView
+        android:id="@+id/Tablenumbertext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Tablenumbertext"
-        android:text="1"
-        android:layout_marginStart="11dp"
         android:layout_alignBaseline="@+id/Table"
         android:layout_alignBottom="@+id/Table"
-        android:layout_toEndOf="@+id/Table" />
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/Table"
+        android:text="1" />
+
+    <Button
+        android:id="@+id/ClaimTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_toEndOf="@+id/Tablenumbertext"
+        android:text="Claim" />
 
 </RelativeLayout>

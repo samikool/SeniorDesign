@@ -68,6 +68,12 @@ public class Activity2 extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Linker.setCurrentView(findViewById(R.id.activity_2));
+    }
+
     private void moveToActivity1(){
 
         Intent intent = new Intent(Activity2.this, MainActivity.class);

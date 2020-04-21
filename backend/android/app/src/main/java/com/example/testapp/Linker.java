@@ -4,9 +4,7 @@ package com.example.testapp;
 
 import android.view.View;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.io.Serializable;
-import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;

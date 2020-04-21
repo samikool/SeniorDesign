@@ -11,8 +11,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-
-public class Server extends JFrame implements Runnable {
+public class Server implements Runnable {
+//public class Server extends JFrame implements Runnable {
     //connection variables
     private int port;
     private ServerSocket serverSocket;
@@ -34,20 +34,27 @@ public class Server extends JFrame implements Runnable {
     //data structures for database data
     HashMap<Integer, Receipt> receiptMap;
 
-    //gui elements
-    private JTextArea console;
-    private JScrollPane pane;
-    private JTextField inputField;
+//    //gui elements
+//    private JTextArea console;
+//    private JScrollPane pane;
+//    private JTextField inputField;
+
+    private ArrayList<Item> drinks;
+    private ArrayList<Item> bbqs;
+    private ArrayList<Item> sides;
 
     public Server(int port){
-        super("Server");
+        //super("Server");
         //initialize connection variables
         this.connectionHandlers = new HashMap<>();
         this.clientsConnected = 0;
         this.port = port;
         requestQ = new LinkedBlockingQueue<>();
         db = new DBConnector();
-        //db.insertImages();
+        db.insertImages();
+        drinks = db.getAllDrinks();
+        bbqs = db.getAllBBQs();
+        sides = db.getAllSides();
 
         //initialize executor
         this.executor = Executors.newCachedThreadPool();
@@ -64,26 +71,29 @@ public class Server extends JFrame implements Runnable {
 
         //initialize gui
 
-        console = new JTextArea();
-        pane = new JScrollPane(console, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        inputField = new JTextField();
-        inputField.setSize(1, 200);
-        inputField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String data = inputField.getText();
-            }
-        });
-
-        this.setLayout(new BorderLayout());
-        this.add(pane, BorderLayout.CENTER);
-        this.add(inputField, BorderLayout.NORTH);
-
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800,400);
+//        console = new JTextArea();
+//        console.setLineWrap(true);
+//        pane = new JScrollPane(console, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//
+//        inputField = new JTextField();
+//        inputField.setSize(1, 200);
+//        inputField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String data = inputField.getText();
+//            }
+//        });
+//
+//        this.setLayout(new BorderLayout());
+//        this.add(pane, BorderLayout.CENTER);
+//        this.add(inputField, BorderLayout.NORTH);
+//
+//        this.setVisible(true);
+//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        this.setSize(800,400);
     }
+
+
 
     public void start() throws IOException{
         serverSocket = new ServerSocket(port,512);
@@ -105,6 +115,15 @@ public class Server extends JFrame implements Runnable {
             }
         }
     }
+
+//    public void appendToConsole(String text){
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                console.append(text);
+//            }
+//        });
+//    }
 
     @Override
     public void run() {
@@ -156,9 +175,7 @@ public class Server extends JFrame implements Runnable {
         }
         else if(command.equals("items")){
             //ITEMS
-            ArrayList<Item> drinks = db.getAllDrinks();
-            ArrayList<Item> bbqs = db.getAllBBQs();
-            ArrayList<Item> sides = db.getAllSides();
+
 
             String drinkString = "0,items,drink";
             for (Item item : drinks){
@@ -336,7 +353,7 @@ public class Server extends JFrame implements Runnable {
             }
         }
         System.out.println("Client ID: " + cid + " || Request: " + command + " || Data: " + data + " || isWaiter: " + connectionHandlers.get(cid).isWaiter);
-        console.append("Client ID: " + cid + " || Request: " + command + " || Data: " + data + " || isWaiter: " + connectionHandlers.get(cid).isWaiter + "\n");
+//        appendToConsole("Client ID: " + cid + " || Request: " + command + " || Data: " + data + " || isWaiter: " + connectionHandlers.get(cid).isWaiter + "\n");
         printReceipt();
     }
 
@@ -344,7 +361,7 @@ public class Server extends JFrame implements Runnable {
         for (Receipt receipt : receiptMap.values()) {
             if(receipt.getNumItems() > 0){
                 System.out.println(receipt);
-                console.append(receipt.toString());
+//                appendToConsole(receipt.toString());
             }
         }
     }
@@ -402,7 +419,11 @@ public class Server extends JFrame implements Runnable {
         public void sendMessage(String message){
             try{
                 System.out.println("Sending: " + message);
-                console.append("Sending ClientID: " + this.clientID + " " + message + "\n");
+                String[] test = message.split(",");
+//                if(!test[1].equals("items")) {
+//                    appendToConsole("Sending ClientID: " + this.clientID + " " + message + "\n");
+//                }
+                //appendToConsole("Sending ClientID: " + this.clientID + " " + message + "\n");
                 output.write(message+"\n");
                 output.flush();
             }catch (IOException e){
@@ -413,11 +434,21 @@ public class Server extends JFrame implements Runnable {
         public void closeConnection(){
             System.out.println("Attempting to close connection with client: " + clientID);
             try{
+                if(isWaiter){
+                    int wid = conToWaiterMap.get(clientID);
+                    conToWaiterMap.remove(clientID);
+                    waiterToConMap.remove(wid);
+                }else{
+                    int tid = conToTableMap.get(clientID);
+                    conToTableMap.remove(clientID);
+                    tableToConMap.remove(tid);
+                }
                 clientSocket.close();
                 input.close();
                 output.close();
+                connectionHandlers.remove(clientID);
                 System.out.println("Client connection " + clientID + " closed." );
-                console.append("Client connection " + clientID + " closed.\n");
+//                appendToConsole("Client connection " + clientID + " closed.\n");
             }catch (IOException e){
                 System.err.println("Error closing client connection");
                 System.err.println(e);

@@ -1,26 +1,39 @@
 package waiter.myapplication;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
-
+import java.util.Base64;
 
 public class Item {
     private int id;
     private double price;
     private String name;
+    private String displayName;
     private String encodedImage;
     private Bitmap image;
+    private ItemType itemType;
 
     public Item(){
-        id = -1;
-        price = 0;
-        name = null;
-        encodedImage = null;
+        this.id=-1;
+        this.name=null;
     }
 
     public Item(int id, String name, double price){
         this.name = name;
+        displayName = "";
+        for(int i=0; i<name.length(); i++){
+            if(i==0){
+                displayName += name.substring(0,1).toUpperCase();
+            }
+            else if(name.charAt(i) == '_'){
+                displayName += " ";
+            }
+            else if(i !=0 && name.charAt(i-1) == 95){
+                displayName += name.substring(i, i+1).toUpperCase();
+            }
+            else{
+                displayName+= name.charAt(i);
+            }
+        }
         this.id = id;
         this.price = price;
     }
@@ -28,7 +41,7 @@ public class Item {
     public Item(int id, String name, double price, String encodedImage){
         this(id, name, price);
         this.encodedImage = encodedImage;
-        byte[] imageBytes = Base64.decode(encodedImage, Base64.DEFAULT);
+        byte[] imageBytes = Base64.getDecoder().decode(encodedImage);
         //java
 //        try{
 //            image = ImageIO.read(new ByteArrayInputStream(imageBytes));
@@ -37,12 +50,13 @@ public class Item {
 //        }
         //android
         image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        //image = Bitmap.createScaledBitmap(image, image.getWidth(), image.getHeight(),false);
+        image = Bitmap.createScaledBitmap(image, image.getWidth(), image.getHeight(),false);
+
     }
 
-    public Bitmap getImage() {return image;}
+    public ItemType getItemType(){return itemType;}
 
-    public void setImage(Bitmap image) {this.image = image;}
+    public ItemType setItemType(ItemType type){return this.itemType = type;}
 
     public double getPrice() {
         return price;
@@ -53,7 +67,7 @@ public class Item {
     }
 
     public String getName() {
-        return name;
+        return displayName;
     }
 
     public void setName(String name) {
@@ -95,3 +109,5 @@ public class Item {
     }
 
 }
+
+

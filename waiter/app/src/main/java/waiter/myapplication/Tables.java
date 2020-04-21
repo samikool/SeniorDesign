@@ -12,6 +12,8 @@ public class Tables extends AppCompatActivity {
     public static final String Table_Need = "waiter.myapplication.Table_Need";
 
     private Button backbutton;
+    private Button claimButton;
+    private Button orderButton;
     private Button SendCheckbutton;
     private Button MarkTablebutton;
     private Button HelpTableButton;
@@ -23,17 +25,18 @@ public class Tables extends AppCompatActivity {
     int Mark =0;
     int OptOut = 0;
     int tableneed = 0;
-
-
+    private static int Tablenumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
         Intent intent1 = getIntent();
-        final int Tablenumber = intent1.getIntExtra(MainActivity.MAIN_NUMBER, 0);
+        Tablenumber = intent1.getIntExtra(MainActivity.MAIN_NUMBER, 0);
 
         backbutton = (Button)findViewById(R.id.TablestoMain);
+        claimButton = (Button)findViewById(R.id.ClaimTable);
+        orderButton = findViewById(R.id.TakeOrderforTable);
         SendCheckbutton = (Button)findViewById(R.id.SendChecktoTable);
         MarkTablebutton = (Button)findViewById(R.id.MarkTable);
         HelpTableButton = (Button)findViewById(R.id.HelpedTable);
@@ -47,6 +50,22 @@ public class Tables extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 moveToActivity1(tableneed);
+            }
+        });
+
+        claimButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Linker.claim(Tablenumber);
+            }
+        });
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Tables.this, Order.class);
+                intent.putExtra("Tablenumber", Tablenumber);
+                startActivity(intent);
             }
         });
 
@@ -121,6 +140,16 @@ public class Tables extends AppCompatActivity {
 
 
 
+    }
+
+    public static int getTablenumber() {
+        return Tablenumber;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Linker.setCurrentView(this.findViewById(R.id.activity_tables));
     }
 
     private void moveToActivity1(int y){

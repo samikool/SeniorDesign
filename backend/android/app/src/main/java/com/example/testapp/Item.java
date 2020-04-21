@@ -10,6 +10,7 @@ public class Item {
     private double price;
     private String name;
     private String encodedImage;
+    private String description;
     private Bitmap image;
 
     public Item(){

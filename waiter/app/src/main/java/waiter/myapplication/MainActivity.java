@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Linker linker = new Linker(2,true, new ArrayList<String>());
+        new Linker(2,true, new ArrayList<String>());
 
         button = (Button)findViewById(R.id.MaintoMenu);
         table1 = (Button)findViewById(R.id.MaintoTable1);
@@ -149,13 +149,15 @@ public class MainActivity extends AppCompatActivity {
                 moveToTables(num);
             }
         });
+    }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Linker.setCurrentView(findViewById(R.id.activity_main));
     }
 
     private void moveToActivity2(){
-
         Intent intent = new Intent(MainActivity.this, Activity2.class);
         startActivity(intent);
     }

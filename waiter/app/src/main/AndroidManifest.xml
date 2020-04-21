@@ -11,6 +11,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".Order"
+            android:label="@string/title_activity_order"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Order"
+            android:label="@string/title_activity_order"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +32,7 @@
         <activity android:name=".SyncTable" />
         <activity android:name=".Todo" />
         <activity android:name=".Tables" />
-        <activity android:name=".Initialize"></activity>
+        <activity android:name=".Initialize" />
     </application>
 
 </manifest>

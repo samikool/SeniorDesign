@@ -42,6 +42,12 @@ public class Receipt {
         }
     }
 
+    public void removeAllItems(){
+        total = 0;
+        items = new ArrayList<>();
+        quantities = new ArrayList<>();
+    }
+
     public int getItemCount(Item item){
         if(items.contains(item)){
             int i =items.indexOf(item);

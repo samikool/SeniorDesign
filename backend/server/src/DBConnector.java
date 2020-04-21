@@ -99,7 +99,9 @@ public class DBConnector {
     }
 
     public Item getBBQ(int id){
-        return getItem(id, "bbqs");
+        Item item = getItem(id, "bbqs");
+        item.setItemType(ItemType.bbq);
+        return item;
     }
 
     public ArrayList<Item> getBBQs(int[] ids){
@@ -111,7 +113,9 @@ public class DBConnector {
     }
 
     public Item getDrink(int id){
-        return getItem(id, "drinks");
+        Item item = getItem(id, "drinks");
+        item.setItemType(ItemType.drink);
+        return item;
     }
 
     public ArrayList<Item> getDrinks(int[] ids){
@@ -123,7 +127,9 @@ public class DBConnector {
     }
 
     public Item getSide(int id){
-        return getItem(id, "sides");
+        Item item = getItem(id, "sides");
+        item.setItemType(ItemType.side);
+        return item;
     }
 
     public ArrayList<Item> getAllSides(){
@@ -169,8 +175,8 @@ public class DBConnector {
         else if(category == 2)
             table = "sides";
         try{
-            //String dir = "E:\\git\\seniordesign\\backend\\";
-            String dir = "C:\\Users\\Sam\\git\\seniordesign\\backend\\";
+            String dir = "E:\\git\\seniordesign\\backend\\";
+            //String dir = "C:\\Users\\Sam\\git\\seniordesign\\backend\\";
             BufferedImage image = ImageIO.read(new File(dir,"samgyupsal" + ".jpg"));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(image, "jpg", baos);
