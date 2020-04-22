@@ -27,16 +27,10 @@ public class Tables extends AppCompatActivity {
     private Button voidItemsButton;
     private Button MarkTablebutton;
     private Button HelpTableButton;
-    private Button OptOutButton;
+    private Button closeButton;
     private TextView Tablenumtext;
 
-    int Send = 0;
-    int Help = 0;
-    int Mark =0;
-    int OptOut = 0;
-    int tableneed = 0;
     private static int Tablenumber;
-
     private static final int ORDERED = 0;
 
     @Override
@@ -51,9 +45,9 @@ public class Tables extends AppCompatActivity {
         orderButton = findViewById(R.id.TakeOrderforTable);
         seeCheckButton = (Button)findViewById(R.id.SendChecktoTable);
         voidItemsButton = findViewById(R.id.voidItemsButton);
-        MarkTablebutton = (Button)findViewById(R.id.MarkTable);
+        MarkTablebutton = (Button)findViewById(R.id.markTable);
         HelpTableButton = (Button)findViewById(R.id.HelpedTable);
-        OptOutButton = (Button)findViewById(R.id.OptOutTable);
+        closeButton = (Button)findViewById(R.id.closeTable);
         Tablenumtext = (TextView)findViewById(R.id.Tablenumbertext);
 
         Tablenumtext.setText(""+Tablenumber);
@@ -102,55 +96,27 @@ public class Tables extends AppCompatActivity {
             }
         });
 
-        HelpTableButton.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v){
-
-                if(Help%2 ==0) {
-                    HelpTableButton.setBackgroundColor(Color.GREEN);
-
-                }
-                else{
-
-                    HelpTableButton.setBackgroundColor(Color.LTGRAY);
-                }
-                Help =Help+1;
-            }
-        });
-
         MarkTablebutton.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v){
-
-                if(Mark%2 == 0){
-                    MarkTablebutton.setBackgroundColor(Color.RED);
-                    tableneed = 1;
-                }
-                else{
-                    MarkTablebutton.setBackgroundColor(Color.LTGRAY);
-                    tableneed = 0;
-
-                }
-                Mark = Mark+1;
+                Linker.markTable(Tablenumber);
+                Snackbar.make(v, (String) "Table has been marked for visit", Snackbar.LENGTH_LONG).show();
             }
         });
 
-        OptOutButton.setOnClickListener(new View.OnClickListener(){
-
+        HelpTableButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                Linker.checkedTable(Tablenumber);
+                Snackbar.make(v, (String) "Table has been marked as checked", Snackbar.LENGTH_LONG).show();
+            }
+        });
 
-                if(OptOut%2 ==0) {
-                    OptOutButton.setBackgroundColor(Color.RED);
-
-                }
-                else{
-
-                    OptOutButton.setBackgroundColor(Color.LTGRAY);
-                }
-                OptOut =OptOut+1;
+        closeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Linker.closeTable(Tablenumber);
+                MainActivity.updateTableColor(Tablenumber, android.R.drawable.btn_default);
             }
         });
 

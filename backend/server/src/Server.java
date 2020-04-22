@@ -356,7 +356,7 @@ public class Server implements Runnable {
                 connectionHandlers.get(sendCid).sendMessage(response);
             }
         }
-        System.out.println("Client ID: " + cid + " || Request: " + command + " || Data: " + data + " || isWaiter: " + connectionHandlers.get(cid).isWaiter);
+            System.out.println("Client ID: " + cid + " || Request: " + command + " || Data: " + data + " || isWaiter: " + connectionHandlers.get(cid).isWaiter);
 //        appendToConsole("Client ID: " + cid + " || Request: " + command + " || Data: " + data + " || isWaiter: " + connectionHandlers.get(cid).isWaiter + "\n");
         printReceipt();
     }
@@ -422,7 +422,8 @@ public class Server implements Runnable {
 
         public void sendMessage(String message){
             try{
-                System.out.println("Sending: " + message);
+                if(!message.split(",")[1].equals("items"))
+                    System.out.println("Sending: " + message);
                 String[] test = message.split(",");
 //                if(!test[1].equals("items")) {
 //                    appendToConsole("Sending ClientID: " + this.clientID + " " + message + "\n");

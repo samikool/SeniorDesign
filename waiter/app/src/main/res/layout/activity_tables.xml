@@ -73,18 +73,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Helped Table"
-            app:layout_constraintTop_toBottomOf="@+id/MarkTable"
-            tools:layout_editor_absoluteX="0dp" />
+            android:text="Mark as Helped"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/markTable" />
 
         <Button
-            android:id="@+id/MarkTable"
+            android:id="@+id/markTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Mark Table"
-            app:layout_constraintTop_toBottomOf="@+id/voidItemsButton"
-            tools:layout_editor_absoluteX="16dp" />
+            android:text="Mark To Visit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/voidItemsButton" />
 
         <Button
             android:id="@+id/SendChecktoTable"
@@ -119,13 +121,15 @@
             app:layout_constraintTop_toBottomOf="@+id/Table" />
 
         <Button
-            android:id="@+id/OptOutTable"
+            android:id="@+id/closeTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Opt Out"
-            app:layout_constraintTop_toBottomOf="@+id/HelpedTable"
-            tools:layout_editor_absoluteX="0dp" />
+            android:text="Close Table"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/HelpedTable" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

@@ -3,11 +3,16 @@ package waiter.myapplication;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 import waiter.myapplication.BackendClasses.Linker;
 
@@ -15,16 +20,16 @@ import waiter.myapplication.BackendClasses.Linker;
 public class MainActivity extends AppCompatActivity {
     public static final String MAIN_NUMBER = "waiter.myapplication.MAIN_NUMBER";
 
-    private Button button;
-    private Button table1;
-    private Button table2;
-    private Button table3;
-    private Button table4;
-    private Button table5;
-    private Button table6;
-    private Button table7;
-    private Button table8;
-    private Button table9;
+    private static Button button;
+    private static Button table1;
+    private static Button table2;
+    private static Button table3;
+    private static Button table4;
+    private static Button table5;
+    private static Button table6;
+    private static Button table7;
+    private static Button table8;
+    private static Button table9;
     private Button TodoButton;
 
 
@@ -33,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new Linker(2,true, new ArrayList<String>());
 
         button = (Button)findViewById(R.id.MaintoMenu);
         table1 = (Button)findViewById(R.id.MaintoTable1);
@@ -151,12 +155,87 @@ public class MainActivity extends AppCompatActivity {
                 moveToTables(num);
             }
         });
+
+        //Thread analyzes times of checking to set colors
+        new Thread(){
+            public void run(){
+                try{
+                    while(true){
+                        HashMap<Integer, Date> checkedTables = Linker.getCheckedMap();
+                        for(Integer tid : checkedTables.keySet()){
+                            Date checkedDate = checkedTables.get(tid);
+                            Date currentDate = Calendar.getInstance().getTime();
+                            long currentTime = currentDate.getTime();
+                            long checkedTime = checkedDate.getTime();
+
+                            double difference = currentTime - checkedTime;
+                            difference /= 1000.;
+                            difference /= 60.; //now in minutes
+                            System.out.println();
+                            if(difference < 1)
+                                updateTableColor(tid, getColor(R.color.lightGreen));
+                            else if(difference < 2)
+                                updateTableColor(tid, getColor(R.color.yellow));
+                            else if(difference < 5)
+                                updateTableColor(tid, getColor(R.color.lightOrange));
+                            else if(difference < 12)
+                                updateTableColor(tid, getColor(R.color.orange));
+                            else if(difference < 15)
+                                updateTableColor(tid, getColor(R.color.darkOrange));
+                            else if(difference >= 15)
+                                updateTableColor(tid, getColor(R.color.red));
+
+                            System.out.println();
+                        }
+
+                        Thread.sleep(5000);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Linker.setCurrentView(findViewById(R.id.activity_main));
+    }
+
+
+    public static void updateTableColor(int tid, int color){
+        switch(tid){
+            case 1:
+                table1.setBackgroundColor(color);
+                break;
+            case 2:
+                table2.setBackgroundColor(color);
+                break;
+            case 3:
+                table3.setBackgroundColor(color);
+                break;
+            case 4:
+                table4.setBackgroundColor(color);
+                break;
+            case 5:
+                table5.setBackgroundColor(color);
+                break;
+            case 6:
+                table6.setBackgroundColor(color);
+                break;
+            case 7:
+                table7.setBackgroundColor(color);
+                break;
+            case 8:
+                table8.setBackgroundColor(color);
+                break;
+            case 9:
+                table9.setBackgroundColor(color);
+                break;
+        }
+
     }
 
     private void moveToActivity2(){

@@ -1,18 +1,23 @@
 package waiter.myapplication.BackendClasses;
 
 
+import android.graphics.Color;
 import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import waiter.myapplication.ItemType;
+import waiter.myapplication.MainActivity;
+import waiter.myapplication.R;
 
 public class Linker implements Runnable, Serializable {
     private static LinkedBlockingQueue<String> q;
@@ -28,9 +33,15 @@ public class Linker implements Runnable, Serializable {
     private static HashMap<Integer, Integer> tableMap;
     private static View currentView;
 
+
+    public static HashMap<Integer, Date> getCheckedMap() {
+        return checkedMap;
+    }
+
+    private static HashMap<Integer, Date> checkedMap;
+
     //going to pass in anything structure that can be updated over network
-    public Linker(int id, boolean isWaiter, ArrayList<String> todoList){
-        this.todoList = todoList;
+    public Linker(int id, boolean isWaiter){
         drinkItems = new ArrayList<>();
         bbqItems = new ArrayList<>();
         sideItems = new ArrayList<>();
@@ -51,10 +62,37 @@ public class Linker implements Runnable, Serializable {
             registerWaiter();
             receiptMap = new HashMap<Integer, Receipt>();
             tableMap = new HashMap<Integer, Integer>();
+            checkedMap = new HashMap<Integer, Date>();
         }else{
             registerTable();
         }
+
+
+
     }
+
+    public static void setTodoList(ArrayList<String> todoList){
+        Linker.todoList = todoList;
+    }
+
+    public static ArrayList<String> getTodoList(){
+        return todoList;
+    }
+
+    public static void checkedTable(int tid){
+        checkedMap.put(tid, Calendar.getInstance().getTime());
+        MainActivity.updateTableColor(tid, currentView.getContext().getColor(R.color.lightGreen));
+    }
+
+    public static void markTable(int tid){
+        Date zeroDate = Calendar.getInstance().getTime();
+        zeroDate.setTime(0);
+        checkedMap.put(tid, zeroDate);
+        MainActivity.updateTableColor(tid, currentView.getContext().getColor(R.color.red));
+
+    }
+
+
 
     public static ArrayList<Item> getDrinkItems() {
         return drinkItems;
@@ -80,9 +118,7 @@ public class Linker implements Runnable, Serializable {
     }
 
 
-    public static ArrayList<String> getTodoList(){
-        return todoList;
-    }
+
 
     private void processItems(ArrayList<String> data){
         if (data.get(0).equals("drink")){
@@ -212,13 +248,17 @@ public class Linker implements Runnable, Serializable {
 
     public static void claim(int tid){
         receiptMap.put(tid, new Receipt(tid, id));
+
+        MainActivity.updateTableColor(tid, currentView.getContext().getColor(R.color.lightGreen));
         tableMap.put(tid, id);
+        checkedTable(tid);
         sendMessage("claim,"+tid);
     }
 
     public static void closeTable(int tid){
         receiptMap.remove(tid);
         tableMap.remove(tid);
+        checkedMap.remove(tid);
         sendMessage("close,"+tid);
     }
 
@@ -372,7 +412,7 @@ public class Linker implements Runnable, Serializable {
             }
 
 
-            todoList.add("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
+            //todoList.add("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
 
 
         }
