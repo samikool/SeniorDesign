@@ -29,7 +29,6 @@
         <activity android:name=".Settings" />
         <activity android:name=".SyncTable" />
         <activity android:name=".Tables" />
-        <activity android:name=".Initialize" />
         <activity android:name=".TodoList.TodoListActivity"/>
     </application>
 

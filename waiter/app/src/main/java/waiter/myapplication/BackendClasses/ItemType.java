@@ -1,4 +1,4 @@
-package waiter.myapplication;
+package waiter.myapplication.BackendClasses;
 
 public enum ItemType {
     bbq,

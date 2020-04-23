@@ -1,7 +1,6 @@
 package waiter.myapplication.BackendClasses;
 
 
-import android.graphics.Color;
 import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -15,7 +14,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import waiter.myapplication.ItemType;
 import waiter.myapplication.MainActivity;
 import waiter.myapplication.R;
 import waiter.myapplication.TodoList.TodoListActivity;

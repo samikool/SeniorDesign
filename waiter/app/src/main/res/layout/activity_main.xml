@@ -143,10 +143,12 @@
 
     <TextView
         android:id="@+id/idLabelView"
-        android:layout_width="122dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="6dp"
+        android:layout_width="150dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Waiter: 004"
+        android:textAlignment="textEnd"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

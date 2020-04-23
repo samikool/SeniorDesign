@@ -8,35 +8,51 @@
 
     <EditText
         android:id="@+id/idNumberView"
-        android:layout_width="107dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="57dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="104dp"
         android:ems="10"
         android:inputType="number"
+        android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableNumberView" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tableNumberView"
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
 
     <TextView
         android:id="@+id/tableNumberView"
-        android:layout_width="250dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="188dp"
-        android:text="Please enter your waiter ID number  below to login"
+        android:layout_width="176dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="116dp"
+        android:text="Enter your waiter ID: "
+        android:textAlignment="textStart"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idNumberView" />
+        app:layout_constraintTop_toBottomOf="@+id/tableNumberView" />
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="325dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="48dp"
+        android:text="KoreanBBQ"
+        android:textAlignment="center"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,8 +3,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import java.util.Base64;
 
-import waiter.myapplication.ItemType;
-
 public class Item {
     private int id;
     private double price;
