@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import waiter.myapplication.BackendClasses.Linker;
+import waiter.myapplication.TodoList.TodoListActivity;
 
 public class AppMenu extends AppCompatActivity {
     public static final String MENU_NUMBER = "waiter.myapplication.MENU_NUMBER";
@@ -102,7 +103,7 @@ public class AppMenu extends AppCompatActivity {
 
     private void moveToTodo(int z){
 
-        Intent intent4 = new Intent(AppMenu.this, Todo.class);
+        Intent intent4 = new Intent(AppMenu.this, TodoListActivity.class);
         intent4.putExtra(MENU_NUMBER, z);
         startActivity(intent4);
     }

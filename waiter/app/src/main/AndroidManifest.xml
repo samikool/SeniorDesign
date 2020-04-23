@@ -16,10 +16,6 @@
             android:name=".DisplayMenu.Order"
             android:label="@string/title_activity_order"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".DisplayMenu.Order"
-            android:label="@string/title_activity_order"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -32,9 +28,9 @@
         <activity android:name=".MyTables" />
         <activity android:name=".Settings" />
         <activity android:name=".SyncTable" />
-        <activity android:name=".Todo" />
         <activity android:name=".Tables" />
         <activity android:name=".Initialize" />
+        <activity android:name=".TodoList.TodoListActivity"/>
     </application>
 
 </manifest>

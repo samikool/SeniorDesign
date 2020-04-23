@@ -207,6 +207,9 @@ public class Server implements Runnable {
                 receiptMap.put(tid, new Receipt(tid, wid));
                 String response = tid+",claim,"+wid;
                 conToWaiterMap.forEach((k, v) -> {
+                    if(v == wid){
+                        return;
+                    }
                     connectionHandlers.get(k).sendMessage(response);
                 });
                 int tableCid = tableToConMap.get(tid);
@@ -424,6 +427,9 @@ public class Server implements Runnable {
             try{
                 if(!message.split(",")[1].equals("items"))
                     System.out.println("Sending: " + message);
+                else
+                    System.out.println("Sending: " + clientID + " items");
+
                 String[] test = message.split(",");
 //                if(!test[1].equals("items")) {
 //                    appendToConsole("Sending ClientID: " + this.clientID + " " + message + "\n");

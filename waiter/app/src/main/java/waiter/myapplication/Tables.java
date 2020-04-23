@@ -116,7 +116,6 @@ public class Tables extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Linker.closeTable(Tablenumber);
-                MainActivity.updateTableColor(Tablenumber, android.R.drawable.btn_default);
             }
         });
 

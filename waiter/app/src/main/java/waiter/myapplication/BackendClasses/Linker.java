@@ -18,10 +18,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import waiter.myapplication.ItemType;
 import waiter.myapplication.MainActivity;
 import waiter.myapplication.R;
+import waiter.myapplication.TodoList.TodoListActivity;
 
 public class Linker implements Runnable, Serializable {
     private static LinkedBlockingQueue<String> q;
     private static ArrayList<String> todoList;
+    private static HashMap<String, Long> todoTimes;
+    private static TodoListActivity todoListActivity;
     private static ArrayList<Item> drinkItems;
     private static ArrayList<Item> bbqItems;
     private static ArrayList<Item> sideItems;
@@ -63,6 +66,8 @@ public class Linker implements Runnable, Serializable {
             receiptMap = new HashMap<Integer, Receipt>();
             tableMap = new HashMap<Integer, Integer>();
             checkedMap = new HashMap<Integer, Date>();
+            todoList = new ArrayList<String>();
+            todoTimes = new HashMap<String, Long>();
         }else{
             registerTable();
         }
@@ -79,16 +84,22 @@ public class Linker implements Runnable, Serializable {
         return todoList;
     }
 
+    public static HashMap<String, Long> getTodoTimes(){return todoTimes;}
+
+    public static void setTodoListActivity(TodoListActivity activity){
+        todoListActivity = activity;
+    }
+
     public static void checkedTable(int tid){
         checkedMap.put(tid, Calendar.getInstance().getTime());
-        MainActivity.updateTableColor(tid, currentView.getContext().getColor(R.color.lightGreen));
+        MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.lightGreen));
     }
 
     public static void markTable(int tid){
         Date zeroDate = Calendar.getInstance().getTime();
         zeroDate.setTime(0);
         checkedMap.put(tid, zeroDate);
-        MainActivity.updateTableColor(tid, currentView.getContext().getColor(R.color.red));
+        MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.red));
 
     }
 
@@ -249,7 +260,7 @@ public class Linker implements Runnable, Serializable {
     public static void claim(int tid){
         receiptMap.put(tid, new Receipt(tid, id));
 
-        MainActivity.updateTableColor(tid, currentView.getContext().getColor(R.color.lightGreen));
+        MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.lightGreen));
         tableMap.put(tid, id);
         checkedTable(tid);
         sendMessage("claim,"+tid);
@@ -260,6 +271,7 @@ public class Linker implements Runnable, Serializable {
         tableMap.remove(tid);
         checkedMap.remove(tid);
         sendMessage("close,"+tid);
+        MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.defaultGray));
     }
 
     public static void sendMessage(String message){
@@ -315,10 +327,26 @@ public class Linker implements Runnable, Serializable {
             //command is for waiter
             else if(isWaiter){
                 if(command.equals("call")){
-                    todoList.add("Table ID: " + tid + " || Request: " + command);
+                    if(!todoList.contains(request)){
+                        todoList.add(request);
+                        todoTimes.put(request, Calendar.getInstance().getTime().getTime());
+
+                        if(TodoListActivity.isActive()){
+                            todoListActivity.addTodo(request);
+                        }
+                        markTable(tid);
+                    }
                 }
                 else if(command.equals("check")){
-                    todoList.add("Table ID: " + tid + " || Request: " + command);
+                    if(!todoList.contains(request)){
+                        todoList.add(request);
+                        todoTimes.put(request, Calendar.getInstance().getTime().getTime());
+
+                        if(TodoListActivity.isActive()){
+                            todoListActivity.addTodo(request);
+                        }
+                        markTable(tid);
+                    }
                 }
                 else if(command.equals("order")){
                     String category = "";
@@ -344,14 +372,26 @@ public class Linker implements Runnable, Serializable {
                     }
                 }
                 else if(command.equals("chop")){
-                    todoList.add("Table ID: " + tid + " || Request: " + command);
+                    if(!todoList.contains(request)){
+                        todoList.add(request);
+                        todoTimes.put(request, Calendar.getInstance().getTime().getTime());
+
+                        if(TodoListActivity.isActive()){
+                            todoListActivity.addTodo(request);
+                        }
+                        markTable(tid);
+                    }
                 }
                 else if(command.equals("claim")){
                     int wid = Integer.parseInt(data.get(0));
                     tableMap.put(tid, wid);
+                    MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.gray));
+
+
                 }
                 else if(command.equals("close")){
                     tableMap.remove(tid);
+                    MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.defaultGray));
                 }
             }
             //command is for table
@@ -412,7 +452,7 @@ public class Linker implements Runnable, Serializable {
             }
 
 
-            //todoList.add("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
+            System.out.println("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
 
 
         }

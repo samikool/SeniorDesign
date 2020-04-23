@@ -1,106 +1,159 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="waiter.myapplication.MainActivity">
 
     <Button
-        android:text="MENU"
+        android:id="@+id/MaintoMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/MaintoMenu" />
+        android:layout_alignParentTop="true"
+        android:text="MENU"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/MaintoTable1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/MaintoMenu"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp"
-        android:text="Table 1" />
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:text="Table 1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoMenu" />
 
     <Button
         android:id="@+id/MaintoTable2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignBottom="@+id/MaintoTable1"
         android:layout_centerHorizontal="true"
-        android:text="Table 2" />
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="48dp"
+        android:text="Table 2"
+        app:layout_constraintStart_toEndOf="@+id/MaintoTable1"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoMenu" />
 
     <Button
         android:id="@+id/MaintoTable3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignTop="@+id/MaintoTable2"
         android:layout_alignParentEnd="true"
-        android:text="Table 3" />
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="48dp"
+        android:text="Table 3"
+        app:layout_constraintStart_toEndOf="@+id/MaintoTable2"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoMenu" />
 
     <Button
-        android:text="Todo"
+        android:id="@+id/MaintoTodo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/MaintoTodo"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="36dp"
+        android:text="Todo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.812"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoTable8" />
 
     <Button
         android:id="@+id/MaintoTable4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/MaintoTable1"
         android:layout_alignEnd="@+id/MaintoTable1"
-        android:layout_marginTop="49dp"
-        android:text="Table 4" />
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="56dp"
+        android:text="Table 4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoTable1" />
 
     <Button
         android:id="@+id/MaintoTable5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignStart="@+id/MaintoTable2"
         android:layout_alignTop="@+id/MaintoTable4"
-        android:text="Table 5" />
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="56dp"
+        android:text="Table 5"
+        app:layout_constraintStart_toEndOf="@+id/MaintoTable4"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoTable2" />
 
     <Button
         android:id="@+id/MaintoTable6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignStart="@+id/MaintoTable3"
         android:layout_alignTop="@+id/MaintoTable5"
-        android:text="Table 6" />
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="56dp"
+        android:text="Table 6"
+        app:layout_constraintStart_toEndOf="@+id/MaintoTable5"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoTable3" />
 
     <Button
         android:id="@+id/MaintoTable7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/MaintoTable4"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp"
-        android:text="Table 7" />
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="56dp"
+        android:text="Table 7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoTable4" />
 
     <Button
         android:id="@+id/MaintoTable8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignStart="@+id/MaintoTable5"
         android:layout_alignTop="@+id/MaintoTable7"
-        android:text="Table 8" />
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="56dp"
+        android:text="Table 8"
+        app:layout_constraintStart_toEndOf="@+id/MaintoTable7"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoTable5" />
 
     <Button
         android:id="@+id/MaintoTable9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignTop="@+id/MaintoTable8"
         android:layout_alignParentEnd="true"
-        android:text="Table 9" />
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="56dp"
+        android:text="Table 9"
+        app:layout_constraintStart_toEndOf="@+id/MaintoTable8"
+        app:layout_constraintTop_toBottomOf="@+id/MaintoTable6" />
+
+    <TextView
+        android:id="@+id/idLabelView"
+        android:layout_width="122dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="6dp"
+        android:text="Waiter: 004"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</RelativeLayout>
+
+
+

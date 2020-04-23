@@ -4,17 +4,18 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
 import waiter.myapplication.BackendClasses.Linker;
+import waiter.myapplication.TodoList.TodoListActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static Button table7;
     private static Button table8;
     private static Button table9;
+    private TextView idLabelView;
     private Button TodoButton;
 
 
@@ -50,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         table8 = (Button)findViewById(R.id.MaintoTable8);
         table9 = (Button)findViewById(R.id.MaintoTable9);
         TodoButton = (Button)findViewById(R.id.MaintoTodo);
+        idLabelView = findViewById(R.id.idLabelView);
+
+        String idString = "Waiter: ";
+        idString  += String.format("%03d", Linker.getId());
+
+        idLabelView.setText(idString);
 
 
         button.setOnClickListener(new View.OnClickListener(){
@@ -173,17 +181,17 @@ public class MainActivity extends AppCompatActivity {
                             difference /= 60.; //now in minutes
                             System.out.println();
                             if(difference < 1)
-                                updateTableColor(tid, getColor(R.color.lightGreen));
+                                updateTableColor(tid, getColorStateList(R.color.lightGreen));
                             else if(difference < 2)
-                                updateTableColor(tid, getColor(R.color.yellow));
+                                updateTableColor(tid, getColorStateList(R.color.yellow));
                             else if(difference < 5)
-                                updateTableColor(tid, getColor(R.color.lightOrange));
+                                updateTableColor(tid, getColorStateList(R.color.lightOrange));
                             else if(difference < 12)
-                                updateTableColor(tid, getColor(R.color.orange));
+                                updateTableColor(tid, getColorStateList(R.color.orange));
                             else if(difference < 15)
-                                updateTableColor(tid, getColor(R.color.darkOrange));
+                                updateTableColor(tid, getColorStateList(R.color.darkOrange));
                             else if(difference >= 15)
-                                updateTableColor(tid, getColor(R.color.red));
+                                updateTableColor(tid, getColorStateList(R.color.red));
 
                             System.out.println();
                         }
@@ -205,34 +213,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static void updateTableColor(int tid, int color){
+    public static void updateTableColor(int tid, ColorStateList color){
+
         switch(tid){
             case 1:
-                table1.setBackgroundColor(color);
+                table1.setBackgroundTintList(color);
                 break;
             case 2:
-                table2.setBackgroundColor(color);
+                table2.setBackgroundTintList(color);
                 break;
             case 3:
-                table3.setBackgroundColor(color);
+                table3.setBackgroundTintList(color);
                 break;
             case 4:
-                table4.setBackgroundColor(color);
+                table4.setBackgroundTintList(color);
                 break;
             case 5:
-                table5.setBackgroundColor(color);
+                table5.setBackgroundTintList(color);
                 break;
             case 6:
-                table6.setBackgroundColor(color);
+                table6.setBackgroundTintList(color);
                 break;
             case 7:
-                table7.setBackgroundColor(color);
+                table7.setBackgroundTintList(color);
                 break;
             case 8:
-                table8.setBackgroundColor(color);
+                table8.setBackgroundTintList(color);
                 break;
             case 9:
-                table9.setBackgroundColor(color);
+                table9.setBackgroundTintList(color);
                 break;
         }
 
@@ -252,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void moveToTodo(int z){
 
-        Intent intent2= new Intent(MainActivity.this, Todo.class);
+        Intent intent2= new Intent(MainActivity.this, TodoListActivity.class);
         intent2.putExtra(MAIN_NUMBER, z);
         startActivity(intent2);
     }
