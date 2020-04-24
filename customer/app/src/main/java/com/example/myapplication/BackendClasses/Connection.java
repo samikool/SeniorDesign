@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.BackendClasses;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -63,14 +63,14 @@ INSERT INTO drinks (NAME, PRICE) VALUES
 ('strawberry_milk', 1.5);
 
 INSERT INTO sides (NAME, PRICE) VALUES
-('kimchi', 0),
-('potato_salad', 0),
-('black_beans', 0),
-('bean_sprouts', 0),
-('pink_radish', 0),
-('white_radish', 0),
-('yellow_radish', 0),
-('spinach', 0);
+('kimchi', 1),
+('potato_salad', 1),
+('black_beans', 1),
+('bean_sprouts', 1),
+('pink_radish', 1),
+('white_radish', 1),
+('yellow_radish', 1),
+('spinach', 1);
 
 -- INSERT INTO receipts (TABLEID, TOTAL, ITEMS) VALUES
 -- (1, 36.9, ARRAY[ROW('samgypsal',15.95,2)::item, ROW('pepsi',2.5,2)::item]),
