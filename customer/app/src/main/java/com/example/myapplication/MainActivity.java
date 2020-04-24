@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.myapplication.BackendClasses.Linker;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button CallServer, BBQOrders, SideDishes, Drinks, Utensils, Check;
@@ -72,8 +74,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Linker.setCurrentView(findViewById(R.id.parentTest));
+    }
 
-/*
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

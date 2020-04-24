@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int id = Integer.parseInt(idNumberView.getText().toString());
-                new Linker(id, true);
+                new Linker(id, false);
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
