@@ -7,9 +7,14 @@ import android.widget.Button;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.BackendClasses.Item;
+import com.example.myapplication.BackendClasses.Linker;
+
 import java.util.ArrayList;
 
 public class Drinks_Activity extends MainActivity {
+    public static ArrayList<Item> DrinkList;
 
     private RecyclerView recyclerView;
     private Drinks_CustomAdapter customAdapter;
@@ -23,9 +28,11 @@ public class Drinks_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.drinkRecycler);
         btnnext = (Button) findViewById(R.id.nextb);
 
-        if(Menu.Drinks == null) {
+        DrinkList = Linker.getDrinkItems();
+
+       /* if(Menu.Drinks == null) {
             Menu.Drinks_Submenu();
-        }
+        }*/
 
         customAdapter = new Drinks_CustomAdapter(this);
 

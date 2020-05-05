@@ -42,14 +42,14 @@ public class Drinks_CustomAdapter extends RecyclerView.Adapter<Drinks_CustomAdap
     @Override
     public void onBindViewHolder(final Drinks_CustomAdapter.MyViewHolder holder, int position) {
 
-        holder.tvFood.setText(Menu.Drinks.get(position).getFood());
-        holder.tvnumber.setText(String.valueOf(Menu.Drinks.get(position).getNumber()));
-        holder.tvDescription.setText(Menu.DrinkDescriptions.get(position).getDescription());
+        holder.tvFood.setText(Drinks_Activity.DrinkList.get(position).getName());
+        holder.tvnumber.setText(String.valueOf(MainActivity.receipt.getItemCount(Drinks_Activity.DrinkList.get(position))));
+      //  holder.tvDescription.setText(Menu.DrinkDescriptions.get(position).getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return Menu.Drinks.size();
+        return Drinks_Activity.DrinkList.size();
     }
 
 
@@ -86,7 +86,9 @@ public class Drinks_CustomAdapter extends RecyclerView.Adapter<Drinks_CustomAdap
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) + 1;
                 tv.setText(String.valueOf(number));
-                Menu.Drinks.get(getAdapterPosition()).setNumber(number);
+                //Menu.Drinks.get(getAdapterPosition()).setNumber(number);
+                MainActivity.receipt.addItem(Drinks_Activity.DrinkList.get(getAdapterPosition()), 1);
+
 
             } else if(v.getId() == btn_minus.getId()) {
 
@@ -94,7 +96,9 @@ public class Drinks_CustomAdapter extends RecyclerView.Adapter<Drinks_CustomAdap
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
                 tv.setText(String.valueOf(number));
-                Menu.Drinks.get(getAdapterPosition()).setNumber(number);
+                //Menu.Drinks.get(getAdapterPosition()).setNumber(number);
+                MainActivity.receipt.addItem(Drinks_Activity.DrinkList.get(getAdapterPosition()), 1);
+
             }
         }
 

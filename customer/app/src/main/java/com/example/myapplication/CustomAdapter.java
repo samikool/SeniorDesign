@@ -93,8 +93,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 tv.setText(String.valueOf(number));
                 //Send over to the Receipt this value
                  //BBQ_Activity.BBQFoods.get(getAdapterPosition()).setnumber());
-                System.out.println(BBQ_Activity.BBQFoods.get(getAdapterPosition()));
-                System.out.println(MainActivity.receipt);
+               // System.out.println(BBQ_Activity.BBQFoods.get(getAdapterPosition()));
+                //System.out.println(MainActivity.receipt);
                  MainActivity.receipt.addItem(BBQ_Activity.BBQFoods.get(getAdapterPosition()), 1);
 
             } else if(v.getId() == btn_minus.getId()) {

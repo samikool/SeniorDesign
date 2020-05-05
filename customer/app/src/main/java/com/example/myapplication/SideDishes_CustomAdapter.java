@@ -39,15 +39,15 @@ public class SideDishes_CustomAdapter extends RecyclerView.Adapter<SideDishes_Cu
     @Override
     public void onBindViewHolder(final SideDishes_CustomAdapter.MyViewHolder holder, int position) {
 
-        holder.tvFood.setText(Menu.SideDishFoods.get(position).getFood());
-        holder.tvnumber.setText(String.valueOf(Menu.SideDishFoods.get(position).getNumber()));
-        holder.tvDescription.setText(Menu.SideDishDescriptions.get(position).getDescription());
+        holder.tvFood.setText(SideDishes_Activity.SideFoods.get(position).getName());
+        holder.tvnumber.setText(String.valueOf(MainActivity.receipt.getItemCount(SideDishes_Activity.SideFoods.get(position))));
+       // holder.tvDescription.setText(Menu.SideDishDescriptions.get(position).getDescription());
     }
 
     @Override
     public int getItemCount() {
 
-        return Menu.SideDishFoods.size();
+        return SideDishes_Activity.SideFoods.size();
     }
 
 
@@ -84,7 +84,8 @@ public class SideDishes_CustomAdapter extends RecyclerView.Adapter<SideDishes_Cu
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) + 1;
                 tv.setText(String.valueOf(number));
-                Menu.SideDishFoods.get(getAdapterPosition()).setNumber(number);
+                //Menu.SideDishFoods.get(getAdapterPosition()).setNumber(number);
+                MainActivity.receipt.addItem(SideDishes_Activity.SideFoods.get(getAdapterPosition()), 1);
 
             } else if(v.getId() == btn_minus.getId()) {
 
@@ -92,7 +93,9 @@ public class SideDishes_CustomAdapter extends RecyclerView.Adapter<SideDishes_Cu
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
                 tv.setText(String.valueOf(number));
-                Menu.SideDishFoods.get(getAdapterPosition()).setNumber(number);
+               // Menu.SideDishFoods.get(getAdapterPosition()).setNumber(number);
+                MainActivity.receipt.addItem(SideDishes_Activity.SideFoods.get(getAdapterPosition()), 1);
+
             }
         }
 

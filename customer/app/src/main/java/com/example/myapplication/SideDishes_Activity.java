@@ -8,7 +8,13 @@ import android.widget.Button;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.BackendClasses.Item;
+import com.example.myapplication.BackendClasses.Linker;
+
+import java.util.ArrayList;
+
 public class SideDishes_Activity extends MainActivity {
+    public static ArrayList<Item> SideFoods;
 
     private RecyclerView recyclerView;
     private SideDishes_CustomAdapter customAdapter;
@@ -22,9 +28,11 @@ public class SideDishes_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.sideDishRecycler);
         btnnext = (Button) findViewById(R.id.nextbutton);
 
-        if(Menu.SideDishFoods == null) {
+        SideFoods = Linker.getSideItems();
+
+        /*if(Menu.SideDishFoods == null) {
             Menu.SideDish_Submenu();
-        }
+        }*/
 
         customAdapter = new SideDishes_CustomAdapter(this);
 
