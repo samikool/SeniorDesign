@@ -7,21 +7,15 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-//import waiter.myapplication.MainActivity;
-//import waiter.myapplication.R;
-//import waiter.myapplication.TodoList.TodoListActivity;
-
 public class Linker implements Runnable, Serializable {
     private static LinkedBlockingQueue<String> q;
-    private static ArrayList<String> todoList;
-    private static HashMap<String, Long> todoTimes;
+    //private static ArrayList<String> todoList;
+    //private static HashMap<String, Long> todoTimes;
 //    private static TodoListActivity todoListActivity;
     private static ArrayList<Item> drinkItems;
     private static ArrayList<Item> bbqItems;
@@ -30,16 +24,16 @@ public class Linker implements Runnable, Serializable {
     private static int id;
     private static boolean isWaiter;
     private static Receipt receipt;
-    private static HashMap<Integer, Receipt> receiptMap; //<tid,TableReceipt>
-    private static HashMap<Integer, Integer> tableMap;
+    //private static HashMap<Integer, Receipt> receiptMap; //<tid,TableReceipt>
+    //private static HashMap<Integer, Integer> tableMap;
     private static View currentView;
 
 
-    public static HashMap<Integer, Date> getCheckedMap() {
-        return checkedMap;
-    }
-
-    private static HashMap<Integer, Date> checkedMap;
+//    public static HashMap<Integer, Date> getCheckedMap() {
+//        return checkedMap;
+//    }
+//
+//    private static HashMap<Integer, Date> checkedMap;
 
     //going to pass in anything structure that can be updated over network
     public Linker(int id, boolean isWaiter){
@@ -60,12 +54,12 @@ public class Linker implements Runnable, Serializable {
         Linker.isWaiter = isWaiter;
 
         if(isWaiter){
-            registerWaiter();
-            receiptMap = new HashMap<Integer, Receipt>();
-            tableMap = new HashMap<Integer, Integer>();
-            checkedMap = new HashMap<Integer, Date>();
-            todoList = new ArrayList<String>();
-            todoTimes = new HashMap<String, Long>();
+//            registerWaiter();
+//            receiptMap = new HashMap<Integer, Receipt>();
+//            tableMap = new HashMap<Integer, Integer>();
+//            checkedMap = new HashMap<Integer, Date>();
+//            todoList = new ArrayList<String>();
+//            todoTimes = new HashMap<String, Long>();
         }else{
             registerTable();
         }
@@ -74,15 +68,15 @@ public class Linker implements Runnable, Serializable {
 
     }
 
-    public static void setTodoList(ArrayList<String> todoList){
-        Linker.todoList = todoList;
-    }
-
-    public static ArrayList<String> getTodoList(){
-        return todoList;
-    }
-
-    public static HashMap<String, Long> getTodoTimes(){return todoTimes;}
+//    public static void setTodoList(ArrayList<String> todoList){
+//        Linker.todoList = todoList;
+//    }
+//
+//    public static ArrayList<String> getTodoList(){
+//        return todoList;
+//    }
+//
+//    public static HashMap<String, Long> getTodoTimes(){return todoTimes;}
 
 //    public static void setTodoListActivity(TodoListActivity activity){
 //        todoListActivity = activity;
@@ -122,9 +116,9 @@ public class Linker implements Runnable, Serializable {
         return sideItems;
     }
 
-    public static Receipt getTableReceipt(int tid){
-        return receiptMap.get(tid);
-    }
+    //public static Receipt getTableReceipt(int tid){
+    //    return receiptMap.get(tid);
+    //}
 
     public static void setCurrentView(View v){
         currentView = v;
@@ -179,53 +173,53 @@ public class Linker implements Runnable, Serializable {
         receipt.addItem(sideItems.get(iid), quant);
     }
 
-    //used by waiters to add to certain tables receipt
-    public static void orderBBQ(int iid, int quant, int tid){
-        sendMessage("order,"+tid+",bbq,"+iid+","+quant);
-        receiptMap.get(tid).addItem(bbqItems.get(iid), quant);
-    }
-
-    public static void orderDrink(int iid, int quant, int tid){
-        sendMessage("order,"+tid+",drink,"+iid+","+quant);
-        receiptMap.get(tid).addItem(drinkItems.get(iid), quant);
-    }
-
-    public static void orderSide(int iid, int quant, int tid){
-        sendMessage("order,"+tid+",side,"+iid+","+quant);
-        receiptMap.get(tid).addItem(sideItems.get(iid), quant);
-    }
+//    //used by waiters to add to certain tables receipt
+//    public static void orderBBQ(int iid, int quant, int tid){
+//        sendMessage("order,"+tid+",bbq,"+iid+","+quant);
+//        receiptMap.get(tid).addItem(bbqItems.get(iid), quant);
+//    }
+//
+//    public static void orderDrink(int iid, int quant, int tid){
+//        sendMessage("order,"+tid+",drink,"+iid+","+quant);
+//        receiptMap.get(tid).addItem(drinkItems.get(iid), quant);
+//    }
+//
+//    public static void orderSide(int iid, int quant, int tid){
+//        sendMessage("order,"+tid+",side,"+iid+","+quant);
+//        receiptMap.get(tid).addItem(sideItems.get(iid), quant);
+//    }
 
     public static void requestUtensil(String utensil, int quant){
         sendMessage("chop,"+utensil+","+quant);
     }
 
-    public static void voidItem(Item item, int quant, int tid){
-        int iid = item.getId();
-        if(item.getItemType() == ItemType.bbq){
-            voidBBq(iid, quant, tid);
-        }
-        else if(item.getItemType() == ItemType.drink){
-            voidDrink(iid, quant, tid);
-        }
-        else if(item.getItemType() == ItemType.side){
-            voidSide(iid, quant, tid);
-        }
-    }
+//    public static void voidItem(Item item, int quant, int tid){
+//        int iid = item.getId();
+//        if(item.getItemType() == ItemType.bbq){
+//            voidBBq(iid, quant, tid);
+//        }
+//        else if(item.getItemType() == ItemType.drink){
+//            voidDrink(iid, quant, tid);
+//        }
+//        else if(item.getItemType() == ItemType.side){
+//            voidSide(iid, quant, tid);
+//        }
+//    }
 
-    public static void voidBBq(int iid, int quant, int tid){
-        sendMessage("void,"+tid+",bbq,"+iid+","+quant);
-        receiptMap.get(tid).addItem(bbqItems.get(iid), quant);
-    }
-
-    public static void voidDrink(int iid, int quant, int tid){
-        sendMessage("void,"+tid+",drink,"+iid+","+quant);
-        receiptMap.get(tid).addItem(drinkItems.get(iid), quant);
-    }
-
-    public static void voidSide(int iid, int quant, int tid){
-        sendMessage("void,"+tid+",side,"+iid+","+quant);
-        receiptMap.get(tid).addItem(sideItems.get(iid), quant);
-    }
+//    public static void voidBBq(int iid, int quant, int tid){
+//        sendMessage("void,"+tid+",bbq,"+iid+","+quant);
+//        receiptMap.get(tid).addItem(bbqItems.get(iid), quant);
+//    }
+//
+//    public static void voidDrink(int iid, int quant, int tid){
+//        sendMessage("void,"+tid+",drink,"+iid+","+quant);
+//        receiptMap.get(tid).addItem(drinkItems.get(iid), quant);
+//    }
+//
+//    public static void voidSide(int iid, int quant, int tid){
+//        sendMessage("void,"+tid+",side,"+iid+","+quant);
+//        receiptMap.get(tid).addItem(sideItems.get(iid), quant);
+//    }
 
     public static void orderItems(Receipt r){
       ///  int tid = r.getTid();
@@ -255,9 +249,9 @@ public class Linker implements Runnable, Serializable {
         sendMessage("register,table,"+id);
     }
 
-    private static void registerWaiter(){
-        sendMessage("register,waiter,"+id);
-    }
+//    private static void registerWaiter(){
+//        sendMessage("register,waiter,"+id);
+//    }
 
     public static void call(){
         sendMessage("call");
@@ -286,11 +280,11 @@ public class Linker implements Runnable, Serializable {
 
     public static void printReceipt(){
         if(isWaiter){
-            for (Receipt receipt : receiptMap.values()) {
-                if(receipt.getNumItems() > 0){
-                    System.out.println(receipt);
-                }
-            }
+//            for (Receipt receipt : receiptMap.values()) {
+//                if(receipt.getNumItems() > 0){
+//                    System.out.println(receipt);
+//                }
+//            }
         }else{
             System.out.println(receipt);
         }
@@ -332,73 +326,73 @@ public class Linker implements Runnable, Serializable {
             //...
             //command is for waiter
             else if(isWaiter){
-                if(command.equals("call")){
-                    if(!todoList.contains(request)){
-                        todoList.add(request);
-                        todoTimes.put(request, Calendar.getInstance().getTime().getTime());
-
-//                        if(TodoListActivity.isActive()){
-//                            todoListActivity.addTodo(request);
-//                        }
-//                        markTable(tid);
-//                    }
-//                }
-//                else if(command.equals("check")){
+//                if(command.equals("call")){
 //                    if(!todoList.contains(request)){
 //                        todoList.add(request);
 //                        todoTimes.put(request, Calendar.getInstance().getTime().getTime());
 //
-//                        if(TodoListActivity.isActive()){
-//                            todoListActivity.addTodo(request);
-//                        }
-//                        markTable(tid);
-                    }
-                }
-                else if(command.equals("order")){
-                    String category = "";
-                    Item item;
-                    int iid;
-                    int quant;
-                    for(int i=0; i<data.size(); i+=3){
-                        category = data.get(i);
-                        iid = Integer.parseInt(data.get(i+1));
-                        quant = Integer.parseInt(data.get(i+2));
-                        if(category.equals("drink")){
-                            item = drinkItems.get(iid);
-                            receiptMap.get(tid).addItem(item, quant);
-                        }
-                        else if(category.equals("bbq")){
-                            item = bbqItems.get(iid);
-                            receiptMap.get(tid).addItem(item, quant);
-                        }
-                        else if(category.equals("sides")){
-                            item = sideItems.get(iid);
-                            receiptMap.get(tid).addItem(item, quant);
-                        }
-                    }
-                }
-                else if(command.equals("chop")){
-                    if(!todoList.contains(request)){
-                        todoList.add(request);
-                        todoTimes.put(request, Calendar.getInstance().getTime().getTime());
-
-//                        if(TodoListActivity.isActive()){
-//                            todoListActivity.addTodo(request);
-//                        }
-//                        markTable(tid);
-                    }
-                }
-//                else if(command.equals("claim")){
-//                    int wid = Integer.parseInt(data.get(0));
-//                    tableMap.put(tid, wid);
-//                    MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.gray));
-//
-//
+////                        if(TodoListActivity.isActive()){
+////                            todoListActivity.addTodo(request);
+////                        }
+////                        markTable(tid);
+////                    }
+////                }
+////                else if(command.equals("check")){
+////                    if(!todoList.contains(request)){
+////                        todoList.add(request);
+////                        todoTimes.put(request, Calendar.getInstance().getTime().getTime());
+////
+////                        if(TodoListActivity.isActive()){
+////                            todoListActivity.addTodo(request);
+////                        }
+////                        markTable(tid);
+//                    }
 //                }
-//                else if(command.equals("close")){
-//                    tableMap.remove(tid);
-//                    MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.defaultGray));
+//                else if(command.equals("order")){
+//                    String category = "";
+//                    Item item;
+//                    int iid;
+//                    int quant;
+//                    for(int i=0; i<data.size(); i+=3){
+//                        category = data.get(i);
+//                        iid = Integer.parseInt(data.get(i+1));
+//                        quant = Integer.parseInt(data.get(i+2));
+//                        if(category.equals("drink")){
+//                            item = drinkItems.get(iid);
+//                            receiptMap.get(tid).addItem(item, quant);
+//                        }
+//                        else if(category.equals("bbq")){
+//                            item = bbqItems.get(iid);
+//                            receiptMap.get(tid).addItem(item, quant);
+//                        }
+//                        else if(category.equals("sides")){
+//                            item = sideItems.get(iid);
+//                            receiptMap.get(tid).addItem(item, quant);
+//                        }
+//                    }
 //                }
+//                else if(command.equals("chop")){
+//                    if(!todoList.contains(request)){
+//                        todoList.add(request);
+//                        todoTimes.put(request, Calendar.getInstance().getTime().getTime());
+//
+////                        if(TodoListActivity.isActive()){
+////                            todoListActivity.addTodo(request);
+////                        }
+////                        markTable(tid);
+//                    }
+//                }
+////                else if(command.equals("claim")){
+////                    int wid = Integer.parseInt(data.get(0));
+////                    tableMap.put(tid, wid);
+////                    MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.gray));
+////
+////
+////                }
+////                else if(command.equals("close")){
+////                    tableMap.remove(tid);
+////                    MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.defaultGray));
+////                }
             }
             //command is for table
             else{

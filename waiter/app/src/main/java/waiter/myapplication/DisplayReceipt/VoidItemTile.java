@@ -75,6 +75,7 @@ public class VoidItemTile extends Fragment {
                     quant--;
                 else{
                     DisplayReceipt.getReceipt().addItem(item, 1);
+                    System.out.println(DisplayReceipt.getReceipt());
                     updateQuantity();
                 }
             }
@@ -88,6 +89,7 @@ public class VoidItemTile extends Fragment {
                     quant++;
                 else{
                     DisplayReceipt.getReceipt().removeItem(item, 1);
+                    System.out.println(DisplayReceipt.getReceipt());
                     updateQuantity();
                 }
             }

@@ -214,17 +214,17 @@ public class Linker implements Runnable, Serializable {
 
     public static void voidBBq(int iid, int quant, int tid){
         sendMessage("void,"+tid+",bbq,"+iid+","+quant);
-        receiptMap.get(tid).addItem(bbqItems.get(iid), quant);
+        receiptMap.get(tid).removeItem(bbqItems.get(iid), quant);
     }
 
     public static void voidDrink(int iid, int quant, int tid){
         sendMessage("void,"+tid+",drink,"+iid+","+quant);
-        receiptMap.get(tid).addItem(drinkItems.get(iid), quant);
+        receiptMap.get(tid).removeItem(drinkItems.get(iid), quant);
     }
 
     public static void voidSide(int iid, int quant, int tid){
         sendMessage("void,"+tid+",side,"+iid+","+quant);
-        receiptMap.get(tid).addItem(sideItems.get(iid), quant);
+        receiptMap.get(tid).removeItem(sideItems.get(iid), quant);
     }
 
     public static void orderItems(Receipt r){
