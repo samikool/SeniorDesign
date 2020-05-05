@@ -80,7 +80,6 @@ public class Tables extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-
                 Intent intent = new Intent(Tables.this, DisplayReceipt.class);
                 intent.putExtra("void", false);
                 startActivity(intent);

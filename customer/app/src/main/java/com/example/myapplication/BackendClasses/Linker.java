@@ -140,14 +140,9 @@ public class Linker implements Runnable, Serializable {
         receiptMap.get(tid).addItem(sideItems.get(iid), quant);
     }
 
-
-
-
-
     public static void requestCheck(){
         sendMessage("check");
     }
-
 
     private static void initializeItems(){
         sendMessage("items");
