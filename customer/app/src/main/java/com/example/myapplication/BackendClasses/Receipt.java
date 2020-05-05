@@ -53,7 +53,7 @@ public class Receipt {
             int i =items.indexOf(item);
             return quantities.get(i);
         }else{
-            return -1;
+            return 0;
         }
     }
 

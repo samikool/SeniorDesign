@@ -228,17 +228,17 @@ public class Linker implements Runnable, Serializable {
     }
 
     public static void orderItems(Receipt r){
-        int tid = r.getTid();
+      ///  int tid = r.getTid();
         for(Item item : r.getItems()){
             int quant = r.getItemCount(item);
             if(item.getItemType() == ItemType.bbq){
-                orderBBQ(item.getId(), quant, tid);
+                orderBBQ(item.getId(), quant);
             }
             else if(item.getItemType() == ItemType.drink){
-                orderDrink(item.getId(), quant, tid);
+                orderDrink(item.getId(), quant);
             }
             else if(item.getItemType() == ItemType.side){
-                orderSide(item.getId(), quant, tid);
+                orderSide(item.getId(), quant);
             }
         }
     }

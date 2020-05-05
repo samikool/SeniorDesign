@@ -11,12 +11,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.myapplication.BackendClasses.Linker;
+import com.example.myapplication.BackendClasses.Receipt;
 
 public class MainActivity extends AppCompatActivity {
+    public static Receipt receipt = new Receipt(Linker.getId());
 
     private Button CallServer, BBQOrders, SideDishes, Drinks, Utensils, Check;
     private LayoutInflater inflater;
 
+   // receipt = ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,11 +1,15 @@
 package com.example.myapplication;
 
+import com.example.myapplication.BackendClasses.Item;
+import com.example.myapplication.BackendClasses.Linker;
+
 import java.util.ArrayList;
 
 public class Menu {
 
 
-    public static ArrayList<Model> BBQFoods;
+    public static ArrayList<Item> BBQFoods;
+    //public static ArrayList<Model> BBQFoods;
     public static ArrayList<Model> BBQDescriptions;
     public static ArrayList<Model> SideDishFoods;
     public static ArrayList<Model> SideDishDescriptions;
@@ -39,8 +43,9 @@ public class Menu {
 
 
     public static void BBQ_Submenu(){
-        BBQFoods = getModel(BBQFoodList);
-        BBQDescriptions = getModelDescriptions(BBQFoodDescription);
+        BBQFoods = Linker.getBBQItems();
+       // BBQFoods = getModel(BBQFoodList);
+       // BBQDescriptions = getModelDescriptions(BBQFoodDescription);
     }
 
     public static void SideDish_Submenu(){
