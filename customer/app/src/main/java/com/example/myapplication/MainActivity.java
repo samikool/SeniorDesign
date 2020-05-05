@@ -10,11 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.myapplication.BackendClasses.Linker;
+import com.example.myapplication.BackendClasses.Receipt;
+
 public class MainActivity extends AppCompatActivity {
+    public static Receipt receipt = new Receipt(Linker.getId());
 
     private Button CallServer, BBQOrders, SideDishes, Drinks, Utensils, Check;
     private LayoutInflater inflater;
 
+   // receipt = ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +77,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Linker.setCurrentView(findViewById(R.id.parentTest));
+    }
 
-/*
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

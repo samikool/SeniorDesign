@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.BackendClasses.Receipt;
+
 import java.util.List;
 
 
@@ -42,14 +44,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final CustomAdapter.MyViewHolder holder, int position) {
 
-        holder.tvFood.setText(Menu.BBQFoods.get(position).getFood());
-        holder.tvnumber.setText(String.valueOf(Menu.BBQFoods.get(position).getNumber()));
-        holder.tvDescription.setText(Menu.BBQDescriptions.get(position).getDescription());
+        holder.tvFood.setText(BBQ_Activity.BBQFoods.get(position).getName());
+        holder.tvnumber.setText(String.valueOf(MainActivity.receipt.getItemCount(BBQ_Activity.BBQFoods.get(position)))) ;
+
+        //holder.tvnumber.setText(String.valueOf(BBQ_Activity.BBQFoods.get(position)));
+        //holder.tvDescription.setText(Menu.BBQDescriptions.get(position).getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return Menu.BBQFoods.size();
+        return BBQ_Activity.BBQFoods.size();
     }
 
 
@@ -58,6 +62,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         CardView cv;
         protected Button btn_plus, btn_minus;
         private TextView tvFood, tvnumber, tvDescription;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -86,7 +91,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) + 1;
                 tv.setText(String.valueOf(number));
-                Menu.BBQFoods.get(getAdapterPosition()).setNumber(number);
+                //Send over to the Receipt this value
+                 //BBQ_Activity.BBQFoods.get(getAdapterPosition()).setnumber());
+                System.out.println(BBQ_Activity.BBQFoods.get(getAdapterPosition()));
+                System.out.println(MainActivity.receipt);
+                 MainActivity.receipt.addItem(BBQ_Activity.BBQFoods.get(getAdapterPosition()), 1);
 
             } else if(v.getId() == btn_minus.getId()) {
 
@@ -94,7 +103,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
                 tv.setText(String.valueOf(number));
-                Menu.BBQFoods.get(getAdapterPosition()).setNumber(number);
+                //Send over to the receipt this value
+                //BBQ_Activity.BBQFoods.get(getAdapterPosition());
+                MainActivity.receipt.addItem(BBQ_Activity.BBQFoods.get(getAdapterPosition()), 1);
             }
         }
 
