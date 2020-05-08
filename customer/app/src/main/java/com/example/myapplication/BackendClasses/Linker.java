@@ -104,6 +104,10 @@ public class Linker implements Runnable, Serializable {
 //        }
 //    }
 
+    public static Receipt getReceipt(){
+        return receipt;
+    }
+
 
 
     public static ArrayList<Item> getDrinkItems() {

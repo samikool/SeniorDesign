@@ -70,8 +70,8 @@ public class Check extends AppCompatActivity {
         super.onResume();
         receipt = MainActivity.receipt;
         int i=0;
-        for(Item item : receipt.getItems()){
-            int quant = receipt.getItemCount(item);
+        for(Item item : Linker.getReceipt().getItems()){
+            int quant = Linker.getReceipt().getItemCount(item);
             getSupportFragmentManager().beginTransaction().add(itemContainer.getId(), ItemTile.newInstance(item, quant), "item"+i++).commit();
         }
     }
