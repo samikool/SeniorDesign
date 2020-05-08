@@ -29,7 +29,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     /*only creates a new view holder when there are no existing view holders which the RecyclerView can reuse*/
     @Override
     public CustomAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = inflater.inflate(R.layout.rv_item, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
 
@@ -42,10 +41,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     and you have to replace old data that they held with new data.*/
     @Override
     public void onBindViewHolder(final CustomAdapter.MyViewHolder holder, int position) {
-
         holder.tvFood.setText(BBQ_Activity.BBQFoods.get(position).getName());
-        holder.tvnumber.setText(String.valueOf(MainActivity.receipt.getItemCount(BBQ_Activity.BBQFoods.get(position)))) ;
-
+        holder.tvnumber.setText(String.valueOf(MainActivity.receipt.getItemCount(BBQ_Activity.BBQFoods.get(position))));
+        
         //holder.tvnumber.setText(String.valueOf(BBQ_Activity.BBQFoods.get(position)));
         //holder.tvDescription.setText(Menu.BBQDescriptions.get(position).getDescription());
     }
@@ -65,18 +63,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.card_view);
 
-            tvFood = (TextView) itemView.findViewById(R.id.food);
-            tvnumber = (TextView) itemView.findViewById(R.id.number);
-            tvDescription = (TextView) itemView.findViewById(R.id.TextDescription);
-            btn_plus = (Button) itemView.findViewById(R.id.plus);
-            btn_minus = (Button) itemView.findViewById(R.id.minus);
+                cv = (CardView) itemView.findViewById(R.id.card_view);
 
-            btn_plus.setTag(R.integer.btn_plus_view, itemView);
-            btn_minus.setTag(R.integer.btn_minus_view, itemView);
-            btn_plus.setOnClickListener(this);
-            btn_minus.setOnClickListener(this);
+                tvFood = (TextView) itemView.findViewById(R.id.food);
+                tvnumber = (TextView) itemView.findViewById(R.id.number);
+                tvDescription = (TextView) itemView.findViewById(R.id.TextDescription);
+                btn_plus = (Button) itemView.findViewById(R.id.plus);
+                btn_minus = (Button) itemView.findViewById(R.id.minus);
+
+                btn_plus.setTag(R.integer.btn_plus_view, itemView);
+                btn_minus.setTag(R.integer.btn_minus_view, itemView);
+                btn_plus.setOnClickListener(this);
+                btn_minus.setOnClickListener(this);
 
         }
 
@@ -113,6 +112,5 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-
     }
 }

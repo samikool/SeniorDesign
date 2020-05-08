@@ -44,7 +44,8 @@ public class Check extends AppCompatActivity {
                     Toast myToast = Toast.makeText(getApplicationContext(), "Order Called!", Toast.LENGTH_SHORT);
                     myToast.show();
                     Linker.orderItems(Check.getReceipt());
-
+                    MainActivity.receipt = new Receipt(Linker.getId());
+                    finish();
                 }
             });
         } else {

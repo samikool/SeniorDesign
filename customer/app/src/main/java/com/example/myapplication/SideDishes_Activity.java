@@ -14,7 +14,7 @@ import com.example.myapplication.BackendClasses.Linker;
 import java.util.ArrayList;
 
 public class SideDishes_Activity extends MainActivity {
-    public static ArrayList<Item> SideFoods;
+    public static ArrayList<Item> SideFoods = Linker.getSideItems();
 
     private RecyclerView recyclerView;
     private SideDishes_CustomAdapter customAdapter;
@@ -28,8 +28,12 @@ public class SideDishes_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.sideDishRecycler);
         btnnext = (Button) findViewById(R.id.nextbutton);
 
-        SideFoods = Linker.getSideItems();
-        SideFoods.remove(0);
+        for(int i=0; i<SideFoods.size(); i++){
+            if(SideFoods.get(i).getName() == null){
+                SideFoods.remove(i);
+            }
+        }
+
         /*if(Menu.SideDishFoods == null) {
             Menu.SideDish_Submenu();
         }*/
@@ -44,6 +48,7 @@ public class SideDishes_Activity extends MainActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SideDishes_Activity.this, com.example.myapplication.Check.Check.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

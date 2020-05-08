@@ -15,7 +15,7 @@ import com.example.myapplication.Check.Check;
 import java.util.ArrayList;
 
 public class BBQ_Activity extends MainActivity {
-    public static ArrayList<Item> BBQFoods;
+    public static ArrayList<Item> BBQFoods = Linker.getBBQItems();
 
     private RecyclerView recyclerView;
     private CustomAdapter customAdapter;
@@ -30,8 +30,11 @@ public class BBQ_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         btnnext = (Button) findViewById(R.id.next);
 
-        BBQFoods = Linker.getBBQItems();
-        BBQFoods.remove(0);
+        for(int i=0; i<BBQFoods.size(); i++){
+            if(BBQFoods.get(i).getName() == null){
+                BBQFoods.remove(i);
+            }
+        }
 
         customAdapter = new CustomAdapter(this);
 
@@ -50,6 +53,7 @@ public class BBQ_Activity extends MainActivity {
                 //intent.setFlags(Intent.);
                 //intent.putExtra(fromMain)
                 startActivity(intent);
+                finish();
             }
         });
     }

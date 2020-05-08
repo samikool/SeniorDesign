@@ -14,7 +14,7 @@ import com.example.myapplication.BackendClasses.Linker;
 import java.util.ArrayList;
 
 public class Drinks_Activity extends MainActivity {
-    public static ArrayList<Item> DrinkList;
+    public static ArrayList<Item> DrinkList = Linker.getDrinkItems();
 
     private RecyclerView recyclerView;
     private Drinks_CustomAdapter customAdapter;
@@ -28,8 +28,12 @@ public class Drinks_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.drinkRecycler);
         btnnext = (Button) findViewById(R.id.nextb);
 
-        DrinkList = Linker.getDrinkItems();
-        DrinkList.remove(0);
+        for(int i=0; i<DrinkList.size(); i++){
+            if(DrinkList.get(i).getName() == null){
+                DrinkList.remove(i);
+            }
+        }
+
        /* if(Menu.Drinks == null) {
             Menu.Drinks_Submenu();
         }*/
@@ -44,6 +48,7 @@ public class Drinks_Activity extends MainActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Drinks_Activity.this, com.example.myapplication.Check.Check.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
