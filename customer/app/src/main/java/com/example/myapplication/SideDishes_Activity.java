@@ -29,7 +29,7 @@ public class SideDishes_Activity extends MainActivity {
         btnnext = (Button) findViewById(R.id.nextbutton);
 
         SideFoods = Linker.getSideItems();
-
+        SideFoods.remove(0);
         /*if(Menu.SideDishFoods == null) {
             Menu.SideDish_Submenu();
         }*/

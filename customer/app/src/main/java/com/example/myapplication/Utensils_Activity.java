@@ -7,6 +7,9 @@ import android.widget.Button;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.BackendClasses.Linker;
+
 import java.util.ArrayList;
 
 public class Utensils_Activity extends MainActivity {
@@ -14,6 +17,7 @@ public class Utensils_Activity extends MainActivity {
     private RecyclerView recyclerView;
     private Utensils_CustomAdapter customAdapter;
     private Button btnnext;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +34,25 @@ public class Utensils_Activity extends MainActivity {
 
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        btnnext.setText("Request Utensils");
 
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Utensils_Activity.this,NextActivity.class);
-                startActivity(intent);
+                for(int i=0; i<Menu.Utensils.size(); i++){
+                    if(Menu.Utensils.get(i).getNumber() > 0){
+                        Linker.requestUtensil(Menu.Utensils.get(i).getFood(), Menu.Utensils.get(i).getNumber());
+                    }
+                }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for(int i=0; i<Menu.Utensils.size(); i++){
+            Menu.Utensils.get(i).setNumber(0);
+        }
     }
 }

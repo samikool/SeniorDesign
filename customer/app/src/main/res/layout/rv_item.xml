@@ -18,12 +18,12 @@
         app:cardCornerRadius="4dp">
 
         <LinearLayout
-            android:layout_width="500dp"
+            android:layout_width="514dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="500dp"
+            android:layout_marginStart="500dp"
+            android:layout_marginLeft="400dp"
             android:background="#fadcdc"
-            android:orientation="vertical"
-            android:layout_marginStart="500dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,31 +36,31 @@
                     android:id="@+id/minus"
                     android:layout_width="115dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="75dp"
                     android:layout_marginLeft="75dp"
                     android:text="@string/Minus_Value"
-                    android:textColor="#000"
-                    android:layout_marginStart="75dp" />
+                    android:textColor="#000" />
 
                 <TextView
                     android:id="@+id/number"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
                     android:layout_marginLeft="80dp"
                     android:gravity="center_vertical"
                     android:text="0"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#000"
-                    android:textSize="30sp"
-                    android:layout_marginStart="80dp" />
+                    android:textSize="30sp" />
 
                 <Button
                     android:id="@+id/plus"
                     android:layout_width="115dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
                     android:layout_marginLeft="80dp"
                     android:text="@string/Plus_Value"
-                    android:textColor="#000"
-                    android:layout_marginStart="80dp" />
+                    android:textColor="#000" />
 
 
             </LinearLayout>

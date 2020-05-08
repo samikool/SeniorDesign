@@ -98,16 +98,6 @@ public class Linker implements Runnable, Serializable {
         zeroDate.setTime(0);
         checkedMap.put(tid, zeroDate);
         MainActivity.updateTableColor(tid, currentView.getContext().getColorStateList(R.color.red));
-        String request = tid+",call";
-        if(!todoList.contains(request)) {
-            todoList.add(request);
-            todoTimes.put(request, Calendar.getInstance().getTime().getTime());
-
-            if (TodoListActivity.isActive()) {
-                todoListActivity.addTodo(request);
-            }
-            markTable(tid);
-        }
     }
 
 

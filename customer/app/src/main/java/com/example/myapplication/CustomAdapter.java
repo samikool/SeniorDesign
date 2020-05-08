@@ -21,7 +21,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private Context ctx;
 
     public CustomAdapter(Context ctx) {
-
         inflater = LayoutInflater.from(ctx);
         this.ctx = ctx;
     }
@@ -53,7 +52,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return BBQ_Activity.BBQFoods.size();
+        return BBQ_Activity.BBQFoods.size()-1;
     }
 
 
@@ -114,5 +113,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+
     }
 }

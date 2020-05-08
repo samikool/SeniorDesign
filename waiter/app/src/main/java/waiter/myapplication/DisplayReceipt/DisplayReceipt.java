@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 import waiter.myapplication.BackendClasses.Item;
 import waiter.myapplication.BackendClasses.Linker;
@@ -15,13 +18,16 @@ public class DisplayReceipt extends AppCompatActivity {
 
     private LinearLayout itemContainer;
     private static Receipt receipt;
+    private TextView totalView;
     private int Tablenumber;
     private static boolean voiding;
+    private static DecimalFormat format = new DecimalFormat("$###.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_receipt);
+        totalView = findViewById(R.id.totalView);
         itemContainer = findViewById(R.id.itemContainer);
         voiding = getIntent().getBooleanExtra("void", false);
     }
@@ -38,6 +44,7 @@ public class DisplayReceipt extends AppCompatActivity {
             int quant = receipt.getItemCount(item);
             getSupportFragmentManager().beginTransaction().add(itemContainer.getId(), ItemTile.newInstance(item, quant), "item"+i++).commit();
         }
+        totalView.setText(format.format(receipt.getTotal()));
     }
 
     public static Receipt getReceipt() {

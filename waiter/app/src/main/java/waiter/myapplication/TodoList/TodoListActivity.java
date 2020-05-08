@@ -14,6 +14,7 @@ import java.util.HashMap;
 import waiter.myapplication.BackendClasses.Linker;
 import waiter.myapplication.DisplayReceipt.ItemTile;
 import waiter.myapplication.R;
+import waiter.myapplication.Tables;
 
 public class TodoListActivity extends AppCompatActivity {
     private LinearLayout todoItemContainer;
@@ -21,6 +22,7 @@ public class TodoListActivity extends AppCompatActivity {
     private static HashMap<String, Long> todoTimes;
     private static ArrayList<TodoItem> todoItemTiles;
     private static boolean active;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class TodoListActivity extends AppCompatActivity {
         todoItemContainer = findViewById(R.id.todoItemContainer);
         todoItemTiles = new ArrayList<TodoItem>();
     }
+
+
 
     public static ArrayList<TodoItem> getTodoItemTiles(){return todoItemTiles;}
 
@@ -58,6 +62,7 @@ public class TodoListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Linker.setTodoListActivity(this);
+        Tables.setTodoListActivity(this);
         int i=0;
         for(String request : todoList){
             TodoItem todoItemTile = TodoItem.newInstance(request, todoTimes.get(request));

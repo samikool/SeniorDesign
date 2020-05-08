@@ -13,9 +13,12 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Calendar;
+
 import waiter.myapplication.BackendClasses.Linker;
 import waiter.myapplication.DisplayMenu.Order;
 import waiter.myapplication.DisplayReceipt.DisplayReceipt;
+import waiter.myapplication.TodoList.TodoListActivity;
 
 public class Tables extends AppCompatActivity {
     public static final String Table_Need = "waiter.myapplication.Table_Need";
@@ -32,6 +35,12 @@ public class Tables extends AppCompatActivity {
 
     private static int Tablenumber;
     private static final int ORDERED = 0;
+
+    private static TodoListActivity todoListActivity;
+
+    public static void setTodoListActivity(TodoListActivity activity){
+        todoListActivity = activity;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +108,10 @@ public class Tables extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Linker.markTable(Tablenumber);
+                if(!Linker.getTodoList().contains(Tablenumber+",call")) {
+                    Linker.getTodoList().add(Tablenumber+",call");
+                    Linker.getTodoTimes().put(Tablenumber+",call", Calendar.getInstance().getTime().getTime());
+                }
                 Snackbar.make(v, (String) "Table has been marked for visit", Snackbar.LENGTH_LONG).show();
             }
         });

@@ -31,6 +31,7 @@ public class BBQ_Activity extends MainActivity {
         btnnext = (Button) findViewById(R.id.next);
 
         BBQFoods = Linker.getBBQItems();
+        BBQFoods.remove(0);
 
         customAdapter = new CustomAdapter(this);
 

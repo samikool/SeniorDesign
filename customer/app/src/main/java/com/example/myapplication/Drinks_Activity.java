@@ -29,7 +29,7 @@ public class Drinks_Activity extends MainActivity {
         btnnext = (Button) findViewById(R.id.nextb);
 
         DrinkList = Linker.getDrinkItems();
-
+        DrinkList.remove(0);
        /* if(Menu.Drinks == null) {
             Menu.Drinks_Submenu();
         }*/

@@ -58,8 +58,10 @@ public class TodoItem extends Fragment {
                 int quant = Integer.parseInt(parts[3]);
                 if(quant > 1)
                     parts[2] += "s";
-                requestDescription="Give "+parts[3]+" "+parts[2]+" to table "+tableNumber;
+                requestDescription="Give "+parts[3]+" "+parts[2];
                 break;
+            case  "order":
+                requestDescription="Table "+tableNumber+" ordered food";
         }
         timeString = "calculating..";
         done = false;

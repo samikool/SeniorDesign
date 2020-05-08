@@ -17,6 +17,7 @@ public class Menu {
     public static ArrayList<Model> DrinkDescriptions;
     public static ArrayList<Model> Utensils;
     public static ArrayList<Model> UtensilDescriptions;
+    public static ArrayList<Integer> UtensilQuant;
 
     private static String BBQItem1 = "Sam-Gyup-Ssal";
     private static String BBQItem2 = "Wang-Gal-Bi";
@@ -38,8 +39,8 @@ public class Menu {
     private static String[] DrinkList = new String[]{"mk", "j", "hj", "jk", "gy"};
     private static String[] DrinkListDescription = new String[]{"Asdf","asdf","asdf","asdf","adsf"};
 
-    private static String[] UtensilList = new String[]{"mk", "j", "hj", "jk", "gy"};
-    private static String[] UDescriptions = new String[]{"Asdf","asdf","asdf","asdf","adsf"};
+    private static String[] UtensilList = new String[]{"Fork","Spoon","Steak Knife","Chopsticks","Ladel","Extra Bowl","Extra Plate","Napkin","Towel"};
+    private static String[] UDescriptions = new String[]{"Fork","Spoon","Steak Knife","Chopsticks","Ladel","Extra Bowl","Extra Plate","Napkin","Towel"};
 
 
     public static void BBQ_Submenu(){
@@ -61,6 +62,7 @@ public class Menu {
     public static void Utensils_Submenu(){
         Utensils = getModel(UtensilList);
         UtensilDescriptions = getModelDescriptions(UDescriptions);
+        UtensilQuant = new ArrayList<>(Utensils.size());
     }
 
     private static ArrayList<Model> getModel(String[] foodList){
