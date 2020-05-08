@@ -3,6 +3,7 @@ package com.example.myapplication.Check;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -11,10 +12,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.myapplication.BBQ_Activity;
 import com.example.myapplication.BackendClasses.Item;
 import com.example.myapplication.BackendClasses.Linker;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
 import java.text.DecimalFormat;
@@ -35,6 +40,7 @@ public class ItemTile extends Fragment {
     private TextView quantityView;
     private TextView priceView;
     private ConstraintLayout layout;
+
 
     private static DecimalFormat priceFormat = new DecimalFormat("$0.00");
 
@@ -72,7 +78,6 @@ public class ItemTile extends Fragment {
         quantityView = getView().findViewById(R.id.quantityView);
         priceView = getView().findViewById(R.id.priceView);
         layout = getView().findViewById(R.id.itemBackground);
-
 
 
         nameView.setText(item.getName());

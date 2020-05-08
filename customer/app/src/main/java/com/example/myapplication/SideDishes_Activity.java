@@ -42,7 +42,7 @@ public class SideDishes_Activity extends MainActivity {
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SideDishes_Activity.this, NextActivity.class);
+                Intent intent = new Intent(SideDishes_Activity.this, com.example.myapplication.Check.Check.class);
                 startActivity(intent);
             }
         });
