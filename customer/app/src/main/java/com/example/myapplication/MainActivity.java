@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.myapplication.BackendClasses.Linker;
 import com.example.myapplication.BackendClasses.Receipt;
 
+import static com.example.myapplication.BackendClasses.Linker.call;
+
 public class MainActivity extends AppCompatActivity {
     public static Receipt receipt = new Receipt(Linker.getId());
 
@@ -36,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         CallServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast myToast = Toast.makeText(getApplicationContext(), "Server Called!", Toast.LENGTH_SHORT);
                 myToast.show();
+                Linker.call();
             }
         });
 
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BBQ_Activity.class);
+                intent.putExtra("void", false);
                 startActivity(intent);
             }
         });
@@ -56,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SideDishes_Activity.class);
+                intent.putExtra("void", false);
                 startActivity(intent);
             }
         });
@@ -64,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Drinks_Activity.class);
+                intent.putExtra("void", false);
                 startActivity(intent);
             }
         });
@@ -72,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Utensils_Activity.class);
+                intent.putExtra("void", false);
+                startActivity(intent);
+            }
+        });
+
+        Check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, com.example.myapplication.Check.Check.class);
+                intent.putExtra("void", true);
                 startActivity(intent);
             }
         });

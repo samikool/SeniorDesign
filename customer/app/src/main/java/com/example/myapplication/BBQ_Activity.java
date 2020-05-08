@@ -38,12 +38,15 @@ public class BBQ_Activity extends MainActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
 
-
+        for (int i=0; i<BBQFoods.size(); i++){
+            System.out.println(BBQFoods.get(i).getName());
+        }
 
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BBQ_Activity.this, com.example.myapplication.Check.Check.class);
+                //intent.setFlags(Intent.);
                 //intent.putExtra(fromMain)
                 startActivity(intent);
             }
