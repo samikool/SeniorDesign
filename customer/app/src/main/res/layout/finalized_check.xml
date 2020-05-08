@@ -9,32 +9,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="50dp">
 
         <TextView
             android:id="@+id/quantityLabel"
-            android:layout_width="43dp"
+            android:layout_width="80dp"
             android:layout_height="26dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
-            android:text="Amt"
+            android:text="Quantity"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            android:layout_marginLeft="16dp" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/itemLabel"
             android:layout_width="43dp"
             android:layout_height="26dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="Item"
@@ -42,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/quantityLabel"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
             android:id="@+id/costLabel"
@@ -56,8 +53,7 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -85,43 +81,42 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/GenericButton">
 
         <TextView
             android:id="@+id/totalLabel"
-            android:layout_width="43dp"
+            android:layout_width="80dp"
             android:layout_height="26dp"
             android:text="Total:"
-            android:textSize="18sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.805"
+            app:layout_constraintHorizontal_bias="0.798"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/totalView"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:text="$543.34"
-            android:textSize="18sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/totalLabel"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.542" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/GenericButton"
-        android:layout_width="142dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="304dp"
         app:layout_constraintBottom_toBottomOf="parent"

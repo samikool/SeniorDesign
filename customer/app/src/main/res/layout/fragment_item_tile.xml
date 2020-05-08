@@ -23,14 +23,15 @@
 
     <TextView
         android:id="@+id/priceView"
-        android:layout_width="80dp"
-        android:layout_height="28dp"
+        android:layout_width="125dp"
+        android:layout_height="41dp"
         android:layout_marginStart="84dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
         android:layout_marginBottom="8dp"
         android:textAlignment="textEnd"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.977"
@@ -40,16 +41,16 @@
 
     <TextView
         android:id="@+id/nameView"
-        android:layout_width="151dp"
+        android:layout_width="500dp"
         android:layout_height="31dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/quantityView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
