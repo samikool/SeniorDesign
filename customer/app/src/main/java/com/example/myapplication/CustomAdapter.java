@@ -50,7 +50,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return BBQ_Activity.BBQFoods.size()-1;
+        return BBQ_Activity.BBQFoods.size();
     }
 
 

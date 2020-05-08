@@ -28,6 +28,10 @@ public class SideDishes_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.sideDishRecycler);
         btnnext = (Button) findViewById(R.id.nextbutton);
 
+        for(int i=0; i<Linker.getSideItems().size(); i++){
+            SideFoods.add(Linker.getSideItems().get(i));
+        }
+
         for(int i=0; i<SideFoods.size(); i++){
             if(SideFoods.get(i).getName() == null){
                 SideFoods.remove(i);
@@ -47,6 +51,7 @@ public class SideDishes_Activity extends MainActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SideDishes_Activity.this, com.example.myapplication.Check.Check.class);
+                intent.putExtra("void", false);
                 startActivity(intent);
                 finish();
             }

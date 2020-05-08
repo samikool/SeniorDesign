@@ -28,6 +28,11 @@ public class Drinks_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.drinkRecycler);
         btnnext = (Button) findViewById(R.id.nextb);
 
+        DrinkList = new ArrayList<Item>();
+        for(int i=0; i<Linker.getDrinkItems().size(); i++){
+            DrinkList.add(Linker.getDrinkItems().get(i));
+        }
+
         for(int i=0; i<DrinkList.size(); i++){
             if(DrinkList.get(i).getName() == null){
                 DrinkList.remove(i);
@@ -47,6 +52,7 @@ public class Drinks_Activity extends MainActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Drinks_Activity.this, com.example.myapplication.Check.Check.class);
+                intent.putExtra("void", false);
                 startActivity(intent);
                 finish();
             }

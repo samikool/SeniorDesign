@@ -15,7 +15,7 @@ import com.example.myapplication.Check.Check;
 import java.util.ArrayList;
 
 public class BBQ_Activity extends MainActivity {
-    public static ArrayList<Item> BBQFoods = Linker.getBBQItems();
+    public static ArrayList<Item> BBQFoods;
 
     private RecyclerView recyclerView;
     private CustomAdapter customAdapter;
@@ -29,6 +29,11 @@ public class BBQ_Activity extends MainActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         btnnext = (Button) findViewById(R.id.next);
+
+        BBQFoods = new ArrayList<Item>();
+        for(int i=0; i<Linker.getBBQItems().size(); i++){
+            BBQFoods.add(Linker.getBBQItems().get(i));
+        }
 
         for(int i=0; i<BBQFoods.size(); i++){
             if(BBQFoods.get(i).getName() == null){
@@ -50,6 +55,7 @@ public class BBQ_Activity extends MainActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BBQ_Activity.this, com.example.myapplication.Check.Check.class);
+                intent.putExtra("void", false);
                 //intent.setFlags(Intent.);
                 //intent.putExtra(fromMain)
                 startActivity(intent);
