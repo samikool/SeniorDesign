@@ -47,7 +47,7 @@ public class Check extends AppCompatActivity {
             btnnext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast myToast = Toast.makeText(getApplicationContext(), "Order Called!", Toast.LENGTH_SHORT);
+                    Toast myToast = Toast.makeText(getApplicationContext(), "Order Placed!", Toast.LENGTH_SHORT);
                     myToast.show();
                     Linker.orderItems(Check.getReceipt());
                     MainActivity.receipt = new Receipt(Linker.getId());

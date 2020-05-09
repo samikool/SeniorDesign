@@ -228,6 +228,7 @@ public class Linker implements Runnable, Serializable {
     public static void orderItems(Receipt r){
       ///  int tid = r.getTid();
         for(Item item : r.getItems()){
+            System.out.println(item);
             int quant = r.getItemCount(item);
             if(item.getItemType() == ItemType.bbq){
                 orderBBQ(item.getId(), quant);
