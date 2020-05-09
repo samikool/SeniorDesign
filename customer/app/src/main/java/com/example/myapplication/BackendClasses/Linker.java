@@ -431,7 +431,7 @@ public class Linker implements Runnable, Serializable {
                             item = bbqItems.get(iid);
                             receipt.addItem(item, quant);
                         }
-                        else if(category.equals("sides")){
+                        else if(category.equals("side")){
                             item = sideItems.get(iid);
                             receipt.addItem(item, quant);
                         }
@@ -454,7 +454,7 @@ public class Linker implements Runnable, Serializable {
                             item = bbqItems.get(iid);
                             receipt.removeItem(item, quant);
                         }
-                        else if(category.equals("sides")){
+                        else if(category.equals("side")){
                             item = sideItems.get(iid);
                             receipt.removeItem(item, quant);
                         }

@@ -319,7 +319,7 @@ public class Linker implements Runnable, Serializable {
             System.out.println("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
             if(!command.equals("items")){
                 if(command.equals("order")){
-                    Snackbar.make(currentView, "Table "+tid+" has ordered something!", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(currentView, "Table "+tid+" has ordered something.", Snackbar.LENGTH_LONG).show();
                 }else if(command.equals("call")){
                     Snackbar.make(currentView, "Table "+tid+" has called you.", Snackbar.LENGTH_LONG).show();
                 }else if(command.equals("chop")){
@@ -397,7 +397,7 @@ public class Linker implements Runnable, Serializable {
 
 
                         }
-                        else if(category.equals("sides")){
+                        else if(category.equals("side")){
                             item = sideItems.get(iid);
                             receiptMap.get(tid).addItem(item, quant);
                             if(!todoList.contains(tid+",order,side")){

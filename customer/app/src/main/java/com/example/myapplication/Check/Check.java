@@ -26,7 +26,7 @@ public class Check extends AppCompatActivity {
     private TextView totalView;
     private static boolean orderServer = false;
     private Button btnnext;
-    private static DecimalFormat format = new DecimalFormat("$###.00");
+    private static DecimalFormat format = new DecimalFormat("$##0.00");
 
 
     @Override

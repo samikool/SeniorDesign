@@ -14,7 +14,7 @@ import com.example.myapplication.BackendClasses.Linker;
 import java.util.ArrayList;
 
 public class SideDishes_Activity extends MainActivity {
-    public static ArrayList<Item> SideFoods = Linker.getSideItems();
+    public static ArrayList<Item> SideFoods;
 
     private RecyclerView recyclerView;
     private SideDishes_CustomAdapter customAdapter;
@@ -28,6 +28,7 @@ public class SideDishes_Activity extends MainActivity {
         recyclerView = (RecyclerView) findViewById(R.id.sideDishRecycler);
         btnnext = (Button) findViewById(R.id.nextbutton);
 
+        SideFoods = new ArrayList<Item>();
         for(int i=0; i<Linker.getSideItems().size(); i++){
             SideFoods.add(Linker.getSideItems().get(i));
         }

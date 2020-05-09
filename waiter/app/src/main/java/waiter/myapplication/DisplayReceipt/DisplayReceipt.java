@@ -21,7 +21,7 @@ public class DisplayReceipt extends AppCompatActivity {
     private TextView totalView;
     private int Tablenumber;
     private static boolean voiding;
-    private static DecimalFormat format = new DecimalFormat("$###.00");
+    private static DecimalFormat format = new DecimalFormat("$##0.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
