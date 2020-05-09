@@ -320,6 +320,12 @@ public class Linker implements Runnable, Serializable {
             if(!command.equals("items")){
                 if(command.equals("order")){
                     Snackbar.make(currentView, "Table "+tid+" has ordered something!", Snackbar.LENGTH_LONG).show();
+                }else if(command.equals("call")){
+                    Snackbar.make(currentView, "Table "+tid+" has called you.", Snackbar.LENGTH_LONG).show();
+                }else if(command.equals("chop")){
+                    Snackbar.make(currentView, "Table "+tid+" needs a utensil.", Snackbar.LENGTH_LONG).show();
+                }else if(command.equals("check")){
+                    Snackbar.make(currentView, "Table "+tid+" needs their check.", Snackbar.LENGTH_LONG).show();
                 }else{
                     //Snackbar.make(currentView, "Table ID: " + tid + " || Request: " + command + " || Data: " + data, Snackbar.LENGTH_LONG).show();
                 }
