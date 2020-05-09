@@ -95,9 +95,13 @@ public class Drinks_CustomAdapter extends RecyclerView.Adapter<Drinks_CustomAdap
                 View tempview = (View) btn_minus.getTag(R.integer.btn_minus_view);
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
-                tv.setText(String.valueOf(number));
+
                 //Menu.Drinks.get(getAdapterPosition()).setNumber(number);
-                MainActivity.receipt.addItem(Drinks_Activity.DrinkList.get(getAdapterPosition()), 1);
+                if(number>-1){
+                    tv.setText(String.valueOf(number));
+                    MainActivity.receipt.removeItem(Drinks_Activity.DrinkList.get(getAdapterPosition()), 1);
+                }
+
 
             }
         }

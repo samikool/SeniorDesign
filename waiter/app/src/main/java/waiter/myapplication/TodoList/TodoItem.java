@@ -61,7 +61,15 @@ public class TodoItem extends Fragment {
                 requestDescription="Give "+parts[3]+" "+parts[2];
                 break;
             case  "order":
-                requestDescription="Table "+tableNumber+" ordered food";
+                String category = parts[2];
+                switch(category){
+                    case "drink":
+                        requestDescription="Ordered "+parts[2]+"s";
+                    case "bbq":
+                        requestDescription="Ordered "+parts[2];
+                    case "sides":
+                        requestDescription="Ordered "+parts[2]+"s";
+                }
         }
         timeString = "calculating..";
         done = false;

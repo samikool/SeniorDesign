@@ -39,6 +39,11 @@ public class Receipt {
                 quantities.set(i, quantities.get(i) - quant);
                 total -= item.getPrice() * quant;
             }
+
+            if(quantities.get(i) == 0){
+                items.remove(i);
+                quantities.remove(i);
+            }
         }
     }
 

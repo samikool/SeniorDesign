@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.BackendClasses.Linker;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static Receipt receipt = new Receipt(Linker.getId());
 
     private Button CallServer, BBQOrders, SideDishes, Drinks, Utensils, Check;
+    private TextView tableNumberView;
     private LayoutInflater inflater;
 
    // receipt = ;
@@ -39,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
         Utensils = (Button) findViewById(R.id.Utensils);
         Check = (Button) findViewById(R.id.Check);
 
-
-
+        tableNumberView = findViewById(R.id.tableNumberView);
+        String text = "Table: "+Linker.getId();
+        tableNumberView.setText(text);
 
         CallServer.setOnClickListener(new View.OnClickListener() {
             @Override

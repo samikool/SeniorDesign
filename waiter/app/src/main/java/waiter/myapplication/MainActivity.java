@@ -180,17 +180,17 @@ public class MainActivity extends AppCompatActivity {
                             difference /= 1000.;
                             difference /= 60.; //now in minutes
                             System.out.println();
-                            if(difference < 1)
+                            if(difference < 14)
                                 updateTableColor(tid, getColorStateList(R.color.lightGreen));
-                            else if(difference < 2)
-                                updateTableColor(tid, getColorStateList(R.color.yellow));
-                            else if(difference < 5)
-                                updateTableColor(tid, getColorStateList(R.color.lightOrange));
-                            else if(difference < 12)
-                                updateTableColor(tid, getColorStateList(R.color.orange));
                             else if(difference < 15)
+                                updateTableColor(tid, getColorStateList(R.color.yellow));
+                            else if(difference < 20)
+                                updateTableColor(tid, getColorStateList(R.color.lightOrange));
+                            else if(difference < 25)
+                                updateTableColor(tid, getColorStateList(R.color.orange));
+                            else if(difference < 35)
                                 updateTableColor(tid, getColorStateList(R.color.darkOrange));
-                            else if(difference >= 15)
+                            else if(difference >= 45)
                                 updateTableColor(tid, getColorStateList(R.color.red));
 
                             System.out.println();

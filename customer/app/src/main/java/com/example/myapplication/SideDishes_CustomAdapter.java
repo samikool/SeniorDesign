@@ -92,9 +92,13 @@ public class SideDishes_CustomAdapter extends RecyclerView.Adapter<SideDishes_Cu
                 View tempview = (View) btn_minus.getTag(R.integer.btn_minus_view);
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
-                tv.setText(String.valueOf(number));
+                if(number>-1){
+                    tv.setText(String.valueOf(number));
+                    MainActivity.receipt.removeItem(SideDishes_Activity.SideFoods.get(getAdapterPosition()), 1);
+                }
+
                // Menu.SideDishFoods.get(getAdapterPosition()).setNumber(number);
-                MainActivity.receipt.addItem(SideDishes_Activity.SideFoods.get(getAdapterPosition()), 1);
+
 
             }
         }

@@ -100,10 +100,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 View tempview = (View) btn_minus.getTag(R.integer.btn_minus_view);
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
-                tv.setText(String.valueOf(number));
+
                 //Send over to the receipt this value
                 //BBQ_Activity.BBQFoods.get(getAdapterPosition());
-                MainActivity.receipt.addItem(BBQ_Activity.BBQFoods.get(getAdapterPosition()), 1);
+                if(number>-1){
+                    tv.setText(String.valueOf(number));
+                    MainActivity.receipt.removeItem(BBQ_Activity.BBQFoods.get(getAdapterPosition()), 1);
+                }
+
             }
         }
 

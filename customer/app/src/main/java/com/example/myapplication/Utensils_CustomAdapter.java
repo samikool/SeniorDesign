@@ -44,7 +44,7 @@ public class Utensils_CustomAdapter extends RecyclerView.Adapter<Utensils_Custom
 
         holder.tvFood.setText(Menu.Utensils.get(position).getFood());
         holder.tvnumber.setText(String.valueOf(Menu.Utensils.get(position).getNumber()));
-        holder.tvDescription.setText(Menu.UtensilDescriptions.get(position).getDescription());
+        //holder.tvDescription.setText(Menu.UtensilDescriptions.get(position).getDescription());
     }
 
     @Override
@@ -93,8 +93,11 @@ public class Utensils_CustomAdapter extends RecyclerView.Adapter<Utensils_Custom
                 View tempview = (View) btn_minus.getTag(R.integer.btn_minus_view);
                 TextView tv = (TextView) tempview.findViewById(R.id.number);
                 int number = Integer.parseInt(tv.getText().toString()) - 1;
-                tv.setText(String.valueOf(number));
-                Menu.Utensils.get(getAdapterPosition()).setNumber(number);
+                if(number>-1){
+                    tv.setText(String.valueOf(number));
+                    Menu.Utensils.get(getAdapterPosition()).setNumber(number);
+                }
+
             }
         }
 

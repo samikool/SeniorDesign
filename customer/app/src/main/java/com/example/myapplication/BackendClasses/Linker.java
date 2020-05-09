@@ -320,7 +320,17 @@ public class Linker implements Runnable, Serializable {
             System.out.println("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
             if(!command.equals("items")){
                 System.out.println(currentView);
-                Snackbar.make(currentView, "Table ID: " + tid + " || Request: " + command + " || Data: " + data, Snackbar.LENGTH_LONG).show();
+                if(command.equals("claim")){
+                    Snackbar.make(currentView, "You will be helped shortly!", Snackbar.LENGTH_LONG).show();
+                }else if(command.equals("close")){
+                    Snackbar.make(currentView, "This table has been closed.", Snackbar.LENGTH_LONG).show();
+                }else if(command.equals("order")){
+                    Snackbar.make(currentView, "Your order has been placed!", Snackbar.LENGTH_LONG).show();
+                }
+                else{
+                    //Snackbar.make(currentView, "Table ID: " + tid + " || Request: " + command + " || Data: " + data, Snackbar.LENGTH_LONG).show();
+                }
+
             }
 
             //general commands
@@ -451,7 +461,7 @@ public class Linker implements Runnable, Serializable {
                     }
                 }
                 else if(command.equals("close")){
-                    receipt = null;
+                    receipt = new Receipt(id);
                 }
             }
 

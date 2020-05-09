@@ -173,16 +173,22 @@ public class Linker implements Runnable, Serializable {
     public static void orderBBQ(int iid, int quant, int tid){
         sendMessage("order,"+tid+",bbq,"+iid+","+quant);
         receiptMap.get(tid).addItem(bbqItems.get(iid), quant);
+        todoList.add(tid+",order,bbq,"+iid+","+quant);
+        todoTimes.put(tid+",order,bbq,"+iid+","+quant, Calendar.getInstance().getTime().getTime());
     }
 
     public static void orderDrink(int iid, int quant, int tid){
         sendMessage("order,"+tid+",drink,"+iid+","+quant);
         receiptMap.get(tid).addItem(drinkItems.get(iid), quant);
+        todoList.add(tid+",order,drink,"+iid+","+quant);
+        todoTimes.put(tid+",order,drink,"+iid+","+quant, Calendar.getInstance().getTime().getTime());
     }
 
     public static void orderSide(int iid, int quant, int tid){
         sendMessage("order,"+tid+",side,"+iid+","+quant);
         receiptMap.get(tid).addItem(sideItems.get(iid), quant);
+        todoList.add(tid+",order,side,"+iid+","+quant);
+        todoTimes.put(tid+",order,side,"+iid+","+quant, Calendar.getInstance().getTime().getTime());
     }
 
     public static void requestUtensil(String utensil, int quant){
@@ -312,8 +318,13 @@ public class Linker implements Runnable, Serializable {
 
             System.out.println("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
             if(!command.equals("items")){
-                System.out.println(currentView);
-                Snackbar.make(currentView, "Table ID: " + tid + " || Request: " + command + " || Data: " + data, Snackbar.LENGTH_LONG).show();
+                if(command.equals("order")){
+                    Snackbar.make(currentView, "Table "+tid+" has ordered something!", Snackbar.LENGTH_LONG).show();
+                }else{
+                    //Snackbar.make(currentView, "Table ID: " + tid + " || Request: " + command + " || Data: " + data, Snackbar.LENGTH_LONG).show();
+                }
+
+
             }
 
             //general commands
@@ -357,14 +368,42 @@ public class Linker implements Runnable, Serializable {
                         if(category.equals("drink")){
                             item = drinkItems.get(iid);
                             receiptMap.get(tid).addItem(item, quant);
+                            if(!todoList.contains(tid+",order,drink")){
+                                todoList.add(tid+",order,drink");
+                                todoTimes.put(tid+",order,drink", Calendar.getInstance().getTime().getTime());
+
+                                if(TodoListActivity.isActive()){
+                                    todoListActivity.addTodo(tid+",order,drink");
+                                }
+                            }
                         }
                         else if(category.equals("bbq")){
                             item = bbqItems.get(iid);
                             receiptMap.get(tid).addItem(item, quant);
+                            if(!todoList.contains(tid+",order,bbq")){
+                                todoList.add(tid+",order,bbq");
+                                todoTimes.put(tid+",order,bbq", Calendar.getInstance().getTime().getTime());
+
+                                if(TodoListActivity.isActive()){
+                                    todoListActivity.addTodo(tid+",order,bbq");
+                                }
+                            }
+
+
                         }
                         else if(category.equals("sides")){
                             item = sideItems.get(iid);
                             receiptMap.get(tid).addItem(item, quant);
+                            if(!todoList.contains(tid+",order,side")){
+                                todoList.add(tid+",order,side");
+                                todoTimes.put(tid+",order,side", Calendar.getInstance().getTime().getTime());
+
+                                if(TodoListActivity.isActive()){
+                                    todoListActivity.addTodo(tid+",order,side");
+                                }
+                            }
+
+
                         }
                     }
                 }
@@ -449,7 +488,7 @@ public class Linker implements Runnable, Serializable {
             }
 
 
-            System.out.println("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
+            //System.out.println("Table ID: " + tid + " || Request: " + command + " || Data: " + data);
 
 
         }
